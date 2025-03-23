@@ -16,17 +16,6 @@ model Birthday {
   day     Int
 }
 
-model Blog {
-  id             String   @id
-  title          String
-  content        String
-  previewContent String
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime
-  userId         String
-  uuid           String   @unique
-}
-
 model Cooldown {
   id        String   @id
   userId    String
@@ -34,96 +23,6 @@ model Cooldown {
   createdAt DateTime @default(now())
   expiresAt DateTime @default(dbgenerated("(now() + '00:01:00'::interval)"))
   User      User     @relation(fields: [userId], references: [id])
-}
-
-model DevLocationUser {
-  id            String          @id
-  ip            String          @unique
-  country       String
-  countryCode   String
-  region        String
-  regionName    String
-  city          String
-  zip           String
-  lat           Float
-  lon           Float
-  timezone      String
-  isp           String
-  org           String
-  as            String
-  DevUserDevice DevUserDevice[]
-}
-
-model DevUserDevice {
-  id              String          @id
-  userLocationId  String
-  browserName     String
-  browserVersion  String
-  osName          String
-  osVersion       String
-  deviceVendor    String
-  deviceModel     String
-  engineName      String
-  engineVersion   String
-  DevLocationUser DevLocationUser @relation(fields: [userLocationId], references: [id])
-}
-
-model Gem {
-  id          Int         @id @default(autoincrement())
-  name        String
-  description String?
-  imageUrl    String
-  userId      String
-  sessionId   String
-  GemzSession GemzSession @relation(fields: [sessionId], references: [sessionId], onDelete: Cascade)
-  GemzUser    GemzUser    @relation(fields: [userId], references: [userId])
-}
-
-model GemzSession {
-  id                 String               @id
-  sessionId          String               @unique
-  name               String?
-  createdAt          DateTime             @default(now())
-  updatedAt          DateTime             @default(now())
-  Gem                Gem[]
-  GemzSessionMessage GemzSessionMessage[]
-  GemzTransaction    GemzTransaction[]
-  GemzUser           GemzUser?
-}
-
-model GemzSessionMessage {
-  id          Int         @id @default(autoincrement())
-  sessionId   String
-  userId      String
-  username    String
-  message     String
-  createdAt   DateTime    @default(now())
-  GemzSession GemzSession @relation(fields: [sessionId], references: [sessionId], onDelete: Cascade)
-  GemzUser    GemzUser    @relation(fields: [userId], references: [userId])
-}
-
-model GemzTransaction {
-  id          String      @id
-  sessionId   String
-  amount      Int
-  type        String
-  createdAt   DateTime    @default(now())
-  updatedAt   DateTime    @default(now())
-  GemzSession GemzSession @relation(fields: [sessionId], references: [sessionId], onDelete: Cascade)
-}
-
-model GemzUser {
-  id                 String               @id
-  username           String
-  ips                String[]
-  userId             String               @unique
-  sessionId          String               @unique
-  balance            Int                  @default(0)
-  createdAt          DateTime             @default(now())
-  updatedAt          DateTime             @default(now())
-  Gem                Gem[]
-  GemzSessionMessage GemzSessionMessage[]
-  GemzSession        GemzSession          @relation(fields: [sessionId], references: [sessionId])
 }
 
 model Guild {
@@ -188,3 +87,23 @@ model Wish {
 }
 
 // ECHORD
+model ESession {
+  id        String   @id @default(cuid())
+  userId    String?  // Nullable to allow for anonymous sessions
+  sessionId String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+  ip        String
+  userAgent String
+  EUser     EUser?    @relation(fields: [userId], references: [userId])
+}
+
+model EUser {
+  id        String   @id @default(cuid())
+  userId    String   @unique
+  username  String
+  avatar    String?
+  updatedAt DateTime @default(now())
+  createdAt DateTime @default(now())
+  sessions   ESession[]
+}
