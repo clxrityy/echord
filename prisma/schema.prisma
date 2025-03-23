@@ -1,0 +1,190 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("POSTGRES_URL")
+  directUrl = env("POSTGRES_URL_NON_POOLING")
+}
+
+model Birthday {
+  id      String @id
+  userId  String
+  guildId String
+  month   Int
+  day     Int
+}
+
+model Blog {
+  id             String   @id
+  title          String
+  content        String
+  previewContent String
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime
+  userId         String
+  uuid           String   @unique
+}
+
+model Cooldown {
+  id        String   @id
+  userId    String
+  command   String
+  createdAt DateTime @default(now())
+  expiresAt DateTime @default(dbgenerated("(now() + '00:01:00'::interval)"))
+  User      User     @relation(fields: [userId], references: [id])
+}
+
+model DevLocationUser {
+  id            String          @id
+  ip            String          @unique
+  country       String
+  countryCode   String
+  region        String
+  regionName    String
+  city          String
+  zip           String
+  lat           Float
+  lon           Float
+  timezone      String
+  isp           String
+  org           String
+  as            String
+  DevUserDevice DevUserDevice[]
+}
+
+model DevUserDevice {
+  id              String          @id
+  userLocationId  String
+  browserName     String
+  browserVersion  String
+  osName          String
+  osVersion       String
+  deviceVendor    String
+  deviceModel     String
+  engineName      String
+  engineVersion   String
+  DevLocationUser DevLocationUser @relation(fields: [userLocationId], references: [id])
+}
+
+model Gem {
+  id          Int         @id @default(autoincrement())
+  name        String
+  description String?
+  imageUrl    String
+  userId      String
+  sessionId   String
+  GemzSession GemzSession @relation(fields: [sessionId], references: [sessionId], onDelete: Cascade)
+  GemzUser    GemzUser    @relation(fields: [userId], references: [userId])
+}
+
+model GemzSession {
+  id                 String               @id
+  sessionId          String               @unique
+  name               String?
+  createdAt          DateTime             @default(now())
+  updatedAt          DateTime             @default(now())
+  Gem                Gem[]
+  GemzSessionMessage GemzSessionMessage[]
+  GemzTransaction    GemzTransaction[]
+  GemzUser           GemzUser?
+}
+
+model GemzSessionMessage {
+  id          Int         @id @default(autoincrement())
+  sessionId   String
+  userId      String
+  username    String
+  message     String
+  createdAt   DateTime    @default(now())
+  GemzSession GemzSession @relation(fields: [sessionId], references: [sessionId], onDelete: Cascade)
+  GemzUser    GemzUser    @relation(fields: [userId], references: [userId])
+}
+
+model GemzTransaction {
+  id          String      @id
+  sessionId   String
+  amount      Int
+  type        String
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @default(now())
+  GemzSession GemzSession @relation(fields: [sessionId], references: [sessionId], onDelete: Cascade)
+}
+
+model GemzUser {
+  id                 String               @id
+  username           String
+  ips                String[]
+  userId             String               @unique
+  sessionId          String               @unique
+  balance            Int                  @default(0)
+  createdAt          DateTime             @default(now())
+  updatedAt          DateTime             @default(now())
+  Gem                Gem[]
+  GemzSessionMessage GemzSessionMessage[]
+  GemzSession        GemzSession          @relation(fields: [sessionId], references: [sessionId])
+}
+
+model Guild {
+  id              String   @id
+  guildId         String   @unique
+  userId          String
+  changeable      Boolean  @default(false)
+  adminRoleId     String?
+  birthdayRoleId  String?
+  birthdayMessage String?
+  User            User     @relation(fields: [userId], references: [id])
+  Wish            Wish[]
+  Member          Member[]
+}
+
+model Member {
+  id             String   @id
+  userId         String
+  friends        String[]
+  friendRequests String[]
+  User           User     @relation(fields: [userId], references: [id])
+  Guild          Guild[]
+}
+
+model SleepData {
+  id        String    @id
+  userId    String
+  date      DateTime
+  duration  Int
+  SleepUser SleepUser @relation(fields: [userId], references: [userId])
+}
+
+model SleepUser {
+  id        String      @id
+  userId    String      @unique
+  username  String
+  avatar    String      @default("https://cdn.discordapp.com/attachments/1020419727731986613/1257156315466174526/default_clock.png?ex=6683618e&is=6682100e&hm=3149313c2ed7e676c5dffe39f2461c0d9f85f882564a208c404ff31905ee4b72&")
+  updatedAt DateTime    @default(now())
+  createdAt DateTime    @default(now())
+  sessionId String
+  SleepData SleepData[]
+}
+
+model User {
+  id           String     @id
+  userId       String     @unique
+  accessToken  String     @unique
+  refreshToken String     @unique
+  Cooldown     Cooldown[]
+  Guild        Guild[]
+  Member       Member[]
+}
+
+model Wish {
+  id           String @id
+  userId       String
+  guildId      String
+  targetUserId String
+  message      String
+  year         Int    @default(2024)
+  Guild        Guild  @relation(fields: [guildId], references: [id])
+}
+
+// ECHORD
