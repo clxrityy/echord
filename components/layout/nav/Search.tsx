@@ -19,6 +19,8 @@ export function Search() {
       return () => {
         clearTimeout(timeoutId);
       };
+    } else if (searchField.length === 0) {
+      router.push('/');
     }
   }, [searchField, router]);
 

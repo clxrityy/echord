@@ -29,7 +29,7 @@ export function Navbar() {
               alt='Echord'
               width={35}
               height={35}
-              className='grayscale-75 brightness-150 mb-1'
+              className='grayscale-75 brightness-150'
             />
             <h1 className='tracking-wide'>
               <span className='font-extrabold'>乇</span>
