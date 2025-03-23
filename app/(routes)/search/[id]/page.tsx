@@ -1,3 +1,4 @@
+import { Results } from "@/components/elements/Results";
 import { DEEZER_API_URL } from "@/lib/config";
 import { DEEZER_SEARCH_RESPONSE } from "@/types/api";
 import axios from "axios";
@@ -25,9 +26,7 @@ export default async function SearchPage({ params }: Props) {
     <div className='search-page'>
       <h1>Search Results for: {id}</h1>
       {/* Add your search results component here */}
-      <pre className="">
-        {JSON.stringify(await fetchSearchResults(), null, 2)}
-      </pre>
+      <Results data={await fetchSearchResults()} />
     </div>
   );
 }
