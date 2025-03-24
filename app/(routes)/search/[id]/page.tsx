@@ -1,7 +1,9 @@
 import { Results } from "@/components/elements/Results";
+import Skeleton from "@/components/ui/Skeleton";
 import { DEEZER_API_URL } from "@/lib/config";
 import { DEEZER_SEARCH_RESPONSE } from "@/types/api";
 import axios from "axios";
+import { Suspense } from "react";
 
 type Props = {
   params: Promise<{
@@ -22,11 +24,14 @@ export default async function SearchPage({ params }: Props) {
     return response.data as DEEZER_SEARCH_RESPONSE;
   }
 
+  const data = await fetchSearchResults();
+
   return (
     <div className='search-page'>
-      <h1>Search Results for: {id}</h1>
-      {/* Add your search results component here */}
-      <Results data={await fetchSearchResults()} />
+      <h1>Search Results for: <span className="italic">"{id}"</span></h1>
+      <Suspense fallback={<Skeleton />}>
+        <Results data={data} />
+      </Suspense>
     </div>
   );
 }

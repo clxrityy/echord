@@ -17,15 +17,19 @@
   "dependencies": {
     "@prisma/client": "^6.5.0",
     "axios": "^1.8.4",
+    "cookie": "^1.0.2",
+    "jsonwebtoken": "^9.0.2",
     "next": "15.2.3",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "uuid": "^11.1.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
     "@eslint/js": "^9.23.0",
     "@next/eslint-plugin-next": "^15.2.3",
     "@tailwindcss/postcss": "^4",
+    "@types/jsonwebtoken": "^9.0.9",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",

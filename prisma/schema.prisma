@@ -35,7 +35,7 @@ model Guild {
   birthdayMessage String?
   User            User     @relation(fields: [userId], references: [id])
   Wish            Wish[]
-  Member          Member[]
+  Member          Member[] @relation("GuildToMember")
 }
 
 model Member {
@@ -44,7 +44,7 @@ model Member {
   friends        String[]
   friendRequests String[]
   User           User     @relation(fields: [userId], references: [id])
-  Guild          Guild[]
+  Guild          Guild[]  @relation("GuildToMember")
 }
 
 model SleepData {
@@ -86,24 +86,64 @@ model Wish {
   Guild        Guild  @relation(fields: [guildId], references: [id])
 }
 
-// ECHORD
 model ESession {
-  id        String   @id @default(cuid())
-  userId    String?  // Nullable to allow for anonymous sessions
-  sessionId String   @unique
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now())
-  ip        String
-  userAgent String
-  EUser     EUser?    @relation(fields: [userId], references: [userId])
+  id          String   @id @default(cuid())
+  userId      String?
+  sessionId   String   @unique
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @default(now())
+  ipAddresses String[]
+  data        EData[]
+  EUser       EUser?   @relation(fields: [userId], references: [userId])
 }
 
 model EUser {
-  id        String   @id @default(cuid())
-  userId    String   @unique
-  username  String
-  avatar    String?
-  updatedAt DateTime @default(now())
-  createdAt DateTime @default(now())
-  sessions   ESession[]
+  id           String         @id @default(cuid())
+  userId       String         @unique
+  username     String
+  avatar       String?
+  updatedAt    DateTime       @default(now())
+  createdAt    DateTime       @default(now())
+  interactions EInteraction[]
+  sessions     ESession[]
+}
+
+model EData {
+  id           String         @id @default(cuid())
+  sessionId    String
+  data         Json
+  type         EDataType
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @default(now())
+  session      ESession       @relation(fields: [sessionId], references: [sessionId])
+  interactions EInteraction[]
+}
+
+model EInteraction {
+  id        String           @id @default(cuid())
+  userId    String
+  type      EInteractionType
+  dataType  EDataType
+  dataId    String
+  createdAt DateTime         @default(now())
+  updatedAt DateTime         @default(now())
+  data      EData            @relation(fields: [dataId], references: [id])
+  user      EUser            @relation(fields: [userId], references: [userId])
+}
+
+enum EDataType {
+  ARTIST
+  ALBUM
+  TRACK
+  USER
+}
+
+enum EInteractionType {
+  RATED
+  REVIEWED
+  LISTENED
+  SAVED
+  FAVORITED
+  FOLLOWED
+  UNFOLLOWED
 }

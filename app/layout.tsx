@@ -5,6 +5,7 @@ import { Navbar } from '@/components/layout/nav/Navbar';
 import { ReactNode, Suspense } from 'react';
 import Skeleton from '@/components/ui/Skeleton';
 import { Main } from '@/components/ui/wrappers/Main';
+import { handleCurrentSession } from '@/handlers/session';
 
 const tomorrow = Tomorrow({
   subsets: ['latin'],
@@ -23,6 +24,11 @@ export default async function RootLayout({
 }: Readonly<{
   children: ReactNode;
 }>) {
+
+  const session = await handleCurrentSession();
+
+  console.log("Current Session:", session);
+
   return (
     <html lang='en'>
       <body className={`${tomorrow.variable} antialiased`}>
