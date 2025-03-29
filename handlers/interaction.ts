@@ -1,5 +1,5 @@
-import { EDataType, EInteraction, EInteractionType } from "@prisma/client";
-import { db } from "@/lib/db";
+import { EDataType, EInteraction, EInteractionType } from '@prisma/client';
+import { db } from '@/lib/db';
 
 export interface InteractionProps {
   dataType: EDataType;
@@ -23,9 +23,9 @@ export async function handleInteraction({
         dataType,
         type: interactionType,
         data: {
-          ...data
-        }
-      }
+          ...data,
+        },
+      },
     });
 
     if (existingInteraction) {
@@ -41,9 +41,9 @@ export async function handleInteraction({
       where: {
         type: dataType,
         data: {
-          ...data
-        }
-      }
+          ...data,
+        },
+      },
     });
 
     if (!existingData) {
@@ -52,35 +52,35 @@ export async function handleInteraction({
         data: {
           type: dataType,
           data: {
-            ...data
+            ...data,
           },
           session: {
             connectOrCreate: {
               where: {
                 userId,
-                sessionId
+                sessionId,
               },
               create: {
                 userId,
                 sessionId,
-              }
-            }
-          }
-        }
+              },
+            },
+          },
+        },
       });
 
-    // Create the interaction with the new data
-    return await db.eInteraction.create({
-      data: {
-        type: interactionType,
-        dataId: newData.id,
-        userId,
-        dataType,
-      }
-    });
-  }
+      // Create the interaction with the new data
+      return await db.eInteraction.create({
+        data: {
+          type: interactionType,
+          dataId: newData.id,
+          userId,
+          dataType,
+        },
+      });
+    }
   } catch (e) {
-  console.error("Error handling interaction:", e);
-  throw new Error("Failed to handle interaction");
-}
+    console.error('Error handling interaction:', e);
+    throw new Error('Failed to handle interaction');
+  }
 }
