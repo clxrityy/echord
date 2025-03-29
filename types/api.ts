@@ -23,7 +23,7 @@ export type DEEZER_SEARCH_DATA = {
     picture_xl: string;
     tracklist: string;
     type: string;
-  },
+  };
   album: {
     id: string | number;
     title: string;
@@ -34,12 +34,12 @@ export type DEEZER_SEARCH_DATA = {
     cover_xl: string;
     tracklist: string;
     type: string;
-  },
+  };
   type: string;
-}
+};
 
 export type DEEZER_SEARCH_RESPONSE = {
   data: DEEZER_SEARCH_DATA[];
   total: number;
   next: string | null;
-}
+};
