@@ -1,7 +1,7 @@
 'use client';
 import { ChangeEvent, useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
-import { ICONS } from '@/lib/config';
+import { ICONS } from '@/utils/constants';
 import { OutsideClick } from '@/components/ui/wrappers/OutsideClick';
 
 export function Search() {
@@ -19,12 +19,13 @@ export function Search() {
       return () => {
         clearTimeout(timeoutId);
       };
-    } else if (searchField.length === 0) {
+    } else if (searchField.length === 0 && clicked) {
       router.push('/');
     }
-  }, [searchField, router]);
+  }, [searchField]);
 
   const handleChange = useCallback(async (e: ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
     setSearchField(e.target.value);
   }, []);
 
