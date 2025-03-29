@@ -1,0 +1,81 @@
+"use client";
+
+import { useSession } from "@/contexts/session";
+import { BASE_URL } from "@/utils/constants";
+import axios from "axios";
+import { useRouter } from "next/navigation";
+import { useCallback, useEffect, useState } from "react";
+
+export const Login = ({
+  sessionId,
+  userId,
+}: {
+  sessionId: string;
+  userId?: string | null;
+}) => {
+  const [username, setUsername] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+
+  const { setUserId } = useSession();
+  const router = useRouter();
+
+  if (userId) {
+    setUserId(userId);
+    router.push(`/profile/${userId}`);
+  }
+
+  const handleLogin = useCallback(async () => {
+    try {
+      const { id } = await axios.post(`${BASE_URL}/api/auth/login`, {
+        username,
+        password
+      }).then((res) => res.data);
+
+      if (id) {
+        setUserId(id);
+        router.push(`/profile/${id}`);
+      } else {
+        alert("Invalid username or password");
+      }
+    } catch (e) {
+      console.error("Login error:", e);
+      alert("An error occurred during login. Please try again.");
+    }
+  }, [username, password, sessionId]);
+
+  return <form className="flex flex-col w-full h-full mx-auto mt-20 gap-5">
+    <div className="flex flex-col xl:flex-row items-center justify-center gap-2 text-center mb-2">
+      <label htmlFor="username">Username</label>
+      <input
+        required
+        type="text"
+        id="username"
+        value={username}
+        onChange={(e) => {
+          e.preventDefault();
+          setUsername(e.target.value);
+        }}
+        className="border border-gray-300 rounded-md p-2"
+      />
+    </div>
+    <div className="flex flex-col xl:flex-row items-center justify-center gap-2 text-center mb-2">
+      <label htmlFor="password">Password</label>
+      <input
+        required
+        type="password"
+        id="password"
+        value={password}
+        onChange={(e) => {
+          e.preventDefault();
+          setPassword(e.target.value);
+        }}
+        className="border border-gray-300 rounded-md p-2"
+      />
+    </div>
+    <div className="flex items-center justify-center w-full">
+      <button type="button" onClick={handleLogin} className="bg-blue-500 text-white rounded-md p-2 hover:bg-blue-600 transition duration-200 w-1/3">
+      Login
+    </button>
+    </div>
+  </form>
+}
