@@ -24,10 +24,7 @@ export default async function RootLayout({
 }: Readonly<{
   children: ReactNode;
 }>) {
-
   const session = await handleCurrentSession();
-
-  console.log("Current Session:", session);
 
   return (
     <html lang='en'>
@@ -51,13 +48,16 @@ export default async function RootLayout({
             sizes='16x16'
             href='/favicon-16x16.png'
           />
+          <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         </head>
-        <Main>
-          <Suspense fallback={<Skeleton />}>
-            <Navbar />
-          </Suspense>
-          {children}
-        </Main>
+        <Suspense fallback={<Skeleton />}>
+          <Main sessionId={session.sessionId}>
+            <Navbar userId={
+              session.userId ? session.userId : undefined
+            } />
+            {children}
+          </Main>
+        </Suspense>
       </body>
     </html>
   );
