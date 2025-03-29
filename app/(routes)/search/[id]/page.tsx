@@ -1,14 +1,14 @@
-import { Results } from "@/components/elements/Results";
-import Skeleton from "@/components/ui/Skeleton";
-import { DEEZER_API_URL } from "@/lib/config";
-import { DEEZER_SEARCH_RESPONSE } from "@/types/api";
-import axios from "axios";
-import { Suspense } from "react";
+import { Results } from '@/components/elements/Results';
+import Skeleton from '@/components/ui/Skeleton';
+import { DEEZER_API_URL } from '@/utils/constants';
+import { DEEZER_SEARCH_RESPONSE } from '@/types/api';
+import axios from 'axios';
+import { Suspense } from 'react';
 
 type Props = {
   params: Promise<{
     id: string;
-  }>
+  }>;
 };
 
 export default async function SearchPage({ params }: Props) {
@@ -28,7 +28,9 @@ export default async function SearchPage({ params }: Props) {
 
   return (
     <div className='search-page'>
-      <h1>Search Results for: <span className="italic">"{id}"</span></h1>
+      <h1>
+        Search Results for: <span className='italic'>&ldquo;{id}&ldquo;</span>
+      </h1>
       <Suspense fallback={<Skeleton />}>
         <Results data={data} />
       </Suspense>
