@@ -14,6 +14,15 @@ const eslintConfig = [
       'plugin:@next/next/recommended',
       'eslint:recommended',
     ],
+    rules: {
+      'no-unused-vars': [
+        'error',
+        {
+          argsIgnorePattern: '^_',
+          varsIgnorePattern: '^_',
+        },
+      ],
+    },
   }),
 ];
 
