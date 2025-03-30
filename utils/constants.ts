@@ -1,4 +1,4 @@
-import { Search, Save, CircleUserRound, LogIn } from 'lucide-react';
+import { Search, Save, CircleUserRound, LogIn, Settings } from 'lucide-react';
 
 export const DEEZER_API_URL = 'https://api.deezer.com';
 export const IP_API_URL = 'https://api.ipify.org';
@@ -12,7 +12,8 @@ export const ICONS = {
   search: Search,
   save: Save,
   user: CircleUserRound,
-  login: LogIn
+  login: LogIn,
+  settings: Settings
 };
 
 export const ENV = {
