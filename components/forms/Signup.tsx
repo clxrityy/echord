@@ -10,7 +10,7 @@ export const Signup = ({
   userId,
 }: {
   sessionId: string;
-  userId?: string | undefined;
+  userId?: string | null;
 }) => {
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
