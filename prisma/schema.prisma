@@ -88,7 +88,7 @@ model Wish {
 
 model ESession {
   id          String   @id @default(cuid())
-  userId      String?
+  userId      String?  @unique
   sessionId   String   @unique
   createdAt   DateTime @default(now())
   updatedAt   DateTime @default(now())
@@ -106,30 +106,47 @@ model EUser {
   createdAt    DateTime       @default(now())
   password     String
   interactions EInteraction[]
-  sessions     ESession[]
+  sessions     ESession?
 }
 
 model EData {
-  id           String         @id @default(cuid())
-  sessionId    String
-  data         Json
-  type         EDataType
-  createdAt    DateTime       @default(now())
-  updatedAt    DateTime       @default(now())
-  session      ESession       @relation(fields: [sessionId], references: [sessionId])
-  interactions EInteraction[]
+  id              String            @id @default(cuid())
+  sessionId       String
+  dataType        EDataType
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @default(now())
+  session         ESession          @relation(fields: [sessionId], references: [sessionId])
+  interactions    EInteraction[]
+  interactionData EInteractionData?
 }
 
 model EInteraction {
-  id        String           @id @default(cuid())
-  userId    String
-  type      EInteractionType
-  dataType  EDataType
-  dataId    String
-  createdAt DateTime         @default(now())
-  updatedAt DateTime         @default(now())
-  data      EData            @relation(fields: [dataId], references: [id])
-  user      EUser            @relation(fields: [userId], references: [userId])
+  id              String           @id @default(cuid())
+  userId          String
+  interactionType EInteractionType
+  dataType        EDataType
+  dataId          String
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @default(now())
+  eData           EData            @relation(fields: [dataId], references: [id])
+  user            EUser            @relation(fields: [userId], references: [userId])
+}
+
+model EInteractionData {
+  id              String           @id @default(cuid())
+  dataId          String           @unique
+  interactionType EInteractionType
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @default(now())
+  title           String?
+  targetUserId    String?
+  imageUrl        String?
+  artistName      String?
+  albumName       String?
+  rating          Int?
+  review          String?
+  albumId         String?
+  eData           EData            @relation(fields: [dataId], references: [id])
 }
 
 enum EDataType {
@@ -142,7 +159,6 @@ enum EDataType {
 enum EInteractionType {
   RATED
   REVIEWED
-  LISTENED
   SAVED
   FAVORITED
   FOLLOWED
