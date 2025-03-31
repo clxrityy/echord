@@ -12,7 +12,8 @@
     "build": "npx prisma generate && pnpm lint && next build",
     "start": "next start",
     "lint": "next lint && prettier --write .",
-    "db": "npx prisma db push && npx prisma db pull && npx prisma generate"
+    "db": "npx prisma db push && npx prisma db pull && npx prisma generate",
+    "studio": "npx prisma studio"
   },
   "license": "MIT",
   "dependencies": {
@@ -50,7 +51,7 @@
     "type": "git",
     "url": "https://github.com/clxrityy/echord.git"
   },
-  "homepage": "https://echord.uk",
+  "homepage": "https://github.com/clxrityy/echord#readme",
   "bugs": {
     "url": "https://github.com/clxrityy/echord/issues"
   },
