@@ -1,8 +1,8 @@
 import { Settings } from "@/components/elements/Settings";
+import { Favorites } from "@/components/elements/user/Favorites";
 import Skeleton from "@/components/ui/Skeleton";
 import { handleCurrentSession } from "@/handlers/session";
 import { db } from "@/lib/db";
-import { ICONS } from "@/utils/constants";
 import { Suspense } from "react";
 
 type Props = {
@@ -24,7 +24,7 @@ export default async function Page({ params }: Props) {
     }
   });
 
-  const session = await handleCurrentSession();
+  const session = await handleCurrentSession(id);
 
   const isCurrentUser = session.userId === profileUser?.userId;
 
@@ -32,9 +32,30 @@ export default async function Page({ params }: Props) {
     return <h1 className="mt-30">User not found</h1>;
   }
 
+  const getFavorites = async () => {
+    const allFavorites = await db.eInteractionData.findMany({
+      where: {
+        interactionType: "FAVORITED",
+      },
+    });
+
+    const userFavorites = await db.eInteraction.findMany({
+      where: {
+        userId: profileUser.userId,
+        interactionType: "FAVORITED",
+      },
+    });
+
+    const favorites = allFavorites.filter((favorite) =>
+      userFavorites.some((userFavorite) => userFavorite.dataId === favorite.dataId)
+    );
+
+    return favorites;
+  }
+
   return (
     <div className="w-full h-full relative mt-30">
-      <div className="w-full flex flex-col gap-4">
+      <div className="w-full flex flex-col gap-10 items-center justify-around">
         <div className="flex items-center justify-start gap-2 w-fit">
           {
             isCurrentUser && (
@@ -46,9 +67,18 @@ export default async function Page({ params }: Props) {
           <div className="flex flex-row items-center gap-2">
             <h1 className="text-2xl font-bold">{profileUser.username}</h1>
           </div>
+          {/**
+           * - Profile data (bio, etc.)
+           */}
         </div>
-        <div className="">
-
+        {/**
+         * - Profile info
+         * - Favorites
+         * - Interactions
+         * - ...
+         */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          <Favorites interactionData={await getFavorites()} />
         </div>
       </div>
     </div>
