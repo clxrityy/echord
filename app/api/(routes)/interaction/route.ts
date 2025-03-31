@@ -2,10 +2,18 @@ import { handleInteraction, InteractionProps } from '@/handlers/interaction';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(req: NextRequest) {
-  const { dataType, data, interactionType, userId, sessionId } =
+  const { dataType, interactionData, interactionType, userId, sessionId } =
     (await req.json()) as InteractionProps;
 
-  if (!dataType || !data || !interactionType || !userId || !sessionId) {
+  console.log('Received interaction:', {
+    dataType,
+    interactionData,
+    interactionType,
+    userId,
+    sessionId,
+  });
+
+  if (!dataType || !interactionType || !userId || !sessionId || !interactionData) {
     return NextResponse.json(
       { error: 'Missing required fields' },
       { status: 400 }
@@ -15,7 +23,9 @@ export async function POST(req: NextRequest) {
   try {
     const interaction = await handleInteraction({
       dataType,
-      data,
+      interactionData: {
+        ...interactionData,
+      },
       interactionType,
       userId,
       sessionId,
@@ -27,7 +37,9 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    return NextResponse.json(interaction, { status: 200 });
+    return NextResponse.json({
+      interaction: interaction,
+    }, { status: 200 });
   } catch (e) {
     console.error('Error handling interaction:', e);
     return NextResponse.json(

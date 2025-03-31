@@ -1,9 +1,9 @@
-import { EDataType, EInteraction, EInteractionType } from '@prisma/client';
+import { EDataType, EInteraction, EInteractionData, EInteractionType } from '@prisma/client';
 import { db } from '@/lib/db';
 
 export interface InteractionProps {
   dataType: EDataType;
-  data: { [key: string]: any };
+  interactionData: Partial<EInteractionData> | EInteractionData;
   interactionType: EInteractionType;
   userId: string;
   sessionId: string;
@@ -11,20 +11,21 @@ export interface InteractionProps {
 
 export async function handleInteraction({
   dataType,
-  data,
+  interactionData,
   interactionType,
   userId,
   sessionId,
 }: InteractionProps): Promise<EInteraction | undefined> {
-  try {
     const existingInteraction = await db.eInteraction.findFirst({
       where: {
         userId,
         dataType,
-        type: interactionType,
-        data: {
-          ...data,
-        },
+        interactionType,
+        eData: {
+          interactionData: {
+            ...interactionData,
+          }
+        }
       },
     });
 
@@ -39,9 +40,9 @@ export async function handleInteraction({
     // check for existing data
     const existingData = await db.eData.findFirst({
       where: {
-        type: dataType,
-        data: {
-          ...data,
+        dataType,
+        interactionData: {
+          ...interactionData,
         },
       },
     });
@@ -50,9 +51,12 @@ export async function handleInteraction({
       // If the data doesn't exist, create it
       const newData = await db.eData.create({
         data: {
-          type: dataType,
-          data: {
-            ...data,
+          dataType,
+          interactionData: {
+            create: {
+              interactionType,
+              ...interactionData,
+            }
           },
           session: {
             connectOrCreate: {
@@ -72,15 +76,66 @@ export async function handleInteraction({
       // Create the interaction with the new data
       return await db.eInteraction.create({
         data: {
-          type: interactionType,
+          interactionType,
           dataId: newData.id,
           userId,
           dataType,
         },
       });
+    } else {
+      // If the data already exists, create the interaction with the existing data
+      const interaction = await db.eInteraction.create({
+        data: {
+          interactionType,
+          dataId: existingData.id,
+          userId,
+          dataType,
+        },
+      });
+
+      try {
+        // Update the interaction count
+        await db.eInteraction.update({
+          where: {
+            id: interaction.id,
+          },
+          data: {
+            updatedAt: new Date(),
+            eData: {
+              connectOrCreate: {
+                where: {
+                  id: existingData.id,
+                },
+                create: {
+                  dataType,
+                  interactionData: {
+                    create: {
+                      interactionType,
+                      ...interactionData,
+                    }
+                  },
+                  session: {
+                    connectOrCreate: {
+                      where: {
+                        userId,
+                        sessionId,
+                      },
+                      create: {
+                        userId,
+                        sessionId,
+                      },
+                    },
+                  },
+                },
+              }
+            }
+          }
+        });
+
+        return interaction;
+      } catch (e) {
+        console.error('Error updating interaction:', e);
+        throw new Error('Database error');
+      }
     }
-  } catch (e) {
-    console.error('Error handling interaction:', e);
-    throw new Error('Failed to handle interaction');
-  }
 }
