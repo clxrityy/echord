@@ -1,4 +1,4 @@
-import { Settings } from "@/components/elements/Settings";
+import { Settings } from "@/components/elements/user/Settings";
 import { Favorites } from "@/components/elements/user/Favorites";
 import Skeleton from "@/components/ui/Skeleton";
 import { handleCurrentSession } from "@/handlers/session";
