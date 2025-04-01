@@ -2,6 +2,7 @@ import { db } from "@/lib/db";
 import { handleCurrentSession } from "./session";
 import { v4 as uuidv4 } from "uuid";
 import { decrypt, encrypt } from "@/utils/encrypt";
+import { EUser } from "@prisma/client";
 
 export async function detectCurrentUserBySession(): Promise<string> {
   const session = await handleCurrentSession();
@@ -101,6 +102,29 @@ export async function checkUser(username: string, pass: string): Promise<string 
     }
   } catch (e) {
     console.error("Error checking user:", e);
+    throw new Error("Database error");
+  }
+}
+
+
+export async function getUserBySessionId(sessionId: string): Promise<EUser | null> {
+  try {
+    const session = await db.eSession.findFirst({
+      where: {
+        sessionId: sessionId,
+      },
+      include: {
+        EUser: true,
+      },
+    });
+
+    if (session && session.EUser) {
+      return session.EUser;
+    } else {
+      return null;
+    }
+  } catch (e) {
+    console.error("Error getting user by session ID:", e);
     throw new Error("Database error");
   }
 }
