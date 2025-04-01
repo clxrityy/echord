@@ -2,7 +2,7 @@
 
 import { ICONS } from "@/utils/constants";
 import { useRef, useState } from "react";
-import { OutsideClick } from "../ui/wrappers/OutsideClick";
+import { OutsideClick } from "@/components/ui/wrappers/OutsideClick";
 
 export function Settings({
   sessionId,
@@ -31,7 +31,7 @@ export function Settings({
               Account Settings
             </h2>
             <div className="w-full h-full flex flex-col items-center justify-start gap-2">
-              
+
             </div>
           </div>
         </dialog>
