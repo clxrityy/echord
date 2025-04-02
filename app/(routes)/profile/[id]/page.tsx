@@ -4,6 +4,7 @@ import Skeleton from "@/components/ui/Skeleton";
 import { handleCurrentSession } from "@/handlers/session";
 import { db } from "@/lib/db";
 import { Suspense } from "react";
+import { SavesGrid } from "@/components/elements/user/SavesGrid";
 
 type Props = {
   params: Promise<{
@@ -53,6 +54,27 @@ export default async function Page({ params }: Props) {
     return favorites;
   }
 
+  const getSaves = async () => {
+    const allSaves = await db.eInteractionData.findMany({
+      where: {
+        interactionType: "SAVED",
+      },
+    });
+
+    const userSaves = await db.eInteraction.findMany({
+      where: {
+        userId: profileUser.userId,
+        interactionType: "SAVED",
+      },
+    });
+
+    const saves = allSaves.filter((save) =>
+      userSaves.some((userSave) => userSave.dataId === save.dataId)
+    );
+
+    return saves;
+  }
+
   return (
     <div className="w-full h-full relative mt-30">
       <div className="w-full flex flex-col gap-10 items-center justify-around">
@@ -81,6 +103,7 @@ export default async function Page({ params }: Props) {
           <Favorites interactionData={await getFavorites()} />
         </div>
       </div>
+      <SavesGrid saves={await getSaves()} />
     </div>
   );
 }
