@@ -19,8 +19,11 @@ export default async function Home() {
   });
 
 
-  return <main className="w-full h-full relative mt-40 items-center justify-center mx-auto flex">
-    <div className="w-full flex flex-col gap-5 items-start justify-start overflow-y-scroll relative">
+  return <main className="w-full h-full relative mt-40 items-center justify-center mx-auto flex flex-col gap-10">
+    {/**
+     * FEED
+     */}
+    <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-2 items-start justify-center overflow-y-scroll relative">
       {
         rawFeed.map(async (item, idx) => {
           const { ...interaction } = item;
@@ -36,8 +39,8 @@ export default async function Home() {
           });
 
           return (
-            <div key={idx} className="w-full h-full relative flex items-center justify-center">
-              <div className="w-5/6 lg:w-3/4 xl:w-2/3 h-full flex flex-col gap-5 items-start justify-center">
+            <div key={idx} className="w-full relative flex items-center justify-center">
+              <div className="w-5/6 lg:w-3/4 h-full flex flex-col gap-5 items-start justify-center">
                 <div className="w-full h-full flex items-center justify-center py-10 px-4">
                   {
                     interaction && data && interactionData ? (
@@ -57,5 +60,10 @@ export default async function Home() {
         })
       }
     </div>
+    {
+      /**
+       * SOMETHING ELSE
+       */
+    }
   </main>;
 }
