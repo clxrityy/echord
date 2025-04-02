@@ -1,4 +1,4 @@
-import { FeedItem } from "@/components/elements/Feed";
+import { FeedItem } from "@/components/elements/feed/Feed";
 import Skeleton from "@/components/ui/Skeleton";
 import { handleCurrentSession } from "@/handlers/session";
 import { db } from "@/lib/db";
