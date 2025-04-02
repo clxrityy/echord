@@ -106,6 +106,7 @@ model EUser {
   createdAt    DateTime       @default(now())
   password     String
   interactions EInteraction[]
+  searches     ESearch[]
   sessions     ESession?
 }
 
@@ -115,7 +116,11 @@ model EData {
   dataType        EDataType
   createdAt       DateTime          @default(now())
   updatedAt       DateTime          @default(now())
+  albumId         String?
+  trackId         String?
+  eAlbum          EAlbum?           @relation(fields: [albumId], references: [albumId])
   session         ESession          @relation(fields: [sessionId], references: [sessionId])
+  eTrack          ETrack?           @relation(fields: [trackId], references: [trackId])
   interactions    EInteraction[]
   interactionData EInteractionData?
 }
@@ -128,7 +133,11 @@ model EInteraction {
   dataId          String
   createdAt       DateTime         @default(now())
   updatedAt       DateTime         @default(now())
+  albumId         String?
+  trackId         String?
+  eAlbum          EAlbum?          @relation(fields: [albumId], references: [albumId])
   eData           EData            @relation(fields: [dataId], references: [id])
+  eTrack          ETrack?          @relation(fields: [trackId], references: [trackId])
   user            EUser            @relation(fields: [userId], references: [userId])
 }
 
@@ -147,6 +156,47 @@ model EInteractionData {
   review          String?
   albumId         String?
   eData           EData            @relation(fields: [dataId], references: [id])
+}
+
+model ESearch {
+  id          String   @id @default(cuid())
+  userId      String?
+  searchQuery String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @default(now())
+  user        EUser?   @relation(fields: [userId], references: [userId])
+}
+
+model ETrack {
+  id            String         @id @default(cuid())
+  trackId       String         @unique
+  title         String
+  artistName    String
+  albumName     String
+  imageUrl      String?
+  releaseDate   DateTime
+  averageRating Int?
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @default(now())
+  albumId       String         @unique
+  eData         EData[]
+  interactions  EInteraction[]
+  album         EAlbum         @relation(fields: [albumId], references: [id])
+}
+
+model EAlbum {
+  id            String         @id @default(cuid())
+  albumId       String         @unique
+  title         String
+  artistName    String
+  imageUrl      String?
+  releaseDate   DateTime
+  averageRating Int?
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @default(now())
+  eData         EData[]
+  interactions  EInteraction[]
+  tracks        ETrack?
 }
 
 enum EDataType {
