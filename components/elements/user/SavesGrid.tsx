@@ -1,5 +1,5 @@
 import { ImageComponent } from "@/components/ui/Image";
-import { EInteraction, EInteractionData } from "@prisma/client";
+import { EInteractionData } from "@prisma/client";
 
 interface SavesGridProps {
   saves: EInteractionData[];

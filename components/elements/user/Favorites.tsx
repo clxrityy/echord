@@ -1,5 +1,5 @@
 import { ImageComponent } from "@/components/ui/Image";
-import { ICONS } from "@/utils/constants";
+import { ICONS } from "@/utils";
 import { EInteractionData } from "@prisma/client";
 
 interface FavoritesProps {
