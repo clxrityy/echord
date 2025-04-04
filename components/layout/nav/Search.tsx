@@ -1,8 +1,10 @@
 'use client';
 import { ChangeEvent, useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
-import { ICONS } from '@/utils/constants';
+import { BASE_URL, ICONS } from '@/utils';
 import { OutsideClick } from '@/components/ui/wrappers/OutsideClick';
+import { useSession } from '@/contexts/session';
+import axios from 'axios';
 
 export function Search() {
   const [searchField, setSearchField] = useState<string>('');
@@ -10,9 +12,34 @@ export function Search() {
 
   const router = useRouter();
 
+  const { addSearch, searches, getSessionId } = useSession();
+
   useEffect(() => {
+
+    async function addSearchToSession(search: string) {
+      return await axios.post(`${BASE_URL}/api/session/search`, {
+        search: search,
+        sessionId: getSessionId(),
+      }).then((res) => {
+        if (res.status === 200) {
+          return res.data;
+        } else if (res.status === 401) {
+          console.log("Unauthorized to save search");
+        } else {
+          console.error("Error saving search");
+        }
+      })
+    }
+
     if (searchField.length > 2) {
       const timeoutId = setTimeout(() => {
+        if (!searches.includes(searchField)) {
+          addSearchToSession(searchField).then((data) => {
+            if (data) {
+              addSearch(searchField);
+            }
+          })
+        }
         router.push(`/search/${searchField}`);
       }, 500);
 
