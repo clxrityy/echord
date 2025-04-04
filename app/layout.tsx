@@ -1,11 +1,11 @@
 import type { Metadata } from 'next';
 import { Tomorrow } from 'next/font/google';
 import './globals.css';
-import { Navbar } from '@/components/layout/nav/Navbar';
 import { ReactNode, Suspense } from 'react';
 import Skeleton from '@/components/ui/Skeleton';
-import { Main } from '@/components/ui/wrappers/Main';
 import { handleCurrentSession } from '@/handlers/session';
+import { LayoutContainer } from '@/components/layout/LayoutContainer';
+import { db } from '@/lib/db';
 
 const tomorrow = Tomorrow({
   subsets: ['latin'],
@@ -26,37 +26,45 @@ export default async function RootLayout({
 }>) {
   const session = await handleCurrentSession();
 
+  const rawFeed = await db.eInteraction.findMany({
+    orderBy: {
+      createdAt: "desc",
+    },
+    where: {
+      interactionType: {
+        notIn: ["UNFOLLOWED", "FOLLOWED"],
+      },
+    }
+  });
+
   return (
     <html lang='en'>
+      <head>
+        <link rel='icon' href='/favicon.ico' />
+        <link
+          rel='apple-touch-icon'
+          sizes='180x180'
+          href='/apple-touch-icon.png'
+        />
+        <link
+          rel='icon'
+          type='image/png'
+          sizes='32x32'
+          href='/favicon-32x32.png'
+        />
+        <link
+          rel='icon'
+          type='image/png'
+          sizes='16x16'
+          href='/favicon-16x16.png'
+        />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      </head>
       <body className={`${tomorrow.variable} antialiased`}>
-        <head>
-          <link rel='icon' href='/favicon.ico' />
-          <link
-            rel='apple-touch-icon'
-            sizes='180x180'
-            href='/apple-touch-icon.png'
-          />
-          <link
-            rel='icon'
-            type='image/png'
-            sizes='32x32'
-            href='/favicon-32x32.png'
-          />
-          <link
-            rel='icon'
-            type='image/png'
-            sizes='16x16'
-            href='/favicon-16x16.png'
-          />
-          <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        </head>
         <Suspense fallback={<Skeleton />}>
-          <Main sessionId={session.sessionId}>
-            <Navbar userId={
-              session.userId ? session.userId : undefined
-            } />
+          <LayoutContainer rawFeed={rawFeed} sessionId={session?.sessionId} userId={session?.userId!}>
             {children}
-          </Main>
+          </LayoutContainer>
         </Suspense>
       </body>
     </html>
