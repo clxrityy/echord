@@ -1,8 +1,8 @@
 import Skeleton from "@/components/ui/Skeleton";
-import { StringOrUndefined } from "@/types/misc";
-import { ICONS } from "@/utils/constants";
+import { StringOrUndefined } from "@/types";
+import { ICONS } from "@/utils";
 import { EDataType, EInteractionType } from "@prisma/client";
-import { Link } from "lucide-react";
+import Link from "next/link";
 import ImageComponent from "next/image";
 import { FeedUser } from "./User";
 
@@ -65,7 +65,7 @@ export function FeedItemContainer({ createdAt, userId, imageUrl, title, albumId,
             <Link href={`/album/${albumId}`} className="flex items-center justify-start gap-2 w-full focus:text-blue-400 transition">
               {
                 imageUrl && title ? (
-                  <ImageComponent src={imageUrl} alt={title} className="w-14 h-14 rounded-md" />
+                  <ImageComponent src={imageUrl} alt={title} className="w-14 h-14 rounded-md" width={25} height={25} />
                 ) : (
                   <Skeleton className="w-14 h-14 rounded-md" />
                 )
