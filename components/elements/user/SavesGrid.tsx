@@ -37,7 +37,7 @@ export function SavesGrid({
   }
 
   return (
-    <div className="flex flex-col gap-0 h-screen mt-22 justify-start items-start fixed top-0 right-0 max-w-[10rem]">
+    <div className="flex flex-col gap-0 h-screen mt-22 justify-end items-start fixed bottom-0 left-0">
       {saves.map((save, idx) => (
         save.imageUrl && save.title ? (
           <ImageComponent
