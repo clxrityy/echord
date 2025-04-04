@@ -18,7 +18,7 @@ export default async function Page() {
           <Login sessionId={session.sessionId} userId={session.userId} />
         </Suspense>
         <Link href={"/signup"} className="text-sm text-gray-400 hover:text-gray-300 transition duration-200 focus:underline">
-          Don't have an account? Sign up here.
+          Don&#39;t have an account? Sign up here.
         </Link>
       </div>
     </div>
