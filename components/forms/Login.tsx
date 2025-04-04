@@ -1,10 +1,10 @@
 "use client";
 
 import { useSession } from "@/contexts/session";
-import { BASE_URL } from "@/utils/constants";
+import { BASE_URL } from "@/utils";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 
 export const Login = ({
   sessionId,
@@ -41,7 +41,7 @@ export const Login = ({
       console.error("Login error:", e);
       alert("An error occurred during login. Please try again.");
     }
-  }, [username, password, sessionId]);
+  }, [username, password, sessionId, setUserId]);
 
   return <form className="flex flex-col w-full h-full mx-auto mt-20 gap-5">
     <div className="flex flex-col xl:flex-row items-center justify-center gap-2 text-center mb-2">

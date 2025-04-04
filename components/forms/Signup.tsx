@@ -2,7 +2,7 @@
 import { useSession } from "@/contexts/session";
 import { useRouter } from "next/navigation";
 import { useCallback, useState } from "react";
-import { BASE_URL, DEFAULT_VALUES } from "@/utils/constants";
+import { BASE_URL, DEFAULT_VALUES } from "@/utils";
 import axios from "axios";
 
 export const Signup = ({
@@ -64,7 +64,7 @@ export const Signup = ({
       setError("An error occurred during signup. Please try again.");
     }
 
-  }, [username, password, confirmPassword, sessionId]);
+  }, [username, password, confirmPassword, sessionId, MAX_PASS_LENGTH, MIN_PASS_LENGTH, MAX_USERNAME_LENGTH, MIN_USERNAME_LENGTH]);
 
 
   return (
