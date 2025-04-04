@@ -26,8 +26,8 @@ export async function LayoutContainer({
             <Main>
               {children}
             </Main>
-            <div className="relative xl:absolute xl:top-30 xl:right-0 xl:w-[20rem] flex justify-center items-center w-full">
-              <div className="w-full h-full flex flex-col gap-5 items-start justify-center overflow-y-auto xl:max-h-[calc(100vh-10rem)] relative">
+            <div className="relative xl:absolute xl:top-30 xl:right-0 xl:w-[20rem] flex flex-col gap-3 justify-center items-center w-full">
+              <div className="w-full h-full flex flex-col gap-5 items-start justify-center relative">
                 <FeedList>
                   {
                     rawFeed.map(async (item, idx) => {

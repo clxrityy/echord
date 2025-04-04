@@ -31,7 +31,7 @@ export function FeedItemContainer({ createdAt, userId, imageUrl, title, albumId,
 
 
   return (
-    <div className="flex items-center justify-start gap-2 w-fit relative pb-8 border-l-4 pl-6 border-white/15 rounded-l-sm bg-gray-900/20 px-10 py-4 shadow-2xl drop-shadow-md mx-2">
+    <div className="flex items-start justify-start gap-2 w-full sm:w-1/2 md:w-auto relative pb-8 border-l-4 border-l-4 pl-6 border-white/15 rounded-l-sm bg-gray-900/20 px-10 py-4 shadow-2xl drop-shadow-md mx-2">
       <div className="flex flex-col items-start justify-center w-full gap-4">
         <div className="flex flex-col items-center justify-start w-fit gap-5">
           <div className="flex items-center justify-start gap-4 w-full flex-col md:flex-row">
