@@ -1,7 +1,7 @@
 import { db } from "@/lib/db";
-import { handleCurrentSession } from "./session";
+import { handleCurrentSession } from "../session";
 import { v4 as uuidv4 } from "uuid";
-import { decrypt, encrypt } from "@/utils/encrypt";
+import { decrypt, encrypt } from "@/utils";
 import { EUser } from "@prisma/client";
 
 export async function detectCurrentUserBySession(): Promise<string> {
