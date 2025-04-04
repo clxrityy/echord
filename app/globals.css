@@ -73,6 +73,12 @@ body {
   z-index: -1;
 }
 
+::-webkit-scrollbar {
+  box-sizing: border-box;
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-redline) transparent;
+};
+
 main {
   position: relative;
 }
