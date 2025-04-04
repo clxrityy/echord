@@ -1,10 +1,10 @@
 'use client';
-import { DEEZER_SEARCH_DATA, DEEZER_SEARCH_RESPONSE } from '@/types/api';
+import { DEEZER_SEARCH_DATA, DEEZER_SEARCH_RESPONSE } from '@/types';
 import { ImageComponent } from '@/components/ui/Image';
 import {
   BASE_URL,
   ICONS,
-} from '@/utils/constants';
+} from '@/utils';
 import { useSession } from '@/contexts/session';
 import { useEffect, useCallback } from 'react';
 import axios from "axios";
@@ -35,7 +35,7 @@ export function Result({ data, sessionId, userId }: Props) {
     if (userId !== undefined && uId !== userId) {
       setUserId(userId);
     }
-  }, [sessionId, userId, seshId, uId]);
+  }, [sessionId, userId, seshId, uId, setSessionId, setUserId]);
 
   const interactionData: Partial<EInteractionData> = {
     title,
@@ -91,7 +91,7 @@ export function Result({ data, sessionId, userId }: Props) {
     if (interaction) {
       alert('Interaction saved successfully');
     }
-  }, [data, sessionId, userId]);
+  }, [data, sessionId, userId, interactionData]);
 
   return (
     <li className='flex flex-col gap-2 p-4 border-b border-white/20 last:border-b-0 relative hover:bg-zinc-900/5 rounded-md transition-all duration-200'>

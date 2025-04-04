@@ -1,7 +1,7 @@
 import { Results } from '@/components/elements/Results';
 import Skeleton from '@/components/ui/Skeleton';
-import { DEEZER_API_URL } from '@/utils/constants';
-import { DEEZER_SEARCH_RESPONSE } from '@/types/api';
+import { DEEZER_API_URL } from '@/utils';
+import { DEEZER_SEARCH_RESPONSE } from '@/types';
 import axios from 'axios';
 import { Suspense } from 'react';
 import { handleCurrentSession } from '@/handlers/session';

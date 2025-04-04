@@ -1,4 +1,4 @@
-import { IP_API_URL } from '@/utils/constants';
+import { IP_API_URL } from '@/utils';
 import axios from 'axios';
 
 export async function fetchIp(): Promise<string> {
