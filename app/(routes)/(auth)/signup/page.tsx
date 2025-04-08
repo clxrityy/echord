@@ -1,4 +1,4 @@
-import { Signup } from "@/components/forms/Signup";
+import { Signup } from "@/components/elements/forms/Signup";
 import Skeleton from "@/components/ui/Skeleton";
 import { handleCurrentSession } from "@/handlers/session";
 import { Suspense } from "react";

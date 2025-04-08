@@ -1,4 +1,4 @@
-import { Login } from "@/components/forms/Login";
+import { Login } from "@/components/elements/forms/Login";
 import Skeleton from "@/components/ui/Skeleton";
 import { handleCurrentSession } from "@/handlers/session"
 import Link from "next/link";
