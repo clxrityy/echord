@@ -4,13 +4,7 @@ import { ICONS } from "@/utils/constants";
 import { useRef, useState } from "react";
 import { OutsideClick } from "@/components/ui/wrappers/OutsideClick";
 
-export function Settings({
-  // sessionId,
-  // userId
-}: {
-  // sessionId: string;
-  // userId: string;
-}) {
+export function Settings(){
 
   const [clicked, setClicked] = useState<boolean>(false);
 
