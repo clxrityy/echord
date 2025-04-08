@@ -32,7 +32,7 @@ export default async function Home() {
       <Suspense fallback={<Skeleton className="w-full h-full" />}>
         <Window sessionId={session.userId || ""}>
           <div className="relative flex justify-center items-center w-full">
-            <div className="w-full h-full flex items-start justify-center relative">
+            <div className="w-full h-full flex items-start justify-center relative pb-10">
               <FeedList>
                 {
                   rawFeed.map(async (item, idx) => {
