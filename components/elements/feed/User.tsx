@@ -1,14 +1,41 @@
+"use client";
 import Skeleton from "@/components/ui/Skeleton";
-import { db } from "@/lib/db";
 import Link from "next/link";
 import ImageComponent from "next/image";
+import { useEffect, useState } from "react";
+import { EUser } from "@prisma/client";
+import axios from "axios";
+import { BASE_URL } from "@/utils";
 
-export async function FeedUser({ userId }: { userId: string }) {
-  const user = await db.eUser.findFirst({
-    where: {
-      userId: userId,
+export function FeedUser({ userId }: { userId: string }) {
+  const [user, setUser] = useState<EUser | null>(null);
+
+  async function fetchUser() {
+    const res = await axios.get(`${BASE_URL}/api/user`, {
+      params: {
+        userId,
+      },
+    });
+
+    const { user: fetchedUser } = await res.data as { user: EUser };
+
+    if (fetchedUser) {
+      setUser(fetchedUser);
+    } else {
+      setUser(null);
     }
-  });
+  }
+
+  useEffect(() => {
+    if (!userId) {
+      return;
+    }
+    if (!user) {
+      fetchUser();
+    }
+
+
+  }, [userId]);
 
   if (user) {
     const { username, avatar } = user;
