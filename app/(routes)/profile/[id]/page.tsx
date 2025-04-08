@@ -20,7 +20,7 @@ export default async function Page({ params }: Props) {
       userId: id
     },
     include: {
-      sessions: true,
+      session: true,
       interactions: true,
     }
   });
