@@ -82,7 +82,10 @@ export default async function Page({ params }: Props) {
           {
             isCurrentUser && (
               <Suspense fallback={<Skeleton />}>
-                <Settings sessionId={session.sessionId} userId={profileUser.userId} />
+                <Settings
+                // sessionId={session.sessionId}
+                // userId={profileUser.userId}
+                />
               </Suspense>
             )
           }

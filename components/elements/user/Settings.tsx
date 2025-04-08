@@ -5,11 +5,11 @@ import { useRef, useState } from "react";
 import { OutsideClick } from "@/components/ui/wrappers/OutsideClick";
 
 export function Settings({
-  sessionId,
-  userId
+  // sessionId,
+  // userId
 }: {
-  sessionId: string;
-  userId: string;
+  // sessionId: string;
+  // userId: string;
 }) {
 
   const [clicked, setClicked] = useState<boolean>(false);
