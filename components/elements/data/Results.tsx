@@ -70,7 +70,7 @@ export function Result({ data, sessionId, userId }: Props) {
         icon: <ICONS.save />,
       });
     }
-  }, [data, sessionId, userId]);
+  }, [data, sessionId, userId, interactionData, artist.name, title]);
 
   const handleFavorite = useCallback(async () => {
     const response = await axios.post<{
