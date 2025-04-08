@@ -3,7 +3,9 @@ import { getUserBySessionId } from "@/handlers/user";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
-  const { search, sessionId } = await req.json();
+  const { searchParams } = new URL(req.url);
+  const sessionId = searchParams.get("sessionId");
+  const search = searchParams.get("search");
 
   if (!search || !sessionId) {
     return NextResponse.json("Missing search or sessionId", { status: 400 });
