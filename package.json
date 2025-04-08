@@ -9,7 +9,7 @@
   },
   "scripts": {
     "dev": "next dev --turbopack",
-    "build": "npx prisma generate && npm run lint && next build",
+    "build": "npx prisma generate && next build",
     "start": "next start",
     "lint": "next lint && prettier --write .",
     "db": "npx prisma db push && npx prisma db pull && npx prisma generate",
