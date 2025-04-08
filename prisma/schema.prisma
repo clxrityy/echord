@@ -94,7 +94,7 @@ model ESession {
   updatedAt   DateTime @default(now())
   ipAddresses String[]
   data        EData[]
-  EUser       EUser?   @relation(fields: [userId], references: [userId])
+  EUser       EUser?   @relation(fields: [userId], references: [userId], onDelete: Cascade)
 }
 
 model EUser {
@@ -107,7 +107,7 @@ model EUser {
   password     String
   interactions EInteraction[]
   searches     ESearch[]
-  sessions     ESession?
+  session      ESession?
 }
 
 model EData {
@@ -136,9 +136,9 @@ model EInteraction {
   albumId         String?
   trackId         String?
   eAlbum          EAlbum?          @relation(fields: [albumId], references: [albumId])
-  eData           EData            @relation(fields: [dataId], references: [id])
+  eData           EData            @relation(fields: [dataId], references: [id], onDelete: Cascade)
   eTrack          ETrack?          @relation(fields: [trackId], references: [trackId])
-  user            EUser            @relation(fields: [userId], references: [userId])
+  user            EUser            @relation(fields: [userId], references: [userId], onDelete: Cascade)
 }
 
 model EInteractionData {
@@ -155,7 +155,7 @@ model EInteractionData {
   rating          Int?
   review          String?
   albumId         String?
-  eData           EData            @relation(fields: [dataId], references: [id])
+  eData           EData            @relation(fields: [dataId], references: [id], onDelete: Cascade)
 }
 
 model ESearch {
@@ -164,7 +164,7 @@ model ESearch {
   searchQuery String
   createdAt   DateTime @default(now())
   updatedAt   DateTime @default(now())
-  user        EUser?   @relation(fields: [userId], references: [userId])
+  user        EUser?   @relation(fields: [userId], references: [userId], onDelete: Cascade)
 }
 
 model ETrack {
@@ -181,7 +181,7 @@ model ETrack {
   albumId       String         @unique
   eData         EData[]
   interactions  EInteraction[]
-  album         EAlbum         @relation(fields: [albumId], references: [id])
+  album         EAlbum         @relation(fields: [albumId], references: [id], onDelete: Cascade)
 }
 
 model EAlbum {
@@ -190,7 +190,6 @@ model EAlbum {
   title         String
   artistName    String
   imageUrl      String?
-  releaseDate   DateTime
   averageRating Int?
   createdAt     DateTime       @default(now())
   updatedAt     DateTime       @default(now())
