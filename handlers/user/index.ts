@@ -38,7 +38,7 @@ export async function createUser(username: string, pass: string): Promise<string
       data: {
         userId: uuidv4(),
         username: username,
-        sessions: {
+        session: {
           connectOrCreate: {
             where: {
               sessionId: session.sessionId,
