@@ -5,14 +5,6 @@ export async function POST(req: NextRequest) {
   const { dataType, interactionData, interactionType, userId, sessionId } =
     (await req.json()) as InteractionProps;
 
-  console.log('Received interaction:', {
-    dataType,
-    interactionData,
-    interactionType,
-    userId,
-    sessionId,
-  });
-
   if (!dataType || !interactionType || !userId || !sessionId || !interactionData) {
     return NextResponse.json(
       { error: 'Missing required fields' },
