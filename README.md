@@ -57,7 +57,7 @@ A music cataloging, rating, reviewing, and recommendation web app.
   - [x] Show the most recent activity from all users
   - [ ] Show the most recent activity from your own profile
 - [ ] Open feed items in a modal
-- [ ] Ability to remove your own feed items
+- [x] Ability to remove your own feed items
 - [ ] Remove your own favorited/saved songs
 
 ### FUTURE / IDEAS
