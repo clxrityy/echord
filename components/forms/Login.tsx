@@ -1,10 +1,11 @@
 "use client";
 
 import { useSession } from "@/contexts/session";
-import { BASE_URL } from "@/utils";
+import { BASE_URL, ICONS } from "@/utils";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useCallback, useState } from "react";
+import toast from "react-hot-toast";
 
 export const Login = ({
   sessionId,
@@ -35,11 +36,11 @@ export const Login = ({
         setUserId(id);
         router.push(`/profile/${id}`);
       } else {
-        alert("Invalid username or password");
+        toast.error("Login failed. Please check your credentials.");
       }
     } catch (e) {
       console.error("Login error:", e);
-      alert("An error occurred during login. Please try again.");
+      toast.error("Login error. Please try again.");
     }
   }, [username, password, sessionId, setUserId]);
 
@@ -74,7 +75,7 @@ export const Login = ({
     </div>
     <div className="flex items-center justify-center w-full">
       <button type="button" onClick={handleLogin} className="bg-blue-500 text-white rounded-md p-2 hover:bg-blue-600 transition duration-200 w-1/3">
-      Login
+      Login <ICONS.login className="h-5 w-5 inline-block" />
     </button>
     </div>
   </form>
