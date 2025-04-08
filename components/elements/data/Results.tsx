@@ -9,6 +9,7 @@ import { useSession } from '@/contexts/session';
 import { useEffect, useCallback } from 'react';
 import axios from "axios";
 import { EInteraction, EInteractionData } from "@prisma/client";
+import toast from 'react-hot-toast';
 
 type Props = {
   data: DEEZER_SEARCH_DATA;
@@ -61,11 +62,13 @@ export function Result({ data, sessionId, userId }: Props) {
 
     if (error) {
       console.error('Error saving interaction:', error);
-      alert('Failed to save interaction');
+      toast.error('Failed to save interaction');
     }
 
     if (interaction) {
-      alert('Interaction saved successfully');
+      toast.success(`Saved ${title} by ${artist.name}`, {
+        icon: <ICONS.save />,
+      });
     }
   }, [data, sessionId, userId]);
 
@@ -85,11 +88,13 @@ export function Result({ data, sessionId, userId }: Props) {
 
     if (error) {
       console.error('Error saving interaction:', error);
-      alert('Failed to save interaction');
+      toast.error('Failed to save interaction');
     }
 
     if (interaction) {
-      alert('Interaction saved successfully');
+      toast.success(`Favorited ${title} by ${artist.name}`, {
+        icon: <ICONS.favorite />,
+      });
     }
   }, [data, sessionId, userId, interactionData]);
 
