@@ -1,4 +1,4 @@
-import { Search, Save, CircleUserRound, LogIn, Settings, Heart, Ellipsis, Pointer } from 'lucide-react';
+import { Search, Save, CircleUserRound, LogIn, Settings, Heart, Ellipsis, Pointer, GripVertical, Trash2 } from 'lucide-react';
 
 export const DEEZER_API_URL = 'https://api.deezer.com';
 export const IP_API_URL = 'https://api.ipify.org';
@@ -17,6 +17,8 @@ export const ICONS = {
   favorite: Heart,
   link: Ellipsis,
   interaction: Pointer,
+  grip: GripVertical,
+  trash: Trash2,
 };
 
 export const ENV = {
