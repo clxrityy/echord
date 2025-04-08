@@ -9,7 +9,7 @@ export type ContextFactory = <T>(
   useContext: () => T;
 };
 
-export const contextFactory: ContextFactory = (
+export const useContextFactory: ContextFactory = (
   initialContextState,
   useContextState
 ) => {
