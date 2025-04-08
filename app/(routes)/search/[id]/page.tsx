@@ -1,4 +1,4 @@
-import { Results } from '@/components/elements/Results';
+import { Results } from '@/components/elements/data/Results';
 import Skeleton from '@/components/ui/Skeleton';
 import { DEEZER_API_URL } from '@/utils';
 import { DEEZER_SEARCH_RESPONSE } from '@/types';
