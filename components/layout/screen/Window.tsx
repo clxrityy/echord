@@ -3,12 +3,12 @@ import Skeleton from "@/components/ui/Skeleton";
 import { useSession } from "@/contexts/session";
 import { useWindow, WindowProvider } from "@/contexts/window";
 import { useScreenSize } from "@/hooks/useScreenSize";
-import { Suspense, useEffect } from "react";
+import { ReactNode, Suspense, useEffect } from "react";
 import { Toaster } from "react-hot-toast";
 
 type WindowProps = {
   sessionId: string;
-  children: React.ReactNode;
+  children: ReactNode;
 }
 
 export const Window = (

@@ -1,12 +1,14 @@
-export function FeedList({children}: {children: React.ReactNode}) {
+import { ReactNode } from "react";
+
+export function FeedList({children}: {children: ReactNode}) {
   return (
-    <ul className="w-full h-full flex flex-col 2xl:grid 2xl:grid-cols-2 2xl:max-w-4xl gap-5 items-start justify-center px-4 rounded-lg shadow-xl shadow-gray-700/15 z-40 relative overflow-y-auto max-h-[calc(125vh-10rem)] z-50 py-56 mt-10 sm:py-40 md:py-20 lg:py-10 xl:py-5">
+    <ul className="w-full h-full flex flex-col 2xl:grid 2xl:grid-cols-2 2xl:max-w-4xl gap-5 items-start justify-center px-4 rounded-lg shadow-xl shadow-gray-700/15 z-40 relative overflow-y-auto max-h-[calc(125vh-10rem)] z-50 py-56 mt-5 sm:py-40 md:py-20 lg:py-10 xl:py-5">
       {children}
     </ul>
   );
 }
 
-export function FeedListItem({children}: {children: React.ReactNode}) {
+export function FeedListItem({children}: {children: ReactNode}) {
   return (
     <li className="w-full h-full flex items-start justify-center py-2 px-4">
       {children}
