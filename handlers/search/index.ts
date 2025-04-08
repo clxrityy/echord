@@ -43,6 +43,7 @@ export async function addSearchToUser(sessionId: string, search: string) {
                 id: newSearch.id,
               },
             },
+            updatedAt: new Date(),
           },
         });
         return newSearch;
