@@ -1,23 +1,24 @@
 "use client";
-import { contextFactory } from '@/utils';
+import { useContextFactory } from '@/hooks/useContextFactory';
 import { useSessionStore } from './useSession';
 
 export type SessionContextState = {
   sessionId: string;
-  userId?: string;
+  userId: string;
   setSessionId: (sessionId: string) => void;
-  setUserId: (userId: string | undefined) => void;
+  setUserId: (userId: string) => void;
   searches: string[];
   addSearch: (search: string) => void;
   setSearches: (searches: string[]) => void;
   removeSearch: (search: string) => void;
   clearSearches: () => void;
   getSessionId: () => string;
+  getSearches: () => string[];
 };
 
 const initialSessionContextState: SessionContextState = {
   sessionId: '',
-  userId: undefined,
+  userId: '',
   setSessionId: () => {},
   setUserId: () => {},
   searches: [],
@@ -26,9 +27,10 @@ const initialSessionContextState: SessionContextState = {
   removeSearch: () => {},
   clearSearches: () => {},
   getSessionId: () => '',
+  getSearches: () => [],
 };
 
-export const { Provider: SessionProvider, useContext: useSession } = contextFactory<SessionContextState>(
+export const { Provider: SessionProvider, useContext: useSession } = useContextFactory<SessionContextState>(
   initialSessionContextState,
   useSessionStore
 );

@@ -3,9 +3,9 @@ import { SessionContextState } from '.';
 
 export const useSessionStore = create<SessionContextState>((set, get) => ({
   sessionId: '',
-  userId: undefined,
+  userId: '',
   setSessionId: (sessionId: string) => set({ sessionId }),
-  setUserId: (userId: string | undefined) => set({ userId }),
+  setUserId: (userId: string) => set({ userId }),
   searches: [],
   getSearches: () => get().searches,
   addSearch: (search: string) => set((state) => ({ searches: [...state.searches, search] })),
