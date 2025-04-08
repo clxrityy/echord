@@ -4,8 +4,8 @@ import './globals.css';
 import { ReactNode, Suspense } from 'react';
 import Skeleton from '@/components/ui/Skeleton';
 import { handleCurrentSession } from '@/handlers/session';
-import { LayoutContainer } from '@/components/layout/LayoutContainer';
-import { db } from '@/lib/db';
+import { SessionProvider } from '@/contexts/session';
+import { Navbar } from '@/components/layout/nav/Navbar';
 
 const tomorrow = Tomorrow({
   subsets: ['latin'],
@@ -25,17 +25,6 @@ export default async function RootLayout({
   children: ReactNode;
 }>) {
   const session = await handleCurrentSession();
-
-  const rawFeed = await db.eInteraction.findMany({
-    orderBy: {
-      createdAt: "desc",
-    },
-    where: {
-      interactionType: {
-        notIn: ["UNFOLLOWED", "FOLLOWED"],
-      },
-    }
-  });
 
   return (
     <html lang='en'>
@@ -61,11 +50,12 @@ export default async function RootLayout({
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </head>
       <body className={`${tomorrow.variable} antialiased`}>
-        <Suspense fallback={<Skeleton />}>
-          <LayoutContainer rawFeed={rawFeed} sessionId={session?.sessionId} userId={session?.userId!}>
-            {children}
-          </LayoutContainer>
+        <Suspense fallback={<Skeleton className="w-full h-full" />}>
+          <SessionProvider>
+            <Navbar userId={session.userId || undefined} />
+          </SessionProvider>
         </Suspense>
+        {children}
       </body>
     </html>
   );
