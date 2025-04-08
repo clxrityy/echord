@@ -1,10 +1,13 @@
+"use client";
 import Skeleton from "@/components/ui/Skeleton";
 import { StringOrUndefined } from "@/types";
-import { ICONS } from "@/utils";
+import { BASE_URL, ICONS } from "@/utils";
 import { EDataType, EInteractionType } from "@prisma/client";
 import Link from "next/link";
 import ImageComponent from "next/image";
 import { FeedUser } from "./User";
+import axios from "axios";
+import { useRouter } from "next/navigation";
 
 export function FeedUserContainer({ children }: { children: React.ReactNode }) {
 
@@ -13,7 +16,20 @@ export function FeedUserContainer({ children }: { children: React.ReactNode }) {
   </div>
 }
 
-export function FeedItemContainer({ createdAt, userId, imageUrl, title, albumId, albumName, dataId, dataType, interactionType }: { createdAt: Date, userId: string | null, imageUrl: StringOrUndefined, title: StringOrUndefined, albumId: StringOrUndefined, albumName: StringOrUndefined, dataId: StringOrUndefined, dataType: EDataType, rating?: number | null, review?: string | null, interactionType: EInteractionType }) {
+export interface FeedItemContainerProps {
+  createdAt: Date;
+  userId: StringOrUndefined;
+  imageUrl: StringOrUndefined;
+  title: StringOrUndefined;
+  albumId: StringOrUndefined;
+  albumName: StringOrUndefined;
+  dataId: string;
+  dataType: EDataType;
+  interactionType: EInteractionType;
+  isCurrentUser: boolean;
+}
+
+export function FeedItemContainer({ createdAt, userId, imageUrl, title, albumId, albumName, dataId, dataType, interactionType, isCurrentUser }: FeedItemContainerProps) {
 
   const isToday = new Date(createdAt).toLocaleDateString("en-US") === new Date().toLocaleDateString("en-US");
   const isSameYear = new Date(createdAt).getFullYear() === new Date().getFullYear();
@@ -27,8 +43,32 @@ export function FeedItemContainer({ createdAt, userId, imageUrl, title, albumId,
     }
   }
 
+  const router = useRouter();
+
   const Icon = interactionTypeIcon();
 
+  async function handleDelete() {
+    try {
+      const { status, message, error } = await axios.delete(`${BASE_URL}/api/interaction`, {
+        data: {
+          userId,
+          interactionId: dataId,
+        },
+      }).then((res) => res.data)
+
+      if (status !== 200) {
+        console.error("Error deleting interaction:", message || error);
+        return;
+      }
+      // Handle successful deletion
+      alert("Interaction deleted successfully");
+      router.refresh();
+
+    } catch (e) {
+      console.error("Error deleting interaction:", e);
+      alert("Error deleting interaction");
+    }
+  }
 
   return (
     <div className="flex items-start justify-start gap-2 w-full sm:w-1/2 md:w-auto relative pb-8 border-l-4 border-l-4 pl-6 border-white/15 rounded-l-sm bg-gray-900/20 px-10 py-4 shadow-2xl drop-shadow-md mx-2">
@@ -85,6 +125,15 @@ export function FeedItemContainer({ createdAt, userId, imageUrl, title, albumId,
           <ICONS.link className="h-4 w-4 md:h-5 md:w-5 lg:h-6 lg:w-6 text-gray-400 hover:text-blue-400 transition" />
         </Link>
       </div>
+      {
+        isCurrentUser && (
+          <div className="asbolute top-2 right-2">
+            <button onClick={async () => await handleDelete()}>
+              <ICONS.trash className="h-4 w-4 md:h-5 md:w-5 lg:h-6 lg:w-6 text-gray-400 hover:text-red-400 focus:text-red-500 transition ease-out" onClick={handleDelete} />
+            </button>
+          </div>
+        )
+      }
     </div>
   )
 }

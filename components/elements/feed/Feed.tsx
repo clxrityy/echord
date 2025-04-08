@@ -15,21 +15,26 @@ export async function FeedItem({
   interactionData,
   userId,
 }: FeedItemProps) {
-  const { createdAt, interactionType } = interaction;
-  const { imageUrl, title, albumId, artistName, albumName, dataId, rating, review } = interactionData;
+  const { createdAt, interactionType, userId: interactionUserId } = interaction;
+  const { imageUrl, title, albumId, artistName, albumName, dataId,
+    // rating, review
+  } = interactionData;
   const { dataType, sessionId } = data;
 
   const user = await getUserBySessionId(sessionId);
+
+  const isCurrentUser = userId == interactionUserId;
 
   switch (interactionType) {
     case "FAVORITED":
       return (
         <>
           <FeedItemContainer
+            isCurrentUser={isCurrentUser}
             interactionType="FAVORITED"
             dataType={dataType}
             createdAt={createdAt}
-            userId={user ? user.userId : null}
+            userId={user ? user.userId : undefined}
             imageUrl={imageUrl && imageUrl !== "undefined" ? imageUrl : undefined}
             title={title && title !== "undefined" ? title : undefined}
             albumId={albumId && albumId !== "undefined" ? albumId : undefined}
@@ -48,10 +53,11 @@ export async function FeedItem({
       return (
         <>
           <FeedItemContainer
+            isCurrentUser={isCurrentUser}
             interactionType="SAVED"
             dataType={dataType}
             createdAt={createdAt}
-            userId={user ? user.userId : null}
+            userId={user ? user.userId : undefined}
             imageUrl={imageUrl && imageUrl !== "undefined" ? imageUrl : undefined}
             title={title && title !== "undefined" ? title : undefined}
             albumId={albumId && albumId !== "undefined" ? albumId : undefined}
