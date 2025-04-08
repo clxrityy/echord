@@ -94,7 +94,7 @@ model ESession {
   updatedAt   DateTime @default(now())
   ipAddresses String[]
   data        EData[]
-  EUser       EUser?   @relation(fields: [userId], references: [userId], onDelete: Cascade)
+  EUser       EUser?   @relation(fields: [userId], references: [userId])
 }
 
 model EUser {
