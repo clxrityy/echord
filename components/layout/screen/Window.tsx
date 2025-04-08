@@ -27,7 +27,7 @@ export const Window = (
   }, [width, height]);
 
   useEffect(() => {
-    if (sessionId !== getSessionId()) {
+    if (sessionId && (sessionId !== getSessionId())) {
       setSessionId(sessionId);
     }
   }, [sessionId]);
