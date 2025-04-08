@@ -45,6 +45,21 @@ A music cataloging, rating, reviewing, and recommendation web app.
 - [x] `/signup` - Sign up
 - [ ] `/logout` - Sign out
 
+##### Refactor structure and stacking of components (07-04-2025)
+- [ ] Move feed display only to the home page
+- [ ] Refactor a new layout component that uses client capabilities to adjust the layout based on the screen size
+- [ ] Refactor the feed component to use a grid layout for the home page
+
+##### Features
+- [x] Add a search bar to the home page
+- [x] Feed display
+  - [ ] Show the most recent activity from users you follow
+  - [x] Show the most recent activity from all users
+  - [ ] Show the most recent activity from your own profile
+- [ ] Open feed items in a modal
+- [ ] Ability to remove your own feed items
+- [ ] Remove your own favorited/saved songs
+
 ---
 
 ### FUTURE / IDEAS
