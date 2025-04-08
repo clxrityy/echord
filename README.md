@@ -46,9 +46,9 @@ A music cataloging, rating, reviewing, and recommendation web app.
 - [ ] `/logout` - Sign out
 
 ##### Refactor structure and stacking of components (07-04-2025)
-- [ ] Move feed display only to the home page
+- [x] Move feed display only to the home page
 - [ ] Refactor a new layout component that uses client capabilities to adjust the layout based on the screen size
-- [ ] Refactor the feed component to use a grid layout for the home page
+- [x] Refactor the feed component to use a grid layout for the home page
 
 ##### Features
 - [x] Add a search bar to the home page
@@ -60,8 +60,6 @@ A music cataloging, rating, reviewing, and recommendation web app.
 - [ ] Ability to remove your own feed items
 - [ ] Remove your own favorited/saved songs
 
----
-
 ### FUTURE / IDEAS
 
 - [ ] Add the ability to feature user playlists on profiles, interact with them, and add them to the feed.
@@ -70,7 +68,7 @@ A music cataloging, rating, reviewing, and recommendation web app.
 - [ ] Adjust feed to show the most recent activity from users you follow.
 - [ ] Randomly recommend other user's feed based on your interactions
 <br />
-- [~] Make it so the average rating is shown by color gradient ranking system for albums and/or tracks
+- [ ~ ] Make it so the average rating is shown by color gradient ranking system for albums and/or tracks
   - unrated = gray
   - 0-1.5 = red
   - 1.5-2.5 = orange
