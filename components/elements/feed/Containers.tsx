@@ -5,9 +5,10 @@ import { BASE_URL, ICONS } from "@/utils";
 import { EDataType, EInteractionType } from "@prisma/client";
 import Link from "next/link";
 import ImageComponent from "next/image";
-import { FeedUser } from "./User";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
+import { FeedUser } from "./User";
 
 export function FeedUserContainer({ children }: { children: React.ReactNode }) {
 
@@ -29,7 +30,9 @@ export interface FeedItemContainerProps {
   isCurrentUser: boolean;
 }
 
-export function FeedItemContainer({ createdAt, userId, imageUrl, title, albumId, albumName, dataId, dataType, interactionType, isCurrentUser }: FeedItemContainerProps) {
+export function FeedItemContainer({ createdAt, userId, imageUrl, title, albumId, albumName, dataId,
+  // dataType,
+  interactionType, isCurrentUser }: FeedItemContainerProps) {
 
   const isToday = new Date(createdAt).toLocaleDateString("en-US") === new Date().toLocaleDateString("en-US");
   const isSameYear = new Date(createdAt).getFullYear() === new Date().getFullYear();
@@ -61,12 +64,14 @@ export function FeedItemContainer({ createdAt, userId, imageUrl, title, albumId,
         return;
       }
       // Handle successful deletion
-      alert("Interaction deleted successfully");
+      toast.success("Interaction deleted successfully", {
+        icon: <ICONS.trash />,
+      });
       router.refresh();
 
     } catch (e) {
       console.error("Error deleting interaction:", e);
-      alert("Error deleting interaction");
+      toast.error("Failed to delete interaction");
     }
   }
 
@@ -120,20 +125,22 @@ export function FeedItemContainer({ createdAt, userId, imageUrl, title, albumId,
           </div>
         </div>
       </div>
-      <div className="absolute bottom-2 right-2 ml-4">
-        <Link href={`/feed/${dataId}`}>
-          <ICONS.link className="h-4 w-4 md:h-5 md:w-5 lg:h-6 lg:w-6 text-gray-400 hover:text-blue-400 transition" />
-        </Link>
+      <div className="absolute flex flex-col items-end right-0 h-full">
+        <div className="absolute bottom-2 right-2 ml-4">
+          <Link href={`/feed/${dataId}`} target="_blank">
+            <ICONS.link className="h-4 w-4 md:h-5 md:w-5 lg:h-6 lg:w-6 text-gray-300/90 hover:text-purple-400 transition-colors ease-in-out" />
+          </Link>
+        </div>
+        <div className="asbolute top-2 right-2 ml-4">
+          {
+            isCurrentUser && (
+              <button onClick={async () => await handleDelete()}>
+                <ICONS.trash className="h-4 w-4 md:h-5 md:w-5 lg:h-6 lg:w-6 text-gray-300/90 hover:text-red-400 focus:text-red-500 transition-colors ease-in-out" onClick={handleDelete} />
+              </button>
+            )
+          }
+        </div>
       </div>
-      {
-        isCurrentUser && (
-          <div className="asbolute top-2 right-2">
-            <button onClick={async () => await handleDelete()}>
-              <ICONS.trash className="h-4 w-4 md:h-5 md:w-5 lg:h-6 lg:w-6 text-gray-400 hover:text-red-400 focus:text-red-500 transition ease-out" onClick={handleDelete} />
-            </button>
-          </div>
-        )
-      }
     </div>
   )
 }
