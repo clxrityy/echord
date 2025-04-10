@@ -6,6 +6,8 @@ import Skeleton from '@/components/ui/Skeleton';
 import { handleCurrentSession } from '@/handlers/session';
 import { SessionProvider } from '@/contexts/session';
 import { Navbar } from '@/components/layout/nav/Navbar';
+import { Toaster } from 'react-hot-toast';
+import { WindowProvider } from '@/contexts/window';
 
 const tomorrow = Tomorrow({
   subsets: ['latin'],
@@ -51,11 +53,52 @@ export default async function RootLayout({
       </head>
       <body className={`${tomorrow.variable} antialiased`}>
         <Suspense fallback={<Skeleton className="w-full h-full" />}>
+          <Toaster position="top-right" toastOptions={{
+            custom: {
+              className: 'bg-gray-900 text-gray-200 shadow-md rounded-lg border border-gray-700/50',
+              style: {
+                background: '#0f2862',
+                color: '#e5e7eb',
+                fontSize: '0.875rem',
+                padding: '1rem',
+                zIndex: 9999,
+              },
+            },
+            success: {
+              duration: 3000,
+              style: {
+                background: '#3b82f6',
+                color: '#ffffff',
+                fontSize: '0.875rem',
+                padding: '1rem',
+              },
+            },
+            error: {
+              duration: 3000,
+              style: {
+                background: '#9e363a',
+                color: '#ffffff',
+                fontSize: '0.875rem',
+                padding: '1rem',
+              },
+            },
+            loading: {
+              duration: 3000,
+              style: {
+                background: '#4f5f76',
+                color: '#ffffff',
+                fontSize: '0.875rem',
+                padding: '1rem',
+              },
+            },
+          }} />
           <SessionProvider>
-            <Navbar userId={session.userId || undefined} />
+            <WindowProvider>
+              <Navbar userId={session.userId || undefined} />
+              {children}
+            </WindowProvider>
           </SessionProvider>
         </Suspense>
-        {children}
       </body>
     </html>
   );
