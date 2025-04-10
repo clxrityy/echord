@@ -1,6 +1,7 @@
 import { StringOrUndefined } from "@/types";
 import { ImageComponent } from "../ui/Image";
 import "@/styles/css/hero.css";
+import Link from "next/link";
 
 export function Hero({
   userId,
@@ -19,7 +20,9 @@ export function Hero({
               </p>
             </div>
             <button className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition duration-200">
-              Get Started
+              <Link href={"/login"}>
+                Get Started
+              </Link>
             </button>
           </div>
         ) : (
