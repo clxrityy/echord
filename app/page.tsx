@@ -27,12 +27,12 @@ export default async function Home() {
     {/**
      *
      */}
-    <div className="w-full h-full xl:h-[90vh] relative flex flex-col xl:flex-row gap-5 items-start justify-start xl:justify-between xl:items-start xl:gap-0">
+    <div className="w-full h-full xl:h-[90vh] relative flex flex-col xl:flex-row gap-2 items-start justify-start xl:justify-between xl:items-start xl:gap-0">
       <Hero userId={session.userId || undefined} />
       <Suspense fallback={<Skeleton className="w-full h-full" />}>
         <Window sessionId={session.userId || ""}>
           <div className="relative flex justify-center items-center w-full">
-            <div className="w-full h-full flex items-start justify-center relative pb-10">
+            <div className="w-full h-full flex items-start justify-start relative pb-10">
               <FeedList>
                 {
                   rawFeed.map(async (item, idx) => {
