@@ -21,14 +21,14 @@ export function Navbar({
   userId?: string | undefined;
 }) {
 
-  const { setUserId, userId: currentUserId } = useSession();
+  const { setUserId, getUserId } = useSession();
   const router = useRouter();
 
   useEffect(() => {
-    if (userId !== undefined && userId !== currentUserId) {
+    if (userId && userId !== getUserId()) {
       setUserId(userId);
     }
-  }, [userId, currentUserId]);
+  }, [userId, getUserId]);
 
   const handleProfileClick = () => router.push(`/profile/${userId}`);
   const handleLoginClick = () => router.push('/login');
