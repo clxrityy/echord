@@ -51,7 +51,7 @@ A music cataloging, rating, reviewing, and recommendation web app.
 - [x] Refactor the feed component to use a grid layout for the home page
 
 #### Fixes (12-04-2025)
-- [ ] Fix the feed to overflow & fit on every screen size (main page)
+- [x] Fix the feed to overflow & fit on every screen size (main page)
 
 ##### Features
 - [x] Add a search bar to the home page
