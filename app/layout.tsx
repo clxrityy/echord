@@ -9,6 +9,7 @@ import { Navbar } from '@/components/layout/nav/Navbar';
 import { Toaster } from 'react-hot-toast';
 import { WindowProvider } from '@/contexts/window';
 import { BASE_URL } from '@/utils';
+import { connection } from 'next/server';
 
 const tomorrow = Tomorrow({
   subsets: ['latin'],
@@ -18,8 +19,27 @@ const tomorrow = Tomorrow({
 });
 
 export const metadata: Metadata = {
+  keywords: [
+    'Echord',
+    'Music',
+    'Music Discovery',
+    'Music Recommendation',
+    'Music Platform',
+    'Music Streaming',
+    'Music Player',
+    'Music Library',
+    'Music Collection',
+    'Music Sharing',
+    'Music Community',
+    'Music Social Network',
+    'Music Analytics',
+    'Music Data Visualization',
+    'Music Trends',
+    'Music Insights',
+    'Music Charts',
+  ],
   title: 'Echord',
-  description: 'Echord is a music discovery platform that allows you to find new music based on your listening habits. It uses machine learning algorithms to analyze your listening history and recommend new songs, albums, and artists that you might like.',
+  description: 'Echord is a music cataloging/discovery/reviewing platform that allows you to find new music based on your listening habits. It uses machine learning algorithms to analyze your listening history and recommend new songs, albums, and artists that you might like.',
   openGraph: {
     title: 'Echord',
     description: 'Echord is a music discovery platform that allows you to find new music based on your listening habits. It uses machine learning algorithms to analyze your listening history and recommend new songs, albums, and artists that you might like.',
@@ -67,6 +87,8 @@ export default async function RootLayout({
 }: Readonly<{
   children: ReactNode;
 }>) {
+  await connection();
+
   const session = await handleCurrentSession();
 
   return (
