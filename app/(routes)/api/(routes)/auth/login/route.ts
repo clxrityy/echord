@@ -2,7 +2,10 @@ import { checkUser } from "@/handlers/user";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
-  const { username, password } = await req.json();
+  const { username, password } = await req.json() as {
+    username: string;
+    password: string;
+  }
 
   if (!username || !password) {
     return NextResponse.json(
