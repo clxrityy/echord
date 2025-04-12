@@ -56,5 +56,8 @@ export async function addSearchToUser(sessionId: string, search: string) {
       console.error('Error adding search to user:', e);
       throw new Error('Database error');
     }
+  } else {
+    console.log('Search already exists for user:', search);
+    return undefined;
   }
 }
