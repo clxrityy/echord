@@ -68,7 +68,7 @@ export const Signup = ({
 
 
   return (
-    <form className="flex flex-col w-full h-full mx-auto mt-20 gap-5 items-center justify-center max-w-sm p-5 rounded-md shadow-md">
+    <form className="flex flex-col w-full h-auto mx-auto gap-5 items-center justify-center max-w-sm p-5 rounded-md shadow-md">
       {error && <h4 className="text-red-500">{error}</h4>}
       <div className="flex flex-col xl:flex-row items-center justify-between gap-2 text-center mb-2 w-full">
         <label htmlFor="username">Username</label>

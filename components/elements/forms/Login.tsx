@@ -44,7 +44,7 @@ export const Login = ({
     }
   }, [username, password, sessionId, setUserId]);
 
-  return <form className="flex flex-col w-full h-full mx-auto mt-20 gap-5">
+  return <form className="flex flex-col w-full h-auto mx-auto gap-5">
     <div className="flex flex-col xl:flex-row items-center justify-center gap-2 text-center mb-2">
       <label htmlFor="username">Username</label>
       <input
