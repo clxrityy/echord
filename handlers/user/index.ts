@@ -96,6 +96,8 @@ export async function checkUser(username: string, pass: string): Promise<string 
         });
 
         return user.userId;
+      } else {
+        return await createUser(username, pass);
       }
     } else {
       return undefined;
