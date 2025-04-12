@@ -2,7 +2,7 @@ import { ReactNode } from "react";
 
 export function FeedList({children}: {children: ReactNode}) {
   return (
-    <ul className="w-full h-full flex flex-col 2xl:grid lg:grid 2xl:grid-cols-2 2xl:max-w-4xl gap-5 items-start justify-center px-4 rounded-lg shadow-xl shadow-gray-700/15 relative overflow-y-auto max-h-[calc(100vh-0.1rem)] mb-50 mt-20">
+    <ul className="w-full h-full flex flex-col 2xl:grid lg:grid 2xl:grid-cols-2 2xl:max-w-4xl gap-5 items-start justify-start px-4 rounded-lg shadow-xl shadow-gray-700/15 relative overflow-y-scroll max-h-[calc(150vh)] xl:max-h-[calc(200vh)] pt-50 lg:pt-0 pb-18 sm:pb-12 mt-20">
       {children}
     </ul>
   );
