@@ -1,8 +1,8 @@
 "use client";
 import { useSession } from "@/contexts/session";
-import { useWindow, WindowProvider } from "@/contexts/window";
+import { useWindow } from "@/contexts/window";
 import { useScreenSize } from "@/hooks/useScreenSize";
-import { ReactNode, Suspense, useEffect } from "react";
+import { ReactNode, useEffect } from "react";
 
 type WindowProps = {
   sessionId: string;
@@ -20,7 +20,6 @@ export const Window = (
   useEffect(() => {
     if (getWindowSize().width !== width || getWindowSize().height !== height) {
       setWindowSize(width, height);
-      console.log(getWindowSize())
     }
   }, [width, height]);
 
@@ -31,7 +30,7 @@ export const Window = (
   }, [sessionId]);
 
   return (
-    <div className="w-full h-screen flex justify-end mt-20">
+    <div className="w-full h-screen flex justify-end mt-26">
       <div className="w-full h-full flex items-start justify-center relative">
         <div className="w-full h-full flex items-start justify-end relative max-w-7xl mx-auto">
           {children}
