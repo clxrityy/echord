@@ -1,4 +1,10 @@
+import { Album } from '@/components/elements/data/Album';
+import { Window } from '@/components/layout/screen/Window';
+import Skeleton from '@/components/ui/Skeleton';
+import { handleCurrentSession } from '@/handlers/session';
 import { db } from '@/lib/db';
+import { connection } from 'next/server';
+import { Suspense } from 'react';
 
 type Props = {
   params: Promise<{
@@ -7,6 +13,10 @@ type Props = {
 }
 
 export default async function Page({params}: Props) {
+
+  await connection();
+
+  const session = await handleCurrentSession();
 
   const id = (await params).id;
 
@@ -21,10 +31,10 @@ export default async function Page({params}: Props) {
   }
 
   return (
-    <div className="">
-      <h1>
-        {album.title} by {album.artistName}
-      </h1>
-    </div>
+    <Suspense fallback={<Skeleton className='w-full h-full' />}>
+      <Window sessionId={session.sessionId || ""}>
+        <Album album={album} />
+      </Window>
+    </Suspense>
   )
 }

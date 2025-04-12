@@ -5,6 +5,7 @@ import { handleCurrentSession } from "@/handlers/session";
 import { db } from "@/lib/db";
 import { Suspense } from "react";
 import { SavesGrid } from "@/components/elements/user/SavesGrid";
+import { Window } from "@/components/layout/screen/Window";
 
 type Props = {
   params: Promise<{
@@ -76,37 +77,39 @@ export default async function Page({ params }: Props) {
   }
 
   return (
-    <div className="w-full h-full relative mt-30">
-      <div className="w-full flex flex-col gap-10 items-center justify-around">
-        <div className="flex items-center justify-start gap-2 w-fit">
-          {
-            isCurrentUser && (
-              <Suspense fallback={<Skeleton />}>
-                <Settings
-                // sessionId={session.sessionId}
-                // userId={profileUser.userId}
-                />
-              </Suspense>
-            )
-          }
-          <div className="flex flex-row items-center gap-2">
-            <h1 className="text-2xl font-bold">{profileUser.username}</h1>
-          </div>
-          {/**
+    <Suspense fallback={<Skeleton className="w-full h-full" />}>
+      <Window sessionId={session.sessionId || ""}>
+        <div className="w-full flex flex-col gap-10 items-center justify-around">
+          <div className="flex items-center justify-start gap-2 w-fit">
+            {
+              isCurrentUser && (
+                <Suspense fallback={<Skeleton />}>
+                  <Settings
+                  // sessionId={session.sessionId}
+                  // userId={profileUser.userId}
+                  />
+                </Suspense>
+              )
+            }
+            <div className="flex flex-row items-center gap-2">
+              <h1 className="text-2xl font-bold">{profileUser.username}</h1>
+            </div>
+            {/**
            * - Profile data (bio, etc.)
            */}
-        </div>
-        {/**
+          </div>
+          {/**
          * - Profile info
          * - Favorites
          * - Interactions
          * - ...
          */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          <Favorites interactionData={await getFavorites()} />
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            <Favorites interactionData={await getFavorites()} />
+          </div>
         </div>
-      </div>
-      <SavesGrid saves={await getSaves()} />
-    </div>
+        <SavesGrid saves={await getSaves()} />
+      </Window>
+    </Suspense>
   );
 }
