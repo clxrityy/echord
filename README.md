@@ -14,7 +14,7 @@ A music cataloging, rating, reviewing, and recommendation web app.
 - [x] `/search/[id]` - Search
   - [ ] Pagination
 - [ ] Item routes
-  - [ ] `/album/[id]` - Album
+  - [x] `/album/[id]` - Album
     - [ ] Album details
     - [ ] Album reviews
     - [ ] Album ratings
@@ -69,9 +69,3 @@ A music cataloging, rating, reviewing, and recommendation web app.
 - [ ] Randomly recommend other user's feed based on your interactions
 <br />
 - [ ~ ] Make it so the average rating is shown by color gradient ranking system for albums and/or tracks
-  - unrated = gray
-  - 0-1.5 = red
-  - 1.5-2.5 = orange
-  - 2.5-3.5 = yellow
-  - 3.5-4.5 = green
-  - 4.5-5 = blue
