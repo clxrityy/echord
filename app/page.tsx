@@ -23,7 +23,7 @@ export default async function Home() {
   });
 
 
-  return <main className="w-full h-full relative items-center justify-center mx-auto flex flex-col gap-10 mt-26 xl:mt-10 2xl:mt-0 overflow-y-scroll xl:overflow-clip scroll-smooth">
+  return <main className="w-full h-full relative items-center justify-center mx-auto flex flex-col gap-10 mt-30 xl:mt-10 2xl:mt-0 overflow-y-scroll xl:overflow-clip scroll-smooth">
     {/**
      *
      */}
@@ -32,7 +32,7 @@ export default async function Home() {
       <Suspense fallback={<Skeleton className="w-full h-full" />}>
         <Window sessionId={session.userId || ""}>
           <div className="relative flex justify-center items-center w-full">
-            <div className="w-full h-full flex items-start justify-start relative pb-10">
+            <div className="w-full h-full flex items-start justify-start relative pb-10 pt-10">
               <FeedList>
                 {
                   rawFeed.map(async (item, idx) => {
