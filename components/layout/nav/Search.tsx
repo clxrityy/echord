@@ -18,10 +18,10 @@ export function Search() {
 
     async function addSearchToSession(search: string) {
       return await axios.post(`${BASE_URL}/api/session/search`, {
-        params: {
-          search: search,
-          sessionId: getSessionId(),
-        }
+
+        search: search,
+        sessionId: getSessionId(),
+
       }).then((res) => {
         if (res.status === 200) {
           return res.data;
