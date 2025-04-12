@@ -6,6 +6,7 @@ import axios from 'axios';
 import { Suspense } from 'react';
 import { handleCurrentSession } from '@/handlers/session';
 import "./index.css";
+import { connection } from 'next/server';
 
 type Props = {
   params: Promise<{
@@ -14,10 +15,12 @@ type Props = {
 };
 
 export default async function SearchPage({ params }: Props) {
+  await connection();
+
   const id = (await params).id;
 
   async function fetchSearchResults(): Promise<DEEZER_SEARCH_RESPONSE> {
-    const response = await axios.get(`${DEEZER_API_URL}/search?q=${id}&limit=6`);
+    const response = await axios.get(`${DEEZER_API_URL}/search?q=${id}`);
 
     if (response.status !== 200) {
       throw new Error('Failed to fetch search results');
@@ -43,7 +46,7 @@ export default async function SearchPage({ params }: Props) {
 
   return (
     <div className='search-page'>
-      <h1>
+      <h1 className='fixed top-10'>
         Search Results for: <span className='italic'>&ldquo;{id}&ldquo;</span>
       </h1>
       <Suspense fallback={<Skeleton />}>

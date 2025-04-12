@@ -21,10 +21,9 @@
   max-width: 1200px;
   border: 1px solid rgba(255, 255, 255, 0.1);
   min-height: max-content;
-  overflow: hidden;
   transition: all 0.3s ease-in-out;
   animation: fadeIn 0.5s ease-in-out;
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 
 @keyframes fadeIn {
