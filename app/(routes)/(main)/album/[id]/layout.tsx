@@ -17,7 +17,7 @@ export async function generateMetadata({ params }: Props):Promise <Metadata> {
 
   const album = await db.eAlbum.findFirst({
     where: {
-      albumId: id,
+      albumId: existingData?.albumId ?? id,
     }
   })
 
@@ -29,7 +29,21 @@ export async function generateMetadata({ params }: Props):Promise <Metadata> {
   }
 
   return {
-    title: album.title,
+    title: `${album.title} by ${album.artistName}`,
+    keywords: [
+      "Echord",
+      "Album",
+      "Music",
+      "Music Album",
+      `${album.title}`,
+      `${album.artistName}`,
+      `${album.title} by ${album.artistName}`,
+      `${album.artistName} Album`,
+      `${album.title} Album`,
+      `${album.title} by ${album.artistName} Album`,
+      `${album.title} by ${album.artistName} Music`,
+      `${album.artistName} Music`,
+    ],
     description: `${album.title} by ${album.artistName}`,
     openGraph: {
       title: album.title,
@@ -50,7 +64,7 @@ export async function generateMetadata({ params }: Props):Promise <Metadata> {
       ]
     },
     icons: {
-      icon: "/favicon.ico",
+      icon: album.imageUrl!,
       shortcut: "/favicon.ico",
       apple: "/favicon.ico",
       other: {
@@ -68,18 +82,10 @@ export async function generateMetadata({ params }: Props):Promise <Metadata> {
 
 export default async function AlbumLayout({
   children,
-  params
 }: Readonly<{
   children: ReactNode;
-  params: Props['params'];
 }>) {
   await connection();
-
-  const id = (await params).id;
-
-  const album = await checkAlbumFromInteraction(id);
-
-  console.log("album", album); // Debugging line
 
   return (
     <div className="mt-30 w-full h-full relative">
