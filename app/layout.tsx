@@ -8,6 +8,7 @@ import { SessionProvider } from '@/contexts/session';
 import { Navbar } from '@/components/layout/nav/Navbar';
 import { Toaster } from 'react-hot-toast';
 import { WindowProvider } from '@/contexts/window';
+import { BASE_URL } from '@/utils';
 
 const tomorrow = Tomorrow({
   subsets: ['latin'],
@@ -18,7 +19,47 @@ const tomorrow = Tomorrow({
 
 export const metadata: Metadata = {
   title: 'Echord',
-  description: '',
+  description: 'Echord is a music discovery platform that allows you to find new music based on your listening habits. It uses machine learning algorithms to analyze your listening history and recommend new songs, albums, and artists that you might like.',
+  openGraph: {
+    title: 'Echord',
+    description: 'Echord is a music discovery platform that allows you to find new music based on your listening habits. It uses machine learning algorithms to analyze your listening history and recommend new songs, albums, and artists that you might like.',
+    url: 'https://echord.uk',
+    siteName: 'Echord',
+  },
+  twitter: {
+    card: 'summary',
+    title: 'Echord',
+    description: 'Echord is a music discovery platform that allows you to find new music based on your listening habits. It uses machine learning algorithms to analyze your listening history and recommend new songs, albums, and artists that you might like.',
+    creator: '@yourclxrity',
+    images: [
+      {
+        url: `${BASE_URL}/android-chrome-512x512.png`,
+        alt: 'Echord',
+        width: 512,
+        height: 512,
+      }
+    ]
+  },
+  icons: {
+    icon: `${BASE_URL}/favicon.ico`,
+    shortcut: '/favicon.ico',
+    apple: '/favicon.ico',
+    other: {
+      rel: 'apple-touch-icon',
+      url: '/favicon.ico',
+    },
+  },
+  applicationName: 'Echord',
+  appLinks: {
+    web: {
+      url: 'https://echord.uk',
+    }
+  },
+  appleWebApp: {
+    title: 'Echord',
+    statusBarStyle: 'black-translucent',
+    capable: true,
+  },
 };
 
 export default async function RootLayout({
