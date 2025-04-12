@@ -74,7 +74,7 @@ export async function handleInteraction({
       });
 
       // Create the interaction with the new data
-      return await db.eInteraction.create({
+      const int = await db.eInteraction.create({
         data: {
           interactionType,
           dataId: newData.id,
@@ -82,6 +82,55 @@ export async function handleInteraction({
           dataType,
         },
       });
+
+      if (dataType === EDataType.ALBUM && int.albumId && interactionData.imageUrl && interactionData.title && interactionData.artistName) {
+
+        try {
+          await db.eAlbum.create({
+            data: {
+              albumId: int.albumId,
+              updatedAt: new Date(),
+              eData: {
+                connectOrCreate: {
+                  where: {
+                    id: newData.id,
+                  },
+                  create: {
+                    dataType,
+                    interactionData: {
+                      create: {
+                        interactionType,
+                        ...interactionData,
+                      }
+                    },
+                    session: {
+                      connectOrCreate: {
+                        where: {
+                          userId,
+                          sessionId,
+                        },
+                        create: {
+                          userId,
+                          sessionId,
+                        },
+                      },
+                    },
+                  },
+                }
+              },
+              imageUrl: interactionData.imageUrl,
+              title: interactionData.title,
+              artistName: interactionData.artistName,
+            }
+          });
+
+          return int;
+        } catch (e) {
+          console.error('Error creating album:', e);
+          throw new Error('Database error');
+        }
+      }
+
     } else {
       // If the data already exists, create the interaction with the existing data
       const interaction = await db.eInteraction.create({
@@ -176,6 +225,8 @@ export async function handleInteraction({
                 }
               }
             });
+
+            return interaction;
           } else if (interaction.albumId && interactionData.imageUrl && interactionData.title && interactionData.artistName) {
             await db.eAlbum.create({
               data: {
