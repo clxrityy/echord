@@ -14,6 +14,7 @@ export type SessionContextState = {
   clearSearches: () => void;
   getSessionId: () => string;
   getSearches: () => string[];
+  getUserId: () => string;
 };
 
 const initialSessionContextState: SessionContextState = {
@@ -28,6 +29,7 @@ const initialSessionContextState: SessionContextState = {
   clearSearches: () => {},
   getSessionId: () => '',
   getSearches: () => [],
+  getUserId: () => '',
 };
 
 export const { Provider: SessionProvider, useContext: useSession } = useContextFactory<SessionContextState>(

@@ -13,4 +13,5 @@ export const useSessionStore = create<SessionContextState>((set, get) => ({
   removeSearch: (search: string) => set(({searches}) => ({ searches: searches.filter((s) => s !== search) })),
   clearSearches: () => set({ searches: [] }),
   getSessionId: () => get().sessionId,
+  getUserId: () => get().userId,
 }));
