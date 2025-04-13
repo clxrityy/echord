@@ -77,7 +77,7 @@ export function FeedItemContainer({ createdAt, userId, imageUrl, title, albumId,
   }
 
   return (
-    <div className="flex items-start justify-start gap-2 w-full sm:w-1/2 md:w-auto relative pb-8 border-l-4 border-l-4 pl-6 border-white/25 rounded-l-sm bg-[var(--color-blue-pastelic-pale)]/[2%] px-10 py-4 shadow-2xl drop-shadow-sm drop-shadow-gray-600/30 mx-2">
+    <div className="flex items-start justify-start gap-2 w-full sm:w-2/3 md:w-1/2 lg:w-fit xl:w-full relative pb-8 border-l-4 border-l-4 pl-6 border-white/25 rounded-l-sm bg-[var(--color-blue-pastelic-pale)]/[2%] px-10 py-4 shadow-2xl drop-shadow-sm drop-shadow-gray-600/30 mx-2">
       <div className="flex flex-col items-start justify-center w-full gap-4">
         <div className="flex flex-col items-center justify-start w-fit gap-5">
           <div className="flex items-center justify-start gap-4 w-full flex-col md:flex-row">
@@ -135,7 +135,7 @@ export function FeedItemContainer({ createdAt, userId, imageUrl, title, albumId,
         <div className="asbolute top-0 right-0 ml-4 px-2">
           {
             isCurrentUser && (
-              <button className="text-gray-300/90 hover:text-red-400 focus:text-red-500 focus:ring focus:ring-offset-0 focus:ring-red-400/25 focus:ring-offset-white/5 rounded-2xl transition-colors ease-in-out px-1 py-1" onClick={async () => await handleDelete()}>
+              <button type="button" title="delete" className="text-gray-300/90 hover:text-red-400 focus:text-red-500 focus:ring focus:ring-offset-0 focus:ring-red-400/25 focus:ring-offset-white/5 rounded-2xl transition-colors ease-in-out px-1 py-1" onClick={async () => await handleDelete()}>
                 <ICONS.trash className="h-4 w-4 md:h-5 md:w-5 4xl:h-6 4xl:w-6" />
               </button>
             )
