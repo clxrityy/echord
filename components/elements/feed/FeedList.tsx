@@ -2,7 +2,7 @@ import { ReactNode } from "react";
 
 export function FeedList({children}: {children: ReactNode}) {
   return (
-    <ul className="w-full h-full flex flex-col 2xl:grid lg:grid 2xl:grid-cols-2 2xl:max-w-4xl gap-5 items-start justify-start px-4 rounded-lg shadow-xl shadow-gray-700/15 relative overflow-y-scroll max-h-[calc(150vh)] xl:max-h-[calc(200vh)] pt-50 lg:pt-0 pb-18 sm:pb-12 mt-20">
+    <ul className="w-full h-fit lg:h-full flex flex-col lg:grid xl:grid-cols-2 lg:w-fit 2xl:max-w-4xl gap-0 items-center justify-start px-4 rounded-lg shadow-xl shadow-gray-700/15 relative overflow-y-scroll max-h-fit lg:max-h-[calc(150vh)] xl:max-h-[calc(200vh)] lg:pt-0 pb-18 sm:pb-12 mt-10">
       {children}
     </ul>
   );
@@ -19,7 +19,7 @@ export function FeedListItem({children}: {children: ReactNode}) {
 export function FeedListItemSkeleton() {
   return (
     <li className="w-full h-full flex items-center justify-center py-10 px-4">
-      <div className="w-full h-20 rounded-md bg-gray-700/30 animate-pulse" />
+      <div className="w-[14rem] h-[7.5rem] rounded-md bg-gray-700/30 animate-pulse" />
     </li>
   );
 }
