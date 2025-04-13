@@ -1,11 +1,13 @@
 import { FeedItem } from "@/components/elements/feed/Feed";
-import { FeedList, FeedListItem } from "@/components/elements/feed/FeedList";
+import { FeedList, FeedListItem, FeedListItemSkeleton } from "@/components/elements/feed/FeedList";
 import { Hero } from "@/components/elements/Hero";
 import { Window } from "@/components/layout/screen/Window";
 import Skeleton from "@/components/ui/Skeleton";
 import { handleCurrentSession } from "@/handlers/session";
 import { db } from "@/lib/db";
 import { Suspense } from "react";
+
+export const dynamic = "force-dynamic";
 
 export default async function Home() {
 
@@ -23,16 +25,16 @@ export default async function Home() {
   });
 
 
-  return <main className="w-full h-full relative items-center justify-center mx-auto flex flex-col gap-10 mt-30 xl:mt-10 2xl:mt-0 overflow-y-scroll xl:overflow-clip scroll-smooth">
+  return <main className="w-full h-full relative items-center justify-center mx-auto flex flex-col gap-10 mt-20 pt-8 xl:mt-10 2xl:mt-0 overflow-y-auto 2xl:overflow-clip scroll-smooth">
     {/**
      *
      */}
-    <div className="w-full h-full xl:h-[90vh] relative flex flex-col xl:flex-row gap-2 items-start justify-start xl:justify-between xl:items-start xl:gap-0">
+    <div className="w-full h-full xl:h-[100vh] flex flex-col xl:flex-row gap-2 items-start justify-start xl:justify-between xl:items-start xl:gap-0">
       <Hero userId={session.userId || undefined} />
       <Suspense fallback={<Skeleton className="w-full h-full" />}>
         <Window sessionId={session.userId || ""}>
           <div className="relative flex justify-center items-center w-full">
-            <div className="w-full h-full flex items-start justify-start relative pb-10 pt-10">
+            <div className="w-full h-fit flex items-center justify-center relative pb-20">
               <FeedList>
                 {
                   rawFeed.map(async (item, idx) => {
@@ -49,19 +51,21 @@ export default async function Home() {
                     });
 
                     return (
-                      <FeedListItem key={idx}>
-                        {
-                          interaction && data && interactionData ? (
-                            <FeedItem
-                              interaction={interaction}
-                              data={data}
-                              interactionData={interactionData}
-                              userId={session.userId || null} />
-                          ) : (
-                            <Skeleton className="w-full h-20 rounded-md" />
-                          )
-                        }
-                      </FeedListItem>
+                      <Suspense key={idx} fallback={<FeedListItemSkeleton />}>
+                        <FeedListItem key={idx}>
+                          {
+                            interaction && data && interactionData ? (
+                              <FeedItem
+                                interaction={interaction}
+                                data={data}
+                                interactionData={interactionData}
+                                userId={session.userId || null} />
+                            ) : (
+                              <Skeleton className="w-full h-20 rounded-md" />
+                            )
+                          }
+                        </FeedListItem>
+                      </Suspense>
                     )
                   })
                 }
