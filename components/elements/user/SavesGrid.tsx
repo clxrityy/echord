@@ -48,7 +48,6 @@ export function SavesGrid({
             width={determineSize(length)}
             height={determineSize(length)}
             loading="lazy"
-            placeholder="blur"
             blurDataURL={save.imageUrl ?? ""}
           />
         ) : (
