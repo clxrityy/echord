@@ -10,6 +10,7 @@ import { Toaster } from 'react-hot-toast';
 import { WindowProvider } from '@/contexts/window';
 import { BASE_URL } from '@/utils';
 import { connection } from 'next/server';
+import { Backdrop } from '@/components/layout/screen/Backdrop';
 
 const tomorrow = Tomorrow({
   subsets: ['latin'],
@@ -66,7 +67,7 @@ export const metadata: Metadata = {
     apple: '/favicon.ico',
     other: {
       rel: 'apple-touch-icon',
-      url: '/favicon.ico',
+      url: '/apple-touch-icon.png',
     },
   },
   applicationName: 'Echord',
@@ -157,6 +158,7 @@ export default async function RootLayout({
           }} />
           <SessionProvider>
             <WindowProvider>
+              <Backdrop />
               <Navbar userId={session.userId || undefined} />
               {children}
             </WindowProvider>
