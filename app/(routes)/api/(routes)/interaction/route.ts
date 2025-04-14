@@ -1,4 +1,4 @@
-import { deleteInteraction, DeleteInteractionProps, handleInteraction, InteractionProps } from '@/handlers/interaction';
+import { deleteInteraction, DeleteInteractionProps, handleInteraction, InteractionProps } from '@/app/_handlers/interaction';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(req: NextRequest) {

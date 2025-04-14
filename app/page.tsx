@@ -3,7 +3,7 @@ import { FeedList, FeedListItem, FeedListItemSkeleton } from "@/components/eleme
 import { Hero } from "@/components/elements/Hero";
 import { Window } from "@/components/layout/screen/Window";
 import Skeleton from "@/components/ui/Skeleton";
-import { handleCurrentSession } from "@/handlers/session";
+import { handleCurrentSession } from "@/app/_handlers/session";
 import { db } from "@/lib/db";
 import { Suspense } from "react";
 

@@ -1,5 +1,5 @@
 import { EData, EInteraction, EInteractionData } from "@prisma/client";
-import { getUserBySessionId } from "@/handlers/user";
+import { getUserBySessionId } from "@/app/_handlers/user";
 import { FeedItemContainer } from "./Containers";
 import { Suspense } from "react";
 import Skeleton from "@/components/ui/Skeleton";

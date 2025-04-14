@@ -1,4 +1,4 @@
-import { checkUser, createUser } from "@/handlers/user";
+import { checkUser, createUser } from "@/app/_handlers/user";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {

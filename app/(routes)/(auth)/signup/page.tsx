@@ -1,7 +1,7 @@
 import { Signup } from "@/components/elements/forms/Signup";
 import { Window } from "@/components/layout/screen/Window";
 import Skeleton from "@/components/ui/Skeleton";
-import { handleCurrentSession } from "@/handlers/session";
+import { handleCurrentSession } from "@/app/_handlers/session";
 import { Suspense } from "react";
 
 export default async function Page() {

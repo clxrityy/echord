@@ -1,7 +1,7 @@
 import { Settings } from "@/components/elements/user/Settings";
 import { Favorites } from "@/components/elements/user/Favorites";
 import Skeleton from "@/components/ui/Skeleton";
-import { handleCurrentSession } from "@/handlers/session";
+import { handleCurrentSession } from "@/app/_handlers/session";
 import { db } from "@/lib/db";
 import { Suspense } from "react";
 import { SavesGrid } from "@/components/elements/user/SavesGrid";

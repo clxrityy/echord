@@ -4,7 +4,7 @@ import { DEEZER_API_URL } from '@/utils';
 import { DEEZER_SEARCH_RESPONSE } from '@/types';
 import axios from 'axios';
 import { Suspense } from 'react';
-import { handleCurrentSession } from '@/handlers/session';
+import { handleCurrentSession } from '@/app/_handlers/session';
 import "./index.css";
 import { connection } from 'next/server';
 import { Window } from '@/components/layout/screen/Window';

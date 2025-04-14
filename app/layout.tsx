@@ -3,7 +3,7 @@ import { Tomorrow } from 'next/font/google';
 import './globals.css';
 import { ReactNode, Suspense } from 'react';
 import Skeleton from '@/components/ui/Skeleton';
-import { handleCurrentSession } from '@/handlers/session';
+import { handleCurrentSession } from '@/app/_handlers/session';
 import { SessionProvider } from '@/contexts/session';
 import { Navbar } from '@/components/layout/nav/Navbar';
 import { Toaster } from 'react-hot-toast';
