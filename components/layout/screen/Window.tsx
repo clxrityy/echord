@@ -30,9 +30,9 @@ export const Window = (
   }, [sessionId]);
 
   return (
-    <div className="w-full h-screen flex justify-end mt-26">
+    <div className="w-full h-screen flex justify-end mt-26 relative">
       <div className="w-full h-full flex items-start justify-center relative">
-        <div className="w-full h-full flex items-start justify-end relative max-w-7xl mx-auto">
+        <div className="w-full h-full flex items-start justify-end relative max-w-7xl mx-auto fixed">
           {children}
         </div>
       </div>
