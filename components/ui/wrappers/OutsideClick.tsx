@@ -1,5 +1,5 @@
 'use client';
-import { useRef, useEffect, ReactNode, RefObject } from 'react';
+import { useRef, useEffect, ReactNode } from 'react';
 
 interface OutsideClickProps {
   children: ReactNode;

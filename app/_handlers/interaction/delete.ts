@@ -26,6 +26,7 @@ export async function deleteInteraction(
       },
     });
   } catch (e) {
+    console.error("Error deleting interaction:", e);
     throw new Error("Failed to delete interaction");
   }
 }
