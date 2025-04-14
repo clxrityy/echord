@@ -1,5 +1,5 @@
-import { db } from "@/lib/db";
-import { getUserBySessionId } from "../user";
+import { db } from '@/lib/db';
+import { getUserBySessionId } from '../user';
 
 export async function addSearchToUser(sessionId: string, search: string) {
   const user = await getUserBySessionId(sessionId);
@@ -10,18 +10,20 @@ export async function addSearchToUser(sessionId: string, search: string) {
 
   const userWithSearches = await db.eUser.findUnique({
     where: {
-      id: user.id
+      id: user.id,
     },
     include: {
       searches: true,
-    }
+    },
   });
 
   if (!userWithSearches) {
     return undefined;
   }
 
-  const doesSearchExist = userWithSearches.searches.some((s) => s.searchQuery === search);
+  const doesSearchExist = userWithSearches.searches.some(
+    (s) => s.searchQuery === search
+  );
 
   if (!doesSearchExist) {
     try {
@@ -29,7 +31,7 @@ export async function addSearchToUser(sessionId: string, search: string) {
         data: {
           searchQuery: search,
           userId: user.userId,
-        }
+        },
       });
 
       if (newSearch) {
@@ -51,7 +53,6 @@ export async function addSearchToUser(sessionId: string, search: string) {
         console.error('Error creating new search:', newSearch);
         throw new Error('Database error');
       }
-
     } catch (e) {
       console.error('Error adding search to user:', e);
       throw new Error('Database error');

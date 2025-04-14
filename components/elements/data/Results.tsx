@@ -1,14 +1,11 @@
 'use client';
 import { DEEZER_SEARCH_DATA, DEEZER_SEARCH_RESPONSE } from '@/types';
 import { ImageComponent } from '@/components/ui/Image';
-import {
-  BASE_URL,
-  ICONS,
-} from '@/utils';
+import { BASE_URL, ICONS } from '@/utils';
 import { useSession } from '@/contexts/session';
 import { useEffect, useCallback } from 'react';
-import axios from "axios";
-import { EInteraction, EInteractionData } from "@prisma/client";
+import axios from 'axios';
+import { EInteraction, EInteractionData } from '@prisma/client';
 import toast from 'react-hot-toast';
 
 type Props = {
@@ -27,7 +24,12 @@ export function Result({ data, sessionId, userId }: Props) {
     },
   } = data;
 
-  const { setSessionId, setUserId, sessionId: seshId, userId: uId } = useSession();
+  const {
+    setSessionId,
+    setUserId,
+    sessionId: seshId,
+    userId: uId,
+  } = useSession();
 
   useEffect(() => {
     if (seshId !== sessionId) {
@@ -44,15 +46,15 @@ export function Result({ data, sessionId, userId }: Props) {
     albumName: albumTitle,
     imageUrl: cover_small,
     albumId: String(data.album.id),
-  }
+  };
 
   const handleSave = useCallback(async () => {
     const response = await axios.post<{
       interaction: EInteraction;
       error?: string;
     }>(`${BASE_URL}/api/interaction`, {
-      dataType: "ALBUM",
-      interactionType: "SAVED",
+      dataType: 'ALBUM',
+      interactionType: 'SAVED',
       userId: userId,
       sessionId: sessionId,
       interactionData: JSON.parse(JSON.stringify(interactionData)),
@@ -77,8 +79,8 @@ export function Result({ data, sessionId, userId }: Props) {
       interaction: EInteraction;
       error?: string;
     }>(`${BASE_URL}/api/interaction`, {
-      dataType: "ALBUM",
-      interactionType: "FAVORITED",
+      dataType: 'ALBUM',
+      interactionType: 'FAVORITED',
       userId: userId,
       sessionId: sessionId,
       interactionData: JSON.parse(JSON.stringify(interactionData)),
@@ -115,35 +117,50 @@ export function Result({ data, sessionId, userId }: Props) {
           {artist.name} - {albumTitle}
         </p>
       </div>
-      {
-        userId && (
-          <section className='absolute bg-zinc-900/5 rounded-md transition-opacity duration-200 right-0 top-0 w-full h-full flex items-center justify-center'>
-            <div className='flex items-center justify-end gap-2 p-2 w-full *:hover:text-gray-300 *:focus:text-blue-400 mr-5'>
-              <button role='button' title='Save to Library' onClick={handleSave}>
-                <ICONS.save />{' '}
-                <span className='sr-only'>
-                  Save {title} by {artist.name} to your library
-                </span>
-              </button>
-              <button role='button' title='Add to Favorites' onClick={handleFavorite}>
-                <ICONS.favorite />{' '}
-                <span className='sr-only'>
-                  Add {title} by {artist.name} to your favorites
-                </span>
-              </button>
-            </div>
-          </section>
-        )
-      }
+      {userId && (
+        <section className='absolute bg-zinc-900/5 rounded-md transition-opacity duration-200 right-0 top-0 w-full h-full flex items-center justify-center'>
+          <div className='flex items-center justify-end gap-2 p-2 w-full *:hover:text-gray-300 *:focus:text-blue-400 mr-5'>
+            <button role='button' title='Save to Library' onClick={handleSave}>
+              <ICONS.save />{' '}
+              <span className='sr-only'>
+                Save {title} by {artist.name} to your library
+              </span>
+            </button>
+            <button
+              role='button'
+              title='Add to Favorites'
+              onClick={handleFavorite}
+            >
+              <ICONS.favorite />{' '}
+              <span className='sr-only'>
+                Add {title} by {artist.name} to your favorites
+              </span>
+            </button>
+          </div>
+        </section>
+      )}
     </li>
   );
 }
 
-export function Results({ data, sessionId, userId }: { data: DEEZER_SEARCH_RESPONSE; sessionId: string; userId?: string | undefined }) {
+export function Results({
+  data,
+  sessionId,
+  userId,
+}: {
+  data: DEEZER_SEARCH_RESPONSE;
+  sessionId: string;
+  userId?: string | undefined;
+}) {
   return (
     <ul className='flex flex-col gap-6 xl:gap-8 relative top-20 overflow-y-scroll pb-40 h-full'>
       {data.data.map((item: DEEZER_SEARCH_DATA) => (
-        <Result key={item.id} data={item} sessionId={sessionId} userId={userId} />
+        <Result
+          key={item.id}
+          data={item}
+          sessionId={sessionId}
+          userId={userId}
+        />
       ))}
     </ul>
   );

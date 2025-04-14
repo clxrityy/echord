@@ -1,11 +1,11 @@
-"use client";
+'use client';
 
-import { useSession } from "@/contexts/session";
-import { BASE_URL, ICONS } from "@/utils";
-import axios from "axios";
-import { useRouter } from "next/navigation";
-import { useCallback, useState } from "react";
-import toast from "react-hot-toast";
+import { useSession } from '@/contexts/session';
+import { BASE_URL, ICONS } from '@/utils';
+import axios from 'axios';
+import { useRouter } from 'next/navigation';
+import { useCallback, useState } from 'react';
+import toast from 'react-hot-toast';
 
 export const Login = ({
   sessionId,
@@ -14,8 +14,8 @@ export const Login = ({
   sessionId: string;
   userId?: string | null;
 }) => {
-  const [username, setUsername] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
+  const [username, setUsername] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
 
   const { setUserId } = useSession();
   const router = useRouter();
@@ -27,56 +27,64 @@ export const Login = ({
 
   const handleLogin = useCallback(async () => {
     try {
-      const { id } = await axios.post(`${BASE_URL}/api/auth/login`, {
-        username,
-        password
-      }).then((res) => res.data);
+      const { id } = await axios
+        .post(`${BASE_URL}/api/auth/login`, {
+          username,
+          password,
+        })
+        .then((res) => res.data);
 
       if (id) {
         setUserId(id);
         router.push(`/profile/${id}`);
       } else {
-        toast.error("Login failed. Please check your credentials.");
+        toast.error('Login failed. Please check your credentials.');
       }
     } catch (e) {
-      console.error("Login error:", e);
-      toast.error("Login error. Please try again.");
+      console.error('Login error:', e);
+      toast.error('Login error. Please try again.');
     }
   }, [username, password, sessionId, setUserId]);
 
-  return <form className="flex flex-col w-full h-auto mx-auto gap-5">
-    <div className="flex flex-col xl:flex-row items-center justify-center gap-2 text-center mb-2">
-      <label htmlFor="username">Username</label>
-      <input
-        required
-        type="text"
-        id="username"
-        value={username}
-        onChange={(e) => {
-          e.preventDefault();
-          setUsername(e.target.value);
-        }}
-        className="border border-gray-300 rounded-md p-2"
-      />
-    </div>
-    <div className="flex flex-col xl:flex-row items-center justify-center gap-2 text-center mb-2">
-      <label htmlFor="password">Password</label>
-      <input
-        required
-        type="password"
-        id="password"
-        value={password}
-        onChange={(e) => {
-          e.preventDefault();
-          setPassword(e.target.value);
-        }}
-        className="border border-gray-300 rounded-md p-2"
-      />
-    </div>
-    <div className="flex items-center justify-center w-full">
-      <button type="button" onClick={handleLogin} className="bg-blue-500 text-white rounded-md p-2 hover:bg-blue-600 transition duration-200 w-1/3">
-      Login <ICONS.login className="h-5 w-5 inline-block" />
-    </button>
-    </div>
-  </form>
-}
+  return (
+    <form className='flex flex-col w-full h-auto mx-auto gap-5'>
+      <div className='flex flex-col xl:flex-row items-center justify-center gap-2 text-center mb-2'>
+        <label htmlFor='username'>Username</label>
+        <input
+          required
+          type='text'
+          id='username'
+          value={username}
+          onChange={(e) => {
+            e.preventDefault();
+            setUsername(e.target.value);
+          }}
+          className='border border-gray-300 rounded-md p-2'
+        />
+      </div>
+      <div className='flex flex-col xl:flex-row items-center justify-center gap-2 text-center mb-2'>
+        <label htmlFor='password'>Password</label>
+        <input
+          required
+          type='password'
+          id='password'
+          value={password}
+          onChange={(e) => {
+            e.preventDefault();
+            setPassword(e.target.value);
+          }}
+          className='border border-gray-300 rounded-md p-2'
+        />
+      </div>
+      <div className='flex items-center justify-center w-full'>
+        <button
+          type='button'
+          onClick={handleLogin}
+          className='bg-blue-500 text-white rounded-md p-2 hover:bg-blue-600 transition duration-200 w-1/3'
+        >
+          Login <ICONS.login className='h-5 w-5 inline-block' />
+        </button>
+      </div>
+    </form>
+  );
+};

@@ -1,11 +1,22 @@
-import { deleteInteraction, DeleteInteractionProps, handleInteraction, InteractionProps } from '@/app/_handlers/interaction';
+import {
+  deleteInteraction,
+  DeleteInteractionProps,
+  handleInteraction,
+  InteractionProps,
+} from '@/app/_handlers/interaction';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(req: NextRequest) {
   const { dataType, interactionData, interactionType, userId, sessionId } =
     (await req.json()) as InteractionProps;
 
-  if (!dataType || !interactionType || !userId || !sessionId || !interactionData) {
+  if (
+    !dataType ||
+    !interactionType ||
+    !userId ||
+    !sessionId ||
+    !interactionData
+  ) {
     return NextResponse.json(
       { error: 'Missing required fields' },
       { status: 400 }
@@ -29,9 +40,12 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    return NextResponse.json({
-      interaction: interaction,
-    }, { status: 200 });
+    return NextResponse.json(
+      {
+        interaction: interaction,
+      },
+      { status: 200 }
+    );
   } catch (e) {
     console.error('Error handling interaction:', e);
     return NextResponse.json(
@@ -42,7 +56,8 @@ export async function POST(req: NextRequest) {
 }
 
 export async function DELETE(req: NextRequest) {
-  const { userId, interactionId } = (await req.json()) as DeleteInteractionProps;
+  const { userId, interactionId } =
+    (await req.json()) as DeleteInteractionProps;
 
   if (!userId || !interactionId) {
     return NextResponse.json(

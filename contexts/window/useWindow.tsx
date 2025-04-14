@@ -1,6 +1,6 @@
-"use client";
-import { create } from "zustand";
-import { WindowContextState } from ".";
+'use client';
+import { create } from 'zustand';
+import { WindowContextState } from '.';
 
 export const useWindowStore = create<WindowContextState>((set, get) => ({
   width: 0,

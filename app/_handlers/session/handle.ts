@@ -1,7 +1,7 @@
-import { db } from "@/lib/db";
-import { fetchIp } from "@/utils";
-import { createSession } from "./create";
-import { getSessionByUserId } from "./get";
+import { db } from '@/lib/db';
+import { fetchIp } from '@/utils';
+import { createSession } from './create';
+import { getSessionByUserId } from './get';
 
 export async function handleCurrentSession(userId?: string) {
   const ip = await fetchIp();
@@ -38,7 +38,6 @@ export async function handleCurrentSession(userId?: string) {
     console.error('Error fetching current session:', e);
     throw new Error('Database error');
   }
-
 }
 
 export async function appendSessionIpAddress(sessionId: string) {
@@ -66,4 +65,3 @@ export async function appendSessionIpAddress(sessionId: string) {
     throw new Error('Database error');
   }
 }
-

@@ -1,16 +1,15 @@
-
-import { checkUser } from "@/app/_handlers/user";
-import { NextRequest, NextResponse } from "next/server";
+import { checkUser } from '@/app/_handlers/user';
+import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(req: NextRequest) {
-  const { username, password } = await req.json() as {
+  const { username, password } = (await req.json()) as {
     username: string;
     password: string;
-  }
+  };
 
   if (!username || !password) {
     return NextResponse.json(
-      { error: "Username and password are required" },
+      { error: 'Username and password are required' },
       { status: 400 }
     );
   }
@@ -20,20 +19,22 @@ export async function POST(req: NextRequest) {
 
     if (!userId) {
       return NextResponse.json(
-        { error: "Invalid username or password" },
+        { error: 'Invalid username or password' },
         { status: 401 }
       );
     }
 
-    return NextResponse.json({
-      message: "User logged in successfully",
-      id: userId,
-    }, { status: 200 });
-
-  } catch (e) {
-    console.error("Error during login:", e);
     return NextResponse.json(
-      { error: "An error occurred during login" },
+      {
+        message: 'User logged in successfully',
+        id: userId,
+      },
+      { status: 200 }
+    );
+  } catch (e) {
+    console.error('Error during login:', e);
+    return NextResponse.json(
+      { error: 'An error occurred during login' },
       { status: 500 }
     );
   }

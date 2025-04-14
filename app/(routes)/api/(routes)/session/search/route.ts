@@ -1,21 +1,21 @@
-import { addSearchToUser } from "@/app/_handlers/search";
-import { getUserBySessionId } from "@/app/_handlers/user";
-import { NextRequest, NextResponse } from "next/server";
+import { addSearchToUser } from '@/app/_handlers/search';
+import { getUserBySessionId } from '@/app/_handlers/user';
+import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(req: NextRequest) {
-  const { sessionId, search } = await req.json() as {
+  const { sessionId, search } = (await req.json()) as {
     sessionId: string;
     search: string;
-  }
+  };
 
   if (!search || !sessionId) {
-    return NextResponse.json("Missing search or sessionId", { status: 400 });
+    return NextResponse.json('Missing search or sessionId', { status: 400 });
   }
 
   const user = await getUserBySessionId(sessionId);
 
   if (!user) {
-    return NextResponse.json("User not authorized", { status: 401 });
+    return NextResponse.json('User not authorized', { status: 401 });
   }
 
   try {
@@ -24,11 +24,10 @@ export async function POST(req: NextRequest) {
     if (newSearch) {
       return NextResponse.json(newSearch, { status: 200 });
     } else {
-      return NextResponse.json("Error creating new search", { status: 500 });
+      return NextResponse.json('Error creating new search', { status: 500 });
     }
-
   } catch (e) {
-    console.error("Error adding search to user:", e);
-    return NextResponse.json("Database error", { status: 500 });
+    console.error('Error adding search to user:', e);
+    return NextResponse.json('Database error', { status: 500 });
   }
 }

@@ -5,7 +5,7 @@ import { DEEZER_SEARCH_RESPONSE } from '@/types';
 import axios from 'axios';
 import { Suspense } from 'react';
 import { handleCurrentSession } from '@/app/_handlers/session';
-import "./index.css";
+import './index.css';
 import { connection } from 'next/server';
 import { Window } from '@/components/layout/screen/Window';
 
@@ -39,7 +39,8 @@ export default async function SearchPage({ params }: Props) {
     return (
       <div className='search-page'>
         <h1>
-          No results found for: <span className='italic'>&ldquo;{id}&ldquo;</span>
+          No results found for:{' '}
+          <span className='italic'>&ldquo;{id}&ldquo;</span>
         </h1>
       </div>
     );
@@ -47,23 +48,22 @@ export default async function SearchPage({ params }: Props) {
 
   return (
     <Suspense fallback={<Skeleton className='w-full h-full' />}>
-      <Window sessionId={session.sessionId || ""}>
+      <Window sessionId={session.sessionId || ''}>
         <div className='search-page'>
           <h1 className='fixed top-10'>
-            Search Results for: <span className='italic'>&ldquo;{id}&ldquo;</span>
+            Search Results for:{' '}
+            <span className='italic'>&ldquo;{id}&ldquo;</span>
           </h1>
           <Suspense fallback={<Skeleton />}>
-            {
-              session.userId ? (
-                <Results
-                  data={data}
-                  sessionId={session.sessionId}
-                  userId={session.userId}
-                />
-              ) : (
-                <Results data={data} sessionId={session.sessionId} />
-              )
-            }
+            {session.userId ? (
+              <Results
+                data={data}
+                sessionId={session.sessionId}
+                userId={session.userId}
+              />
+            ) : (
+              <Results data={data} sessionId={session.sessionId} />
+            )}
           </Suspense>
         </div>
       </Window>

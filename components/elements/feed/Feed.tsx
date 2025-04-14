@@ -1,8 +1,8 @@
-import { EData, EInteraction, EInteractionData } from "@prisma/client";
-import { getUserBySessionId } from "@/app/_handlers/user";
-import { FeedItemContainer } from "./Containers";
-import { Suspense } from "react";
-import Skeleton from "@/components/ui/Skeleton";
+import { EData, EInteraction, EInteractionData } from '@prisma/client';
+import { getUserBySessionId } from '@/app/_handlers/user';
+import { FeedItemContainer } from './Containers';
+import { Suspense } from 'react';
+import Skeleton from '@/components/ui/Skeleton';
 
 interface FeedItemProps {
   interaction: EInteraction;
@@ -18,7 +18,13 @@ export async function FeedItem({
   userId,
 }: FeedItemProps) {
   const { createdAt, interactionType, userId: interactionUserId } = interaction;
-  const { imageUrl, title, albumId, artistName, albumName, dataId,
+  const {
+    imageUrl,
+    title,
+    albumId,
+    artistName,
+    albumName,
+    dataId,
     // rating, review
   } = interactionData;
   const { dataType, sessionId } = data;
@@ -28,51 +34,66 @@ export async function FeedItem({
   const isCurrentUser = userId == interactionUserId;
 
   switch (interactionType) {
-    case "FAVORITED":
+    case 'FAVORITED':
       return (
-        <Suspense fallback={<Skeleton className="w-[5rem] h-full rounded-md" />}>
+        <Suspense
+          fallback={<Skeleton className='w-[5rem] h-full rounded-md' />}
+        >
           <FeedItemContainer
             isCurrentUser={isCurrentUser}
-            interactionType="FAVORITED"
+            interactionType='FAVORITED'
             dataType={dataType}
             createdAt={createdAt}
             userId={user ? user.userId : undefined}
-            imageUrl={imageUrl && imageUrl !== "undefined" ? imageUrl : undefined}
-            title={title && title !== "undefined" ? title : undefined}
-            albumId={albumId && albumId !== "undefined" ? albumId : undefined}
-            albumName={albumName && albumName !== "undefined" ? albumName : undefined}
+            imageUrl={
+              imageUrl && imageUrl !== 'undefined' ? imageUrl : undefined
+            }
+            title={title && title !== 'undefined' ? title : undefined}
+            albumId={albumId && albumId !== 'undefined' ? albumId : undefined}
+            albumName={
+              albumName && albumName !== 'undefined' ? albumName : undefined
+            }
             dataId={dataId}
           />
-          <span className="sr-only">
-            {user ? user.username : "Unknown User"} favorited{" "}
-            {title && title !== "undefined" ? title : "Unknown Title"} by{" "}
-            {artistName && artistName !== "undefined" ? artistName : "Unknown Artist"}
+          <span className='sr-only'>
+            {user ? user.username : 'Unknown User'} favorited{' '}
+            {title && title !== 'undefined' ? title : 'Unknown Title'} by{' '}
+            {artistName && artistName !== 'undefined'
+              ? artistName
+              : 'Unknown Artist'}
           </span>
         </Suspense>
       );
 
-    case "SAVED":
+    case 'SAVED':
       return (
-        <Suspense fallback={<Skeleton className="w-[5rem] h-full rounded-md" />}>
+        <Suspense
+          fallback={<Skeleton className='w-[5rem] h-full rounded-md' />}
+        >
           <FeedItemContainer
             isCurrentUser={isCurrentUser}
-            interactionType="SAVED"
+            interactionType='SAVED'
             dataType={dataType}
             createdAt={createdAt}
             userId={user ? user.userId : undefined}
-            imageUrl={imageUrl && imageUrl !== "undefined" ? imageUrl : undefined}
-            title={title && title !== "undefined" ? title : undefined}
-            albumId={albumId && albumId !== "undefined" ? albumId : undefined}
-            albumName={albumName && albumName !== "undefined" ? albumName : undefined}
+            imageUrl={
+              imageUrl && imageUrl !== 'undefined' ? imageUrl : undefined
+            }
+            title={title && title !== 'undefined' ? title : undefined}
+            albumId={albumId && albumId !== 'undefined' ? albumId : undefined}
+            albumName={
+              albumName && albumName !== 'undefined' ? albumName : undefined
+            }
             dataId={dataId}
           />
-          <span className="sr-only">
-            {user ? user.username : "Unknown User"} saved{" "}
-            {title && title !== "undefined" ? title : "Unknown Title"} by{" "}
-            {artistName && artistName !== "undefined" ? artistName : "Unknown Artist"}
+          <span className='sr-only'>
+            {user ? user.username : 'Unknown User'} saved{' '}
+            {title && title !== 'undefined' ? title : 'Unknown Title'} by{' '}
+            {artistName && artistName !== 'undefined'
+              ? artistName
+              : 'Unknown Artist'}
           </span>
         </Suspense>
       );
   }
-
 }

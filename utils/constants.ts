@@ -1,4 +1,15 @@
-import { Search, Save, CircleUserRound, LogIn, Settings, Heart, Ellipsis, Pointer, GripVertical, Trash2 } from 'lucide-react';
+import {
+  Search,
+  Save,
+  CircleUserRound,
+  LogIn,
+  Settings,
+  Heart,
+  Ellipsis,
+  Pointer,
+  GripVertical,
+  Trash2,
+} from 'lucide-react';
 
 export const DEEZER_API_URL = 'https://api.deezer.com';
 export const IP_API_URL = 'https://api.ipify.org';
@@ -31,4 +42,4 @@ export const DEFAULT_VALUES = {
   MAX_PASS_LENGTH: 32,
   MAX_USERNAME_LENGTH: 20,
   MIN_USERNAME_LENGTH: 3,
-}
+};

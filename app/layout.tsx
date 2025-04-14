@@ -41,17 +41,20 @@ export const metadata: Metadata = {
     'Music Charts',
   ],
   title: 'Echord',
-  description: 'Echord is a music cataloging/discovery/reviewing platform that allows you to find new music based on your listening habits. It uses machine learning algorithms to analyze your listening history and recommend new songs, albums, and artists that you might like.',
+  description:
+    'Echord is a music cataloging/discovery/reviewing platform that allows you to find new music based on your listening habits. It uses machine learning algorithms to analyze your listening history and recommend new songs, albums, and artists that you might like.',
   openGraph: {
     title: 'Echord',
-    description: 'Echord is a music discovery platform that allows you to find new music based on your listening habits. It uses machine learning algorithms to analyze your listening history and recommend new songs, albums, and artists that you might like.',
+    description:
+      'Echord is a music discovery platform that allows you to find new music based on your listening habits. It uses machine learning algorithms to analyze your listening history and recommend new songs, albums, and artists that you might like.',
     url: 'https://echord.uk',
     siteName: 'Echord',
   },
   twitter: {
     card: 'summary',
     title: 'Echord',
-    description: 'Echord is a music discovery platform that allows you to find new music based on your listening habits. It uses machine learning algorithms to analyze your listening history and recommend new songs, albums, and artists that you might like.',
+    description:
+      'Echord is a music discovery platform that allows you to find new music based on your listening habits. It uses machine learning algorithms to analyze your listening history and recommend new songs, albums, and artists that you might like.',
     creator: '@yourclxrity',
     images: [
       {
@@ -59,8 +62,8 @@ export const metadata: Metadata = {
         alt: 'Echord',
         width: 512,
         height: 512,
-      }
-    ]
+      },
+    ],
   },
   icons: {
     icon: `${BASE_URL}/favicon.ico`,
@@ -75,7 +78,7 @@ export const metadata: Metadata = {
   appLinks: {
     web: {
       url: 'https://echord.uk',
-    }
+    },
   },
   appleWebApp: {
     title: 'Echord',
@@ -89,19 +92,18 @@ export const viewport: Viewport = {
   initialScale: 1,
   maximumScale: 1,
   userScalable: false,
-  colorScheme: "dark",
+  colorScheme: 'dark',
   themeColor: [
     {
       media: '(prefers-color-scheme: dark)',
-      color: "#294380"
+      color: '#294380',
     },
     {
       media: '(prefers-color-scheme: light)',
-      color: "#8fc0c9"
-    }
-  ]
-}
-
+      color: '#8fc0c9',
+    },
+  ],
+};
 
 export default async function RootLayout({
   children,
@@ -130,46 +132,50 @@ export default async function RootLayout({
         />
       </head>
       <body className={`${tomorrow.variable} antialiased`}>
-        <Suspense fallback={<Skeleton className="w-full h-full" />}>
-          <Toaster position="top-right" toastOptions={{
-            custom: {
-              className: 'bg-gray-900 text-gray-200 shadow-md rounded-lg border border-gray-700/50',
-              style: {
-                background: '#0f2862',
-                color: '#e5e7eb',
-                fontSize: '0.875rem',
-                padding: '1rem',
-                zIndex: 9999,
+        <Suspense fallback={<Skeleton className='w-full h-full' />}>
+          <Toaster
+            position='top-right'
+            toastOptions={{
+              custom: {
+                className:
+                  'bg-gray-900 text-gray-200 shadow-md rounded-lg border border-gray-700/50',
+                style: {
+                  background: '#0f2862',
+                  color: '#e5e7eb',
+                  fontSize: '0.875rem',
+                  padding: '1rem',
+                  zIndex: 9999,
+                },
               },
-            },
-            success: {
-              duration: 3000,
-              style: {
-                background: '#3b82f6',
-                color: '#ffffff',
-                fontSize: '0.875rem',
-                padding: '1rem',
+              success: {
+                duration: 3000,
+                style: {
+                  background: '#3b82f6',
+                  color: '#ffffff',
+                  fontSize: '0.875rem',
+                  padding: '1rem',
+                },
               },
-            },
-            error: {
-              duration: 3000,
-              style: {
-                background: '#9e363a',
-                color: '#ffffff',
-                fontSize: '0.875rem',
-                padding: '1rem',
+              error: {
+                duration: 3000,
+                style: {
+                  background: '#9e363a',
+                  color: '#ffffff',
+                  fontSize: '0.875rem',
+                  padding: '1rem',
+                },
               },
-            },
-            loading: {
-              duration: 3000,
-              style: {
-                background: '#4f5f76',
-                color: '#ffffff',
-                fontSize: '0.875rem',
-                padding: '1rem',
+              loading: {
+                duration: 3000,
+                style: {
+                  background: '#4f5f76',
+                  color: '#ffffff',
+                  fontSize: '0.875rem',
+                  padding: '1rem',
+                },
               },
-            },
-          }} />
+            }}
+          />
           <SessionProvider>
             <WindowProvider>
               <Backdrop />

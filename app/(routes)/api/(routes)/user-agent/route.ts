@@ -1,6 +1,6 @@
-import { handleCurrentSession } from "@/app/_handlers/session";
-import { UserAgent } from "@/types";
-import { NextRequest, NextResponse, userAgent } from "next/server";
+import { handleCurrentSession } from '@/app/_handlers/session';
+import { UserAgent } from '@/types';
+import { NextRequest, NextResponse, userAgent } from 'next/server';
 
 export async function GET(req: NextRequest) {
   const session = await handleCurrentSession();
@@ -8,21 +8,17 @@ export async function GET(req: NextRequest) {
   const userId = session.userId;
 
   if (!userId) {
-    return NextResponse.json({
-      error: "Unauthorized",
-    }, {
-      status: 401,
-    });
+    return NextResponse.json(
+      {
+        error: 'Unauthorized',
+      },
+      {
+        status: 401,
+      }
+    );
   }
 
-
-  const {
-    isBot,
-    browser,
-    device,
-    os,
-    cpu,
-  } = userAgent(req);
+  const { isBot, browser, device, os, cpu } = userAgent(req);
 
   const userAgentInfo = {
     isBot,
@@ -45,9 +41,12 @@ export async function GET(req: NextRequest) {
     },
   } as UserAgent;
 
-  return NextResponse.json({
-    userAgent: userAgentInfo,
-  }, {
-    status: 200,
-  });
+  return NextResponse.json(
+    {
+      userAgent: userAgentInfo,
+    },
+    {
+      status: 200,
+    }
+  );
 }

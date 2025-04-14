@@ -1,8 +1,8 @@
 {
-    "recommendations": [
-        "bradlc.vscode-tailwindcss",
-        "dbaeumer.vscode-eslint",
-        "dsznajder.es7-react-js-snippets",
-        "editorconfig.editorconfig"
-    ]
+  "recommendations": [
+    "bradlc.vscode-tailwindcss",
+    "dbaeumer.vscode-eslint",
+    "dsznajder.es7-react-js-snippets",
+    "editorconfig.editorconfig"
+  ]
 }

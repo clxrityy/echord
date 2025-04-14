@@ -1,22 +1,23 @@
-import { db } from "@/lib/db";
+import { db } from '@/lib/db';
 
 export type DeleteInteractionProps = {
   userId: string;
   interactionId: string;
-}
+};
 
-export async function deleteInteraction(
-  { userId, interactionId }: DeleteInteractionProps
-) {
+export async function deleteInteraction({
+  userId,
+  interactionId,
+}: DeleteInteractionProps) {
   const existing = await db.eInteraction.findFirst({
     where: {
       dataId: interactionId,
       userId: userId,
-    }
+    },
   });
 
   if (!existing) {
-    throw new Error("Interaction not found");
+    throw new Error('Interaction not found');
   }
 
   try {
@@ -26,7 +27,7 @@ export async function deleteInteraction(
       },
     });
   } catch (e) {
-    console.error("Error deleting interaction:", e);
-    throw new Error("Failed to delete interaction");
+    console.error('Error deleting interaction:', e);
+    throw new Error('Failed to delete interaction');
   }
 }

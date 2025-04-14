@@ -15,22 +15,21 @@ export function Search() {
   const { addSearch, searches, getSessionId } = useSession();
 
   useEffect(() => {
-
     async function addSearchToSession(search: string) {
-      return await axios.post(`${BASE_URL}/api/session/search`, {
-
-        search: search,
-        sessionId: getSessionId(),
-
-      }).then((res) => {
-        if (res.status === 200) {
-          return res.data;
-        } else if (res.status === 401) {
-          console.log("Unauthorized to save search");
-        } else {
-          console.error("Error saving search");
-        }
-      })
+      return await axios
+        .post(`${BASE_URL}/api/session/search`, {
+          search: search,
+          sessionId: getSessionId(),
+        })
+        .then((res) => {
+          if (res.status === 200) {
+            return res.data;
+          } else if (res.status === 401) {
+            console.log('Unauthorized to save search');
+          } else {
+            console.error('Error saving search');
+          }
+        });
     }
 
     if (searchField.length > 2) {
@@ -40,7 +39,7 @@ export function Search() {
             if (data) {
               addSearch(searchField);
             }
-          })
+          });
         }
         router.push(`/search/${searchField}`);
       }, 500);

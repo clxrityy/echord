@@ -1,5 +1,5 @@
-import { db } from "@/lib/db";
-import { fetchIp } from "@/utils/ip";
+import { db } from '@/lib/db';
+import { fetchIp } from '@/utils/ip';
 import { v4 as uuidv4 } from 'uuid';
 
 export async function createSession() {

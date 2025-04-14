@@ -1,2 +1,2 @@
-export * from "./handle";
-export * from "./delete";
+export * from './handle';
+export * from './delete';

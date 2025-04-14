@@ -1,4 +1,4 @@
-import { db } from "@/lib/db";
+import { db } from '@/lib/db';
 
 export async function getSessionById(id: string) {
   try {
@@ -41,7 +41,6 @@ export async function getSessionByUserId(userId: string) {
         throw new Error('Database error');
       }
     }
-
   } catch (e) {
     console.error('Error fetching session by user ID:', e);
     throw new Error('Database error');

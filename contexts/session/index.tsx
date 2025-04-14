@@ -1,4 +1,4 @@
-"use client";
+'use client';
 import { useContextFactory } from '@/hooks/useContextFactory';
 import { useSessionStore } from './useSession';
 
@@ -32,7 +32,8 @@ const initialSessionContextState: SessionContextState = {
   getUserId: () => '',
 };
 
-export const { Provider: SessionProvider, useContext: useSession } = useContextFactory<SessionContextState>(
-  initialSessionContextState,
-  useSessionStore
-);
+export const { Provider: SessionProvider, useContext: useSession } =
+  useContextFactory<SessionContextState>(
+    initialSessionContextState,
+    useSessionStore
+  );

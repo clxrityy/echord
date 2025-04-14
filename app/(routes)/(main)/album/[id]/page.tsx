@@ -10,10 +10,9 @@ type Props = {
   params: Promise<{
     id: string;
   }>;
-}
+};
 
-export default async function Page({params}: Props) {
-
+export default async function Page({ params }: Props) {
   await connection();
 
   const session = await handleCurrentSession();
@@ -27,14 +26,14 @@ export default async function Page({params}: Props) {
   });
 
   if (!album) {
-    return <h1 className="">Album not found</h1>;
+    return <h1 className=''>Album not found</h1>;
   }
 
   return (
     <Suspense fallback={<Skeleton className='w-full h-full' />}>
-      <Window sessionId={session.sessionId || ""}>
+      <Window sessionId={session.sessionId || ''}>
         <Album album={album} />
       </Window>
     </Suspense>
-  )
+  );
 }

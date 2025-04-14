@@ -1,26 +1,29 @@
-import { db } from "@/lib/db";
-import { handleCurrentSession } from "../session";
-import { v4 as uuidv4 } from "uuid";
-import { decrypt, encrypt } from "@/utils";
-import { EUser } from "@prisma/client";
+import { db } from '@/lib/db';
+import { handleCurrentSession } from '../session';
+import { v4 as uuidv4 } from 'uuid';
+import { decrypt, encrypt } from '@/utils';
+import { EUser } from '@prisma/client';
 
 export async function detectCurrentUserBySession(): Promise<string> {
   const session = await handleCurrentSession();
 
   if (!session) {
-    throw new Error("No active session found");
+    throw new Error('No active session found');
   }
 
   const userId = session.userId;
 
   if (!userId) {
-    return "";
+    return '';
   } else {
     return userId;
   }
 }
 
-export async function createUser(username: string, pass: string): Promise<string> {
+export async function createUser(
+  username: string,
+  pass: string
+): Promise<string> {
   const existingUser = await detectCurrentUserBySession();
 
   if (existingUser.length > 1) {
@@ -30,7 +33,7 @@ export async function createUser(username: string, pass: string): Promise<string
   const session = await handleCurrentSession();
 
   if (!session) {
-    throw new Error("Failed to create session");
+    throw new Error('Failed to create session');
   }
 
   try {
@@ -55,13 +58,15 @@ export async function createUser(username: string, pass: string): Promise<string
     });
     return user.userId;
   } catch (e) {
-    console.error("Error creating user:", e);
-    throw new Error("Database error");
+    console.error('Error creating user:', e);
+    throw new Error('Database error');
   }
 }
 
-export async function checkUser(username: string, pass: string): Promise<string | undefined> {
-
+export async function checkUser(
+  username: string,
+  pass: string
+): Promise<string | undefined> {
   const existingUser = await detectCurrentUserBySession();
 
   if (existingUser.length > 1) {
@@ -72,7 +77,7 @@ export async function checkUser(username: string, pass: string): Promise<string 
     const user = await db.eUser.findFirst({
       where: {
         username: username,
-      }
+      },
     });
 
     if (user) {
@@ -80,7 +85,7 @@ export async function checkUser(username: string, pass: string): Promise<string 
         const session = await handleCurrentSession();
 
         if (!session) {
-          throw new Error("Failed to create session");
+          throw new Error('Failed to create session');
         }
 
         await db.eSession.update({
@@ -103,13 +108,14 @@ export async function checkUser(username: string, pass: string): Promise<string 
       return undefined;
     }
   } catch (e) {
-    console.error("Error checking user:", e);
-    throw new Error("Database error");
+    console.error('Error checking user:', e);
+    throw new Error('Database error');
   }
 }
 
-
-export async function getUserBySessionId(sessionId: string): Promise<EUser | null> {
+export async function getUserBySessionId(
+  sessionId: string
+): Promise<EUser | null> {
   try {
     const session = await db.eSession.findFirst({
       where: {
@@ -126,7 +132,7 @@ export async function getUserBySessionId(sessionId: string): Promise<EUser | nul
       return null;
     }
   } catch (e) {
-    console.error("Error getting user by session ID:", e);
-    throw new Error("Database error");
+    console.error('Error getting user by session ID:', e);
+    throw new Error('Database error');
   }
 }

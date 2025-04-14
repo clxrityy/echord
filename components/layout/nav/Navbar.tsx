@@ -1,4 +1,4 @@
-"use client";
+'use client';
 import { ImageComponent } from '@/components/ui/Image';
 import Link from 'next/link';
 import { Search } from './Search';
@@ -15,12 +15,7 @@ export function NavbarContainer({ children }: { children: ReactNode }) {
   );
 }
 
-export function Navbar({
-  userId,
-}: {
-  userId?: string | undefined;
-}) {
-
+export function Navbar({ userId }: { userId?: string | undefined }) {
   const { setUserId, getUserId } = useSession();
   const router = useRouter();
 
@@ -61,9 +56,7 @@ export function Navbar({
             <h1 className='tracking-wide'>
               <span className='font-extrabold'>乇</span>
               <span className='uppercase'>chord</span>
-              <span className='sr-only'>
-                Echord
-              </span>
+              <span className='sr-only'>Echord</span>
             </h1>
           </Link>
         </div>
@@ -74,23 +67,17 @@ export function Navbar({
          */}
         <div className='flex items-center gap-4 justify-end px-4 py-2'>
           <Search />
-          {
-            userId ? (
-              <button aria-label='Profile' onClick={handleProfileClick}>
-                <ICONS.user />
-                <span className='sr-only'>
-                  Profile
-                </span>
-              </button>
-            ) : (
-              <button aria-label='Login' onClick={handleLoginClick}>
-                <ICONS.login />
-                <span className='sr-only'>
-                  Login
-                </span>
-              </button>
-            )
-          }
+          {userId ? (
+            <button aria-label='Profile' onClick={handleProfileClick}>
+              <ICONS.user />
+              <span className='sr-only'>Profile</span>
+            </button>
+          ) : (
+            <button aria-label='Login' onClick={handleLoginClick}>
+              <ICONS.login />
+              <span className='sr-only'>Login</span>
+            </button>
+          )}
         </div>
       </div>
     </NavbarContainer>

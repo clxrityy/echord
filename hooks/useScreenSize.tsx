@@ -1,9 +1,8 @@
-"use client";
-import { useCallback, useEffect, useState } from "react";
+'use client';
+import { useCallback, useEffect, useState } from 'react';
 
 export const useScreenSize = () => {
-
-  if (typeof window === "undefined") {
+  if (typeof window === 'undefined') {
     return {
       width: 0,
       height: 0,
@@ -23,13 +22,12 @@ export const useScreenSize = () => {
   }, []);
 
   useEffect(() => {
-
-    window.addEventListener("resize", handleResize);
+    window.addEventListener('resize', handleResize);
 
     return () => {
-      window.removeEventListener("resize", handleResize);
+      window.removeEventListener('resize', handleResize);
     };
   }, []);
 
   return screenSize;
-}
+};
