@@ -13,7 +13,10 @@ export const ImageComponent = ({ ...props }: ImageProps) => {
       {loading && (
         <Skeleton
           targetRef={ref as RefObject<HTMLImageElement>}
-          className='absolute inset-0'
+          style={{
+            width: props.width || 100,
+            height: props.height || 100,
+          }}
         />
       )}
       <Image
