@@ -13,6 +13,7 @@ const eslintConfig = [
       'prettier',
       'plugin:@next/next/recommended',
       'eslint:recommended',
+      'next/core-web-vitals',
     ],
     rules: {
       // remove use effect missing dependencies
