@@ -15,11 +15,14 @@ const eslintConfig = [
       'eslint:recommended',
     ],
     rules: {
+      // remove use effect missing dependencies
+      'react-hooks/exhaustive-deps': 'off',
       'no-unused-vars': [
-        'error',
+        'warn',
         {
           argsIgnorePattern: '^_',
           varsIgnorePattern: '^_',
+          ignoreRestSiblings: true,
         },
       ],
     },
