@@ -1,5 +1,5 @@
 import { handleCurrentSession } from "@/app/_handlers/session";
-import axios from "axios";
+// import axios from "axios";
 import { redirect } from "next/navigation";
 
 export default async function Page() {
@@ -9,10 +9,10 @@ export default async function Page() {
     return redirect("/");
   }
 
-  const logout = await axios.post("/api/auth/logout", {
-    sessionId: session.sessionId,
-    userId: session.userId,
-  })
+  // const logout = await axios.post("/api/auth/logout", {
+  //   sessionId: session.sessionId,
+  //   userId: session.userId,
+  // });
 
   return <>
 
