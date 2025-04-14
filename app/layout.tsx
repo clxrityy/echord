@@ -11,6 +11,7 @@ import { WindowProvider } from '@/contexts/window';
 import { BASE_URL } from '@/utils';
 import { connection } from 'next/server';
 import { Backdrop } from '@/components/layout/screen/Backdrop';
+import type { Viewport } from 'next';
 
 const tomorrow = Tomorrow({
   subsets: ['latin'],
@@ -83,6 +84,25 @@ export const metadata: Metadata = {
   },
 };
 
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
+  colorScheme: "dark",
+  themeColor: [
+    {
+      media: '(prefers-color-scheme: dark)',
+      color: "#294380"
+    },
+    {
+      media: '(prefers-color-scheme: light)',
+      color: "#8fc0c9"
+    }
+  ]
+}
+
+
 export default async function RootLayout({
   children,
 }: Readonly<{
@@ -108,7 +128,6 @@ export default async function RootLayout({
           sizes='16x16'
           href='/favicon-16x16.png'
         />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </head>
       <body className={`${tomorrow.variable} antialiased`}>
         <Suspense fallback={<Skeleton className="w-full h-full" />}>
