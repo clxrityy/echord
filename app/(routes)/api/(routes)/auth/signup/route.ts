@@ -21,7 +21,7 @@ export async function POST(req: NextRequest) {
       }, { status: 409 });
     }
 
-    const userId = await createUser(username, password);
+    const userId = await createUser(username, password)
 
     if (!userId) {
       return NextResponse.json(
@@ -30,10 +30,10 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    return NextResponse.json({
-      message: "User created successfully",
-      id: userId,
-    }, { status: 201 })
+    return NextResponse.json(
+      { message: "User created successfully", id: userId },
+      { status: 201 }
+    );
 
   } catch (e) {
     console.error("Error during signup:", e);
