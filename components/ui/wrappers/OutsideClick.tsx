@@ -1,5 +1,5 @@
 'use client';
-import { useRef, useEffect, ReactNode } from 'react';
+import { useRef, useEffect, ReactNode, RefObject } from 'react';
 
 interface OutsideClickProps {
   children: ReactNode;
@@ -11,10 +11,7 @@ export function OutsideClick({ children, onOutsideClick }: OutsideClickProps) {
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (
-        wrapperRef.current &&
-        !wrapperRef.current.contains(event.target as Node)
-      ) {
+     if (wrapperRef.current && !wrapperRef.current.contains(event.target as Node)) {
         onOutsideClick();
       }
     };
@@ -23,7 +20,7 @@ export function OutsideClick({ children, onOutsideClick }: OutsideClickProps) {
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, [onOutsideClick]);
+  }, [onOutsideClick, wrapperRef]);
 
   return <div ref={wrapperRef}>{children}</div>;
 }
