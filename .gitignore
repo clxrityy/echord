@@ -42,3 +42,6 @@ next-env.d.ts
 
 # drawings
 *.tldr
+
+# prisma
+/prisma/app/generated/prisma/client/*
