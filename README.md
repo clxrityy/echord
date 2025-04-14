@@ -6,8 +6,8 @@ A music cataloging, rating, reviewing, and recommendation web app.
 
 ## TO-DO
 
-- [ ] Ratings
-- [ ] Reviews
+- [ ] Ratings !!!
+- [ ] Reviews !!!
 - [x] `/` - Home (Feed)
   - [ ] `/feed/[id]` - Specific feed item
   - [ ] Pagination
@@ -49,11 +49,13 @@ A music cataloging, rating, reviewing, and recommendation web app.
 
 - [x] Move feed display only to the home page
 - [ ] Refactor a new layout component that uses client capabilities to adjust the layout based on the screen size
+  - [x] Kind of done, doesn't work on mobile yet
 - [x] Refactor the feed component to use a grid layout for the home page
 
 #### Fixes (12-04-2025)
 
 - [x] Fix the feed to overflow & fit on every screen size (main page)
+  - **Note:** Pagination is needed for the feed to work properly
 
 ##### Features
 
@@ -64,7 +66,8 @@ A music cataloging, rating, reviewing, and recommendation web app.
   - [ ] Show the most recent activity from your own profile
 - [ ] Open feed items in a modal
 - [x] Ability to remove your own feed items
-- [ ] Remove your own favorited/saved songs
+- [x] Remove your own favorited/saved songs
+- [ ] Click on a liked song (on someone's profile) to open a modal with the track
 
 ### FUTURE / IDEAS
 
