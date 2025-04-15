@@ -24,7 +24,7 @@ export default function Skeleton({ targetRef, ...props }: SkeletonProps) {
   return (
     <div
       {...props}
-      className={`animate-pulse bg-zinc-900/5 backdrop:blur-3xl rounded-md ${props.className}`}
+      className={`animate-pulse bg-zinc-600/5 backdrop:blur-3xl rounded-md ${props.className}`}
       style={{
         width: width > 0 ? width : '100%',
         height: height > 0 ? height : '100%',
