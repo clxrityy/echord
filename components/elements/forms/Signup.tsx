@@ -70,6 +70,7 @@ export const Signup = ({
       if (id) {
         setUserId(id);
         toast.success('Signup successful!', { id: toastId });
+        router.refresh();
         router.push(`/profile/${id}`);
       } else {
         setError('Signup failed. Please try again.');

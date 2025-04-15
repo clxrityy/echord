@@ -38,6 +38,8 @@ export const Login = ({
       if (id) {
         setUserId(id);
         toast.success('Login successful!', { id: toastId });
+        router.refresh();
+        // Redirect to the profile page
         router.push(`/profile/${id}`);
       } else {
         toast.error('Login failed. Please check your credentials.', {
