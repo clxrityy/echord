@@ -21,7 +21,7 @@ export const Window = ({ sessionId, children }: WindowProps) => {
     null
   );
 
-  const userAgent = getUserAgent();
+  const usr = getUserAgent();
 
   useEffect(() => {
     if (getWindowSize().width !== width || getWindowSize().height !== height) {
@@ -51,9 +51,11 @@ export const Window = ({ sessionId, children }: WindowProps) => {
       setUserAgentObject(userAgent);
     }
 
-    fetchUserAgent();
+    if (!usr) {
+      fetchUserAgent();
+    }
 
-    if (userAgentObject && !userAgent) {
+    if (userAgentObject && !usr) {
       const agent: Partial<EUserAgent> = {
         sessionId: getSessionId(),
         os: `${userAgentObject.os.name} ${userAgentObject.os.version}`,
@@ -63,7 +65,7 @@ export const Window = ({ sessionId, children }: WindowProps) => {
 
       setUserAgent(agent);
     }
-  }, [userAgentObject, userAgent]);
+  }, [userAgentObject]);
 
   useEffect(() => {
     async function addUserAgent() {
@@ -75,11 +77,10 @@ export const Window = ({ sessionId, children }: WindowProps) => {
         console.error('Failed to add user agent');
       }
     }
-
-    if (userAgent) {
+    if (usr) {
       addUserAgent();
     }
-  }, [userAgent]);
+  }, []);
 
   return (
     <div className='w-full h-screen flex justify-end mt-26 relative'>
