@@ -144,7 +144,7 @@ export function FeedItemContainer({
       </div>
       <div className='absolute flex flex-col items-end right-0 h-full'>
         <div className='absolute bottom-5 right-2 ml-4'>
-          <Link href={`/feed/${dataId}`} target='_blank'>
+          <Link href={`/feed/${dataId}`} target='_blank' prefetch={false}>
             <ICONS.link className='h-4 w-4 md:h-5 md:w-5 2xl:h-6 2xl:w-6 text-gray-300/90 hover:text-purple-400 transition-colors ease-in-out' />
           </Link>
         </div>
