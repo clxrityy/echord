@@ -3,7 +3,7 @@ import {
   EInteraction,
   EInteractionData,
   EInteractionType,
-} from '@prisma/client';
+} from '@/prisma/app/generated/prisma/client';
 import { db } from '@/lib/db';
 
 export interface InteractionProps {
