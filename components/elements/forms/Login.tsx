@@ -26,6 +26,7 @@ export const Login = ({
   }
 
   const handleLogin = useCallback(async () => {
+    const toastId = toast.loading('Logging in...');
     try {
       const { id } = await axios
         .post(`${BASE_URL}/api/auth/login`, {
@@ -36,9 +37,12 @@ export const Login = ({
 
       if (id) {
         setUserId(id);
+        toast.success('Login successful!', { id: toastId });
         router.push(`/profile/${id}`);
       } else {
-        toast.error('Login failed. Please check your credentials.');
+        toast.error('Login failed. Please check your credentials.', {
+          id: toastId,
+        });
       }
     } catch (e) {
       console.error('Login error:', e);
