@@ -4,7 +4,7 @@ import Skeleton from '@/components/ui/Skeleton';
 import { handleCurrentSession } from '@/app/_handlers/session';
 import { db } from '@/lib/db';
 import { Suspense } from 'react';
-import { SavesGrid } from '@/components/elements/user/SavesGrid';
+import { SavesGrid } from '@/components/elements/user/save/SavesGrid';
 import { Window } from '@/components/layout/screen/Window';
 
 type Props = {
@@ -21,7 +21,7 @@ export default async function Page({ params }: Props) {
       userId: id,
     },
     include: {
-      session: true,
+      sessions: true,
       interactions: true,
     },
   });
