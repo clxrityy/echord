@@ -4,7 +4,7 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider  = "postgresql"
   url       = env("POSTGRES_URL")
   directUrl = env("POSTGRES_URL_NON_POOLING")
 }
@@ -87,15 +87,27 @@ model Wish {
   Guild        Guild  @relation(fields: [guildId], references: [id])
 }
 
+model EUserAgent {
+  id        String   @id @default(cuid())
+  sessionId String
+  browser   String
+  os        String
+  device    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+  session   ESession @relation(fields: [sessionId], references: [sessionId])
+}
+
 model ESession {
-  id          String   @id @default(cuid())
-  userId      String?  @unique
-  sessionId   String   @unique
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @default(now())
+  id          String       @id @default(cuid())
+  userId      String?      @unique
+  sessionId   String       @unique
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @default(now())
   ipAddresses String[]
   data        EData[]
-  EUser       EUser?   @relation(fields: [userId], references: [userId])
+  EUser       EUser?       @relation(fields: [userId], references: [userId])
+  userAgent   EUserAgent[]
 }
 
 model EUser {
@@ -108,7 +120,7 @@ model EUser {
   password     String
   interactions EInteraction[]
   searches     ESearch[]
-  session      ESession?
+  sessions     ESession?
 }
 
 model EData {
