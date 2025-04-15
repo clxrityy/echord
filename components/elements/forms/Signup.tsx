@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation';
 import { useCallback, useState } from 'react';
 import { BASE_URL, DEFAULT_VALUES } from '@/utils';
 import axios from 'axios';
+import toast from 'react-hot-toast';
 
 export const Signup = ({
   sessionId,
@@ -56,6 +57,8 @@ export const Signup = ({
       return;
     }
 
+    const toastId = toast.loading('Signing up...');
+
     try {
       const { id } = await axios
         .post(`${BASE_URL}/api/auth/signup`, {
@@ -66,9 +69,11 @@ export const Signup = ({
 
       if (id) {
         setUserId(id);
+        toast.success('Signup successful!', { id: toastId });
         router.push(`/profile/${id}`);
       } else {
         setError('Signup failed. Please try again.');
+        toast.error('Signup failed', { id: toastId });
       }
     } catch (e) {
       console.error('Signup error:', e);
