@@ -2,7 +2,7 @@ import { db } from '@/lib/db';
 import { handleCurrentSession } from '../session';
 import { v4 as uuidv4 } from 'uuid';
 import { decrypt, encrypt } from '@/utils';
-import { EUser } from '@prisma/client';
+import { EUser } from '@/prisma/app/generated/prisma/client';
 
 export async function detectCurrentUserBySession(): Promise<string> {
   const session = await handleCurrentSession();
@@ -41,7 +41,7 @@ export async function createUser(
       data: {
         userId: uuidv4(),
         username: username,
-        session: {
+        sessions: {
           connectOrCreate: {
             where: {
               sessionId: session.sessionId,
