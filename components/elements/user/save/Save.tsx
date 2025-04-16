@@ -1,30 +1,36 @@
 'use client';
 
 import { Button } from '@/components/ui/Button';
-import { useWindow } from '@/contexts/window';
-import { ReactNode, useCallback } from 'react';
+import { ReactNode, useCallback, useState } from 'react';
+import { AlbumModal } from '@/components/elements/modals/AlbumModal';
 
-export function Save({ children }: { children: ReactNode }) {
-  const { getCurrentOpenModal, setCurrentOpenModal, closeModal } = useWindow();
+export function Save({ children, save }: {
+  children: ReactNode, save: {
+    albumId: string | null;
+    albumName: string | null;
+  }
+}) {
 
-  const currentModal = getCurrentOpenModal();
+  const [isOpen, setIsOpen] = useState<boolean>(false);
 
-  const handleClick = useCallback(() => {
-    if (currentModal) {
-      closeModal();
-    } else {
-      setCurrentOpenModal('track');
-    }
-
-    console.log('currentModal', currentModal);
-  }, [currentModal]);
+  const handleClose = useCallback(() => {
+    setIsOpen(false);
+  }, []);
 
   return (
-    <Button
-      onClick={handleClick}
-      className='hover:border-2 border-gray-300/75 transition-colors duration-50 ease-linear z-20 rounded-lg focus:border-[3] focus:border-gray-300'
-    >
-      {children}
-    </Button>
+    <>
+      <AlbumModal
+        albumId={save.albumId || ''}
+        onClose={handleClose}
+        open={isOpen}
+        title={save.albumName || ''}
+      />
+      <Button
+        onClick={() => setIsOpen((prev) => !prev)}
+        className='hover:border-2 border-gray-300/75 transition-colors duration-50 ease-linear z-20 rounded-lg focus:border-[3] focus:border-gray-300'
+      >
+        {children}
+      </Button>
+    </>
   );
 }
