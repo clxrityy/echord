@@ -10,7 +10,7 @@ A music cataloging, rating, reviewing, and recommendation web app.
 - [ ] Reviews !!!
 - [x] `/` - Home (Feed)
   - [ ] `/feed/[id]` - Specific feed item
-  - [ ] Pagination
+  - [x] Pagination
 - [x] `/search/[id]` - Search
   - [ ] Pagination
 - [ ] Item routes
@@ -56,6 +56,7 @@ A music cataloging, rating, reviewing, and recommendation web app.
 
 - [x] Fix the feed to overflow & fit on every screen size (main page)
   - **Note:** Pagination is needed for the feed to work properly
+    - [x] Pagination is working
 
 ##### Features
 
