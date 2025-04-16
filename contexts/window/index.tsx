@@ -8,13 +8,6 @@ export type WindowContextState = {
   height: number;
   setWindowSize: (width: number, height: number) => void;
   getWindowSize: () => { width: number; height: number };
-  hasOpenModal: boolean;
-  setCurrentOpenModal: (title: string) => void;
-  currentOpenModal: {
-    title: string;
-  } | null;
-  closeModal: () => void;
-  getCurrentOpenModal: () => { title: string } | null;
   userAgent: Partial<EUserAgent> | null;
   setUserAgent: (userAgent: Partial<EUserAgent>) => void;
   getUserAgent: () => Partial<EUserAgent> | null;
@@ -25,11 +18,6 @@ const initialWindowContextState: WindowContextState = {
   height: 0,
   setWindowSize: () => {},
   getWindowSize: () => ({ width: 0, height: 0 }),
-  hasOpenModal: false,
-  setCurrentOpenModal: () => {},
-  currentOpenModal: null,
-  closeModal: () => {},
-  getCurrentOpenModal: () => null,
   userAgent: null,
   setUserAgent: () => {},
   getUserAgent: () => null,
