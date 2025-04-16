@@ -1,9 +1,8 @@
 import { ImageComponent } from '@/components/ui/Image';
-import { EInteractionData } from '@prisma/client';
+import { EInteractionData } from '@/prisma/app/generated/prisma/client';
 import { Save } from './Save';
 import { Suspense } from 'react';
 import Skeleton from '@/components/ui/Skeleton';
-import { TrackModal } from './TrackModal';
 
 interface SavesGridProps {
   saves: EInteractionData[];
@@ -53,7 +52,7 @@ export function SavesGrid({ saves }: SavesGridProps) {
             />
           }
         >
-          <Save>
+          <Save key={idx} save={save}>
             {save.albumId && save.imageUrl && save.artistName && (
               <ImageComponent
                 src={save.imageUrl}
@@ -64,9 +63,6 @@ export function SavesGrid({ saves }: SavesGridProps) {
               />
             )}
           </Save>
-          <Suspense>
-            <TrackModal />
-          </Suspense>
         </Suspense>
       ))}
     </div>
