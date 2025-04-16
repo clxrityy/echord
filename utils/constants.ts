@@ -9,6 +9,8 @@ import {
   Pointer,
   GripVertical,
   Trash2,
+  ChevronRight,
+  ChevronLeft,
 } from 'lucide-react';
 
 export const DEEZER_API_URL = 'https://api.deezer.com';
@@ -18,6 +20,8 @@ export const BASE_URL =
   process.env.NODE_ENV === 'production'
     ? 'https://echord.uk'
     : 'http://localhost:3000';
+
+export const FEED_ITEMS_PER_PAGE = 6;
 
 export const ICONS = {
   search: Search,
@@ -30,6 +34,8 @@ export const ICONS = {
   interaction: Pointer,
   grip: GripVertical,
   trash: Trash2,
+  right: ChevronRight,
+  left: ChevronLeft,
 };
 
 export const ENV = {
