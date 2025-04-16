@@ -11,6 +11,7 @@ import { handleCurrentSession } from '@/app/_handlers/session';
 import { db } from '@/lib/db';
 import { Suspense } from 'react';
 import { FEED_ITEMS_PER_PAGE } from '@/utils';
+import { getUserBySessionId } from './_handlers/user';
 
 export const dynamic = 'force-dynamic';
 
@@ -56,6 +57,8 @@ export default async function Home() {
                       },
                     });
 
+                    const user = await getUserBySessionId(data.sessionId);
+
                     return (
                       <Suspense key={idx} fallback={<FeedListItemSkeleton />}>
                         <FeedListItem key={idx}>
@@ -64,7 +67,8 @@ export default async function Home() {
                               interaction={interaction}
                               data={data}
                               interactionData={interactionData}
-                              userId={session.userId || null}
+                              userId={session.userId}
+                              username={user?.username ? user.username : null}
                             />
                           ) : (
                             <Skeleton className='w-full h-20 rounded-md' />
