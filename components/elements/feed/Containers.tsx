@@ -64,6 +64,9 @@ export function FeedItemContainer({
   const Icon = interactionTypeIcon();
 
   async function handleDelete() {
+
+    const toastId = toast.loading('Deleting interaction...');
+
     try {
       const { status, message, error } = await axios
         .delete(`${BASE_URL}/api/interaction`, {
@@ -81,11 +84,16 @@ export function FeedItemContainer({
       // Handle successful deletion
       toast.success('Interaction deleted successfully', {
         icon: <ICONS.trash />,
+        id: toastId,
       });
       router.refresh();
     } catch (e) {
       console.error('Error deleting interaction:', e);
-      toast.error('Failed to delete interaction');
+      toast.error('Failed to delete interaction', {
+        id: toastId,
+      });
+    } finally {
+      toast.dismiss(toastId);
     }
   }
 
