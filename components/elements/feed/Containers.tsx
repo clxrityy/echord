@@ -64,7 +64,6 @@ export function FeedItemContainer({
   const Icon = interactionTypeIcon();
 
   async function handleDelete() {
-
     const toastId = toast.loading('Deleting interaction...');
 
     try {

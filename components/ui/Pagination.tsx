@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import { Button } from "@/components/ui/Button";
-import { ICONS } from "@/utils";
+import { useState } from 'react';
+import { Button } from '@/components/ui/Button';
+import { ICONS } from '@/utils';
 
 interface PaginationProps {
   totalItems: number;
@@ -17,7 +17,6 @@ export function Pagination({
   currentPage = 1,
   onPageChange,
 }: PaginationProps) {
-
   const [page, setPage] = useState<number>(currentPage);
   const totalPages = Math.ceil(totalItems / itemsPerPage);
 
@@ -26,7 +25,7 @@ export function Pagination({
       setPage(newPage);
       onPageChange?.(newPage);
     }
-  }
+  };
 
   const renderPageNumbers = () => {
     const pages = [];
@@ -36,20 +35,23 @@ export function Pagination({
       for (let i = 1; i <= totalPages; i++) {
         pages.push(
           <Button
-            className={`${page === i ? "" : "text-gray-400 text-sm"}`}
+            className={`${page === i ? '' : 'text-gray-400 text-sm'}`}
             key={i}
             onClick={() => handlePageChange(i)}
-            aria-current={page === i ? "page" : undefined}>
+            aria-current={page === i ? 'page' : undefined}
+          >
             {i}
           </Button>
-        )
+        );
       }
     } else {
       // Show first page
       pages.push(
-        <Button key={1}
+        <Button
+          key={1}
           onClick={() => handlePageChange(1)}
-          aria-current={page === 1 ? "page" : undefined}>
+          aria-current={page === 1 ? 'page' : undefined}
+        >
           {1}
         </Button>
       );
@@ -57,10 +59,10 @@ export function Pagination({
       // Show ellipsis if needed
       if (page > 3) {
         pages.push(
-          <span key={"ellipsis-1"} className="px-2 text-xs text-gray-500">
+          <span key={'ellipsis-1'} className='px-2 text-xs text-gray-500'>
             ...
           </span>
-        )
+        );
       }
 
       const startPage = Math.max(2, page - 1);
@@ -72,7 +74,8 @@ export function Pagination({
             <Button
               key={i}
               onClick={() => handlePageChange(i)}
-              aria-current={page === i ? "page" : undefined}>
+              aria-current={page === i ? 'page' : undefined}
+            >
               {i}
             </Button>
           );
@@ -81,44 +84,44 @@ export function Pagination({
 
       if (page < totalPages - 2) {
         pages.push(
-          <span key={"ellipsis-2"} className="px-2 text-xs text-gray-500">
+          <span key={'ellipsis-2'} className='px-2 text-xs text-gray-500'>
             ...
           </span>
-        )
+        );
       }
 
       pages.push(
-        <Button key={totalPages}
+        <Button
+          key={totalPages}
           onClick={() => handlePageChange(totalPages)}
-          aria-current={page === totalPages ? "page" : undefined}>
+          aria-current={page === totalPages ? 'page' : undefined}
+        >
           {totalPages}
-        </Button>,
+        </Button>
       );
     }
     return pages;
-  }
-
+  };
 
   return (
-    <div className="flex items-center justify-center gap-4 py-4">
+    <div className='flex items-center justify-center gap-4 py-4'>
       <Button
         onClick={() => handlePageChange(page - 1)}
         disabled={page === 1}
-        aria-label="Previous Page"
-        className="transition-colors duration-200 ease-in-out enabled:hover:scale-105">
-        <ICONS.left className="h-4 w-4" />
+        aria-label='Previous Page'
+        className='transition-colors duration-200 ease-in-out enabled:hover:scale-105'
+      >
+        <ICONS.left className='h-4 w-4' />
       </Button>
-      <div className="flex items-center gap-2">
-        {renderPageNumbers()}
-      </div>
+      <div className='flex items-center gap-2'>{renderPageNumbers()}</div>
       <Button
         onClick={() => handlePageChange(page + 1)}
         disabled={page === totalPages}
-        aria-label="Next Page"
-        className="transition-colors duration-200 ease-in-out enabled:hover:scale-105"
+        aria-label='Next Page'
+        className='transition-colors duration-200 ease-in-out enabled:hover:scale-105'
       >
-        <ICONS.right className="h-4 w-4" />
+        <ICONS.right className='h-4 w-4' />
       </Button>
     </div>
-  )
+  );
 }

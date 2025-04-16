@@ -29,7 +29,6 @@ export default async function Home() {
     },
   });
 
-
   return (
     <main className='w-full h-full relative items-center justify-center mx-auto flex flex-col gap-10 mt-20 pt-8 xl:mt-10 2xl:mt-0 overflow-y-auto 2xl:overflow-clip scroll-smooth'>
       {/**
@@ -41,9 +40,7 @@ export default async function Home() {
           <Window sessionId={session.userId || ''}>
             <div className='relative flex justify-center items-center w-full'>
               <div className='w-full h-fit flex items-center justify-center relative pb-20'>
-                <FeedList
-                  itemsPerPage={FEED_ITEMS_PER_PAGE}
-                >
+                <FeedList itemsPerPage={FEED_ITEMS_PER_PAGE}>
                   {Array.from(rawFeed).map(async (item, idx) => {
                     const { ...interaction } = item;
                     const { ...data } = await db.eData.findUnique({
@@ -51,11 +48,12 @@ export default async function Home() {
                         id: item.dataId,
                       },
                     });
-                    const { ...interactionData } = await db.eInteractionData.findFirst({
-                      where: {
-                        dataId: item.dataId,
-                      },
-                    });
+                    const { ...interactionData } =
+                      await db.eInteractionData.findFirst({
+                        where: {
+                          dataId: item.dataId,
+                        },
+                      });
 
                     const user = await getUserBySessionId(data.sessionId);
 

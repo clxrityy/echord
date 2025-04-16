@@ -4,13 +4,16 @@ import { Button } from '@/components/ui/Button';
 import { ReactNode, useCallback, useState } from 'react';
 import { AlbumModal } from '@/components/elements/modals/AlbumModal';
 
-export function Save({ children, save }: {
-  children: ReactNode, save: {
+export function Save({
+  children,
+  save,
+}: {
+  children: ReactNode;
+  save: {
     albumId: string | null;
     albumName: string | null;
-  }
+  };
 }) {
-
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const handleClose = useCallback(() => {
