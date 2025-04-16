@@ -22,6 +22,7 @@ export function Navbar({ userId }: { userId?: string | undefined }) {
   useEffect(() => {
     if (userId && userId !== getUserId()) {
       setUserId(userId);
+      router.refresh();
     }
   }, [userId, getUserId]);
 
