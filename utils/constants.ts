@@ -11,6 +11,7 @@ import {
   Trash2,
   ChevronRight,
   ChevronLeft,
+  X,
 } from 'lucide-react';
 
 export const DEEZER_API_URL = 'https://api.deezer.com';
@@ -36,6 +37,7 @@ export const ICONS = {
   trash: Trash2,
   right: ChevronRight,
   left: ChevronLeft,
+  close: X,
 };
 
 export const ENV = {
