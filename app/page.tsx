@@ -10,6 +10,7 @@ import Skeleton from '@/components/ui/Skeleton';
 import { handleCurrentSession } from '@/app/_handlers/session';
 import { db } from '@/lib/db';
 import { Suspense } from 'react';
+import { FEED_ITEMS_PER_PAGE } from '@/utils';
 
 export const dynamic = 'force-dynamic';
 
@@ -27,6 +28,7 @@ export default async function Home() {
     },
   });
 
+
   return (
     <main className='w-full h-full relative items-center justify-center mx-auto flex flex-col gap-10 mt-20 pt-8 xl:mt-10 2xl:mt-0 overflow-y-auto 2xl:overflow-clip scroll-smooth'>
       {/**
@@ -38,20 +40,21 @@ export default async function Home() {
           <Window sessionId={session.userId || ''}>
             <div className='relative flex justify-center items-center w-full'>
               <div className='w-full h-fit flex items-center justify-center relative pb-20'>
-                <FeedList>
-                  {rawFeed.map(async (item, idx) => {
+                <FeedList
+                  itemsPerPage={FEED_ITEMS_PER_PAGE}
+                >
+                  {Array.from(rawFeed).map(async (item, idx) => {
                     const { ...interaction } = item;
                     const { ...data } = await db.eData.findUnique({
                       where: {
                         id: item.dataId,
                       },
                     });
-                    const { ...interactionData } =
-                      await db.eInteractionData.findFirst({
-                        where: {
-                          dataId: item.dataId,
-                        },
-                      });
+                    const { ...interactionData } = await db.eInteractionData.findFirst({
+                      where: {
+                        dataId: item.dataId,
+                      },
+                    });
 
                     return (
                       <Suspense key={idx} fallback={<FeedListItemSkeleton />}>
