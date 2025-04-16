@@ -1,5 +1,5 @@
 'use client';
-import { Children, ReactNode, useState } from 'react';
+import { Children, ReactNode, Suspense, useState } from 'react';
 import { Pagination } from '../../ui/Pagination';
 
 export function FeedList({
@@ -30,12 +30,14 @@ export function FeedList({
           return null;
         })}
       </ul>
-      <Pagination
-        currentPage={currentPage}
-        totalItems={totalItems}
-        itemsPerPage={itemsPerPage}
-        onPageChange={(page: number) => setCurrentPage(page)}
-      />
+      <Suspense fallback={<div className='w-full h-10' />}>
+        <Pagination
+          totalItems={totalItems}
+          itemsPerPage={itemsPerPage}
+          currentPage={currentPage}
+          onPageChange={setCurrentPage}
+        />
+      </Suspense>
     </div>
   );
 }

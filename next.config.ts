@@ -16,11 +16,11 @@ const nextConfig: NextConfig = {
       {
         source: '/(.*)',
         headers: [
-          {
-            key: 'Content-Security-Policy',
-            value:
-              "default-src 'self'; script-src 'self' cdn-images.dzcdn.net; img-src 'self' img.example.com; style-src 'self';",
-          }, // THIS IS THE ONE THAT PREVENTS XSS
+          // {
+          //   key: 'Content-Security-Policy',
+          //   value:
+          //     "default-src 'self'; script-src 'self' cdn-images.dzcdn.net; style-src 'self';",
+          // }, // THIS IS THE ONE THAT PREVENTS XSS
           {
             key: 'X-Content-Type-Options',
             value: 'nosniff',
