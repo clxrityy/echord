@@ -36,6 +36,7 @@ export function Pagination({
       for (let i = 1; i <= totalPages; i++) {
         pages.push(
           <Button
+            className={`${page === i ? "" : "text-gray-400 text-sm"}`}
             key={i}
             onClick={() => handlePageChange(i)}
             aria-current={page === i ? "page" : undefined}>
@@ -56,7 +57,7 @@ export function Pagination({
       // Show ellipsis if needed
       if (page > 3) {
         pages.push(
-          <span key={"ellipsis-1"} className="px-2">
+          <span key={"ellipsis-1"} className="px-2 text-xs text-gray-500">
             ...
           </span>
         )
@@ -80,7 +81,7 @@ export function Pagination({
 
       if (page < totalPages - 2) {
         pages.push(
-          <span key={"ellipsis-2"} className="px-2">
+          <span key={"ellipsis-2"} className="px-2 text-xs text-gray-500">
             ...
           </span>
         )
