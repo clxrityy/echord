@@ -114,6 +114,8 @@ h3 {
 
 button {
   cursor: pointer;
+
+  @apply disabled:cursor-not-allowed;
 }
 
 .loader {
