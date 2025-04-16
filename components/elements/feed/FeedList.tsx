@@ -1,6 +1,6 @@
 "use client";
 import { Children, ReactNode, useState } from 'react';
-import { Pagination } from '../Pagination';
+import { Pagination } from '../../ui/Pagination';
 
 export function FeedList({ children, itemsPerPage }: { children: ReactNode, itemsPerPage: number }) {
 
