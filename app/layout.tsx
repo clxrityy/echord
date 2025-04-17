@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Tomorrow } from 'next/font/google';
+import { AR_One_Sans} from 'next/font/google';
 import './globals.css';
 import { ReactNode, Suspense } from 'react';
 import Skeleton from '@/components/ui/Skeleton';
@@ -13,11 +13,10 @@ import { connection } from 'next/server';
 import { Backdrop } from '@/components/layout/screen/Backdrop';
 import type { Viewport } from 'next';
 
-const tomorrow = Tomorrow({
+const FONT = AR_One_Sans({
   subsets: ['latin'],
-  variable: '--font-tmr',
+  variable: '--font-ar',
   display: 'swap',
-  weight: ['200', '300', '400', '500', '700', '800', '900'],
 });
 
 export const metadata: Metadata = {
@@ -131,7 +130,7 @@ export default async function RootLayout({
           href='/favicon-16x16.png'
         />
       </head>
-      <body className={`${tomorrow.variable} antialiased`}>
+      <body className={`${FONT.variable} antialiased`}>
         <Suspense fallback={<Skeleton className='w-full h-full' />}>
           <Toaster
             position='top-right'
