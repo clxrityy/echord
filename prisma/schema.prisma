@@ -106,7 +106,7 @@ model ESession {
   updatedAt   DateTime     @default(now())
   ipAddresses String[]
   data        EData[]
-  EUser       EUser?       @relation(fields: [userId], references: [userId])
+  EUser       EUser?       @relation(fields: [userId], references: [userId], onDelete: Cascade)
   userAgent   EUserAgent[]
 }
 
