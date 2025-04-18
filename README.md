@@ -48,15 +48,14 @@ A music cataloging, rating, reviewing, and recommendation web app.
 ##### Refactor structure and stacking of components (07-04-2025)
 
 - [x] Move feed display only to the home page
-- [ ] Refactor a new layout component that uses client capabilities to adjust the layout based on the screen size
-  - [x] Kind of done, doesn't work on mobile yet
+- [x] Refactor a new layout component that uses client capabilities to adjust the layout based on the screen size
+  - [x] ~~Kind of done, doesn't work on mobile yet~~
 - [x] Refactor the feed component to use a grid layout for the home page
 
-#### Fixes (12-04-2025)
+#### fixes
 
-- [x] Fix the feed to overflow & fit on every screen size (main page)
-  - **Note:** Pagination is needed for the feed to work properly
-    - [x] Pagination is working
+- [x] Fix feed display (server) within `<Window />` (client) **Hydration Error**
+  - [x] **Fix**: Just wrapped the `<Hero />` component within the `<Window />` component. This way the window will still be rendered on the client side, but the feed will be rendered on the server side.
 
 ##### Features
 
@@ -64,7 +63,7 @@ A music cataloging, rating, reviewing, and recommendation web app.
 - [x] Feed display
   - [ ] Show the most recent activity from users you follow
   - [x] Show the most recent activity from all users
-  - [ ] Show the most recent activity from your own profile
+  - [ ] Show your most recent activity on your own profile
 - [ ] Open feed items in a modal
 - [x] Ability to remove your own feed items
 - [x] Remove your own favorited/saved songs
