@@ -2,6 +2,7 @@ import { StringOrUndefined } from '@/types';
 import { ImageComponent } from '../ui/Image';
 import '@/styles/css/hero.css';
 import Link from 'next/link';
+import { Button } from '@/components/ui/Button';
 
 export function Hero({ userId }: { userId: StringOrUndefined }) {
   return (
@@ -16,9 +17,9 @@ export function Hero({ userId }: { userId: StringOrUndefined }) {
               Join and start cataloging your music collection
             </p>
           </div>
-          <button className='bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition duration-200'>
-            <Link href={'/login'}>Get Started</Link>
-          </button>
+          <Button className='bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition duration-200'>
+            <Link prefetch={false} href={'/login'}>Get Started</Link>
+          </Button>
         </div>
       ) : (
         <div className='w-full h-full flex flex-col items-center justify-center gap-2'>
