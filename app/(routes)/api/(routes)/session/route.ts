@@ -29,7 +29,7 @@ export async function POST(_req: NextRequest) {
       // Check if the session is still valid
       const existingSession = await getSessionById(sessionId);
       if (existingSession) {
-        return NextResponse.json({ sessionId }, { status: 200 });
+        return NextResponse.json({ session: existingSession }, { status: 200 });
       } else {
         // If the session is invalid, delete the cookie
         cookieStore.delete(ENV.COOKIE_NAME);
@@ -47,7 +47,7 @@ export async function POST(_req: NextRequest) {
     );
   }
 
-  const token = sign({ sessionId: session.sessionId }, ENV.JWT_SECRET, {
+  const token = sign({ session: session }, ENV.JWT_SECRET, {
     expiresIn: '72h',
   });
   try {
@@ -60,7 +60,7 @@ export async function POST(_req: NextRequest) {
       })
     );
 
-    return NextResponse.json({ sessionId: session.sessionId }, { status: 200 });
+    return NextResponse.json({ session: session }, { status: 200 });
   } catch (e) {
     console.error('Error setting cookie:', e);
     try {
