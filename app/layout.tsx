@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { AR_One_Sans} from 'next/font/google';
+import { AR_One_Sans, Tomorrow } from 'next/font/google';
 import './globals.css';
 import { ReactNode, Suspense } from 'react';
 import Skeleton from '@/components/ui/Skeleton';
@@ -13,11 +13,18 @@ import { connection } from 'next/server';
 import { Backdrop } from '@/components/layout/screen/Backdrop';
 import type { Viewport } from 'next';
 
-const FONT = AR_One_Sans({
+const AR = AR_One_Sans({
   subsets: ['latin'],
   variable: '--font-ar',
   display: 'swap',
 });
+
+const TMR = Tomorrow({
+  subsets: ['latin'],
+  variable: '--font-tmr',
+  display: 'swap',
+  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+})
 
 export const metadata: Metadata = {
   keywords: [
@@ -109,9 +116,10 @@ export default async function RootLayout({
 }: Readonly<{
   children: ReactNode;
 }>) {
-  await connection();
 
   const session = await handleCurrentSession();
+
+  await connection();
 
   return (
     <html lang='en'>
@@ -130,7 +138,7 @@ export default async function RootLayout({
           href='/favicon-16x16.png'
         />
       </head>
-      <body className={`${FONT.variable} antialiased`}>
+      <body className={`${AR.variable} ${TMR.variable} antialiased`}>
         <Suspense fallback={<Skeleton className='w-full h-full' />}>
           <Toaster
             position='top-right'
@@ -178,7 +186,7 @@ export default async function RootLayout({
           <SessionProvider>
             <WindowProvider>
               <Backdrop />
-              <Navbar userId={session.userId || undefined} />
+              <Navbar userId={(session && session.userId) ?? (session!.userId!)} />
               {children}
             </WindowProvider>
           </SessionProvider>
