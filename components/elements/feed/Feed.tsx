@@ -45,7 +45,7 @@ export function FeedItem({
             interactionType='FAVORITED'
             dataType={dataType}
             createdAt={createdAt}
-            userId={userId ? userId : undefined}
+            userId={interactionUserId}
             imageUrl={
               imageUrl && imageUrl !== 'undefined' ? imageUrl : undefined
             }
