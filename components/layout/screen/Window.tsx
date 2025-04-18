@@ -39,7 +39,7 @@ export const Window = ({ sessionId, children }: WindowProps) => {
     async function fetchUserAgent() {
       const res = await fetch('/api/session/user-agent', {
         method: 'GET',
-        cache: 'no-store',
+        cache: "force-cache",
       });
 
       if (!res.ok) {
