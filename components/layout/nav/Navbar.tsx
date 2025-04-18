@@ -6,6 +6,7 @@ import { ReactNode, useEffect } from 'react';
 import { ICONS } from '@/utils/constants';
 import { useSession } from '@/contexts/session';
 import { useRouter } from 'next/navigation';
+import { Button } from '@/components/ui/Button';
 
 export function NavbarContainer({ children }: { children: ReactNode }) {
   return (
@@ -22,7 +23,6 @@ export function Navbar({ userId }: { userId?: string | undefined }) {
   useEffect(() => {
     if (userId && userId !== getUserId()) {
       setUserId(userId);
-      router.refresh();
     }
   }, [userId, getUserId]);
 
@@ -69,15 +69,15 @@ export function Navbar({ userId }: { userId?: string | undefined }) {
         <div className='flex items-center gap-4 justify-end px-4 py-2'>
           <Search />
           {userId ? (
-            <button aria-label='Profile' onClick={handleProfileClick}>
+            <Button aria-label='Profile' onClick={handleProfileClick}>
               <ICONS.user />
               <span className='sr-only'>Profile</span>
-            </button>
+            </Button>
           ) : (
-            <button aria-label='Login' onClick={handleLoginClick}>
+            <Button aria-label='Login' onClick={handleLoginClick}>
               <ICONS.login />
               <span className='sr-only'>Login</span>
-            </button>
+            </Button>
           )}
         </div>
       </div>
