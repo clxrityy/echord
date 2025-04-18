@@ -1,7 +1,9 @@
-import { EData, EInteraction, EInteractionData } from '@prisma/client';
+"use client";
+import { EData, EInteraction, EInteractionData } from '@/prisma/app/generated/prisma/client';
 import { FeedItemContainer } from './Containers';
 import { Suspense } from 'react';
 import Skeleton from '@/components/ui/Skeleton';
+import { FeedListItemSkeleton } from './FeedList';
 
 interface FeedItemProps {
   interaction: EInteraction;
@@ -93,6 +95,11 @@ export function FeedItem({
               : 'Unknown Artist'}
           </span>
         </Suspense>
+      );
+
+    default:
+      return (
+        <FeedListItemSkeleton />
       );
   }
 }

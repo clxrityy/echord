@@ -3,7 +3,7 @@ import Skeleton from '@/components/ui/Skeleton';
 import Link from 'next/link';
 import ImageComponent from 'next/image';
 import { useEffect, useState } from 'react';
-import { EUser } from '@prisma/client';
+import { EUser } from '@/prisma/app/generated/prisma/client';
 import axios from 'axios';
 import { BASE_URL } from '@/utils';
 

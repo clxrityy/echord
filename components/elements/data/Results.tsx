@@ -5,7 +5,7 @@ import { BASE_URL, ICONS } from '@/utils';
 import { useSession } from '@/contexts/session';
 import { useEffect, useCallback } from 'react';
 import axios from 'axios';
-import { EInteraction, EInteractionData } from '@prisma/client';
+import { EInteraction, EInteractionData } from '@/prisma/app/generated/prisma/client';
 import toast from 'react-hot-toast';
 
 type Props = {

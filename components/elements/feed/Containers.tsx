@@ -2,7 +2,7 @@
 import Skeleton from '@/components/ui/Skeleton';
 import { StringOrUndefined } from '@/types';
 import { BASE_URL, ICONS } from '@/utils';
-import { EDataType, EInteractionType } from '@prisma/client';
+import { EDataType, EInteractionType } from '@/prisma/app/generated/prisma/client';
 import Link from 'next/link';
 import ImageComponent from 'next/image';
 import axios from 'axios';
@@ -44,6 +44,7 @@ export function FeedItemContainer({
   interactionType,
   isCurrentUser,
 }: FeedItemContainerProps) {
+
   const isToday =
     new Date(createdAt).toLocaleDateString('en-US') ===
     new Date().toLocaleDateString('en-US');
@@ -151,7 +152,7 @@ export function FeedItemContainer({
       </div>
       <div className='absolute flex flex-col items-end right-0 h-full'>
         <div className='absolute bottom-5 right-2 ml-4'>
-          <Link href={`/feed/${dataId}`} target='_blank' prefetch={false}>
+          <Link href={`/feed/${dataId}`} prefetch={false}>
             <ICONS.link className='h-4 w-4 md:h-5 md:w-5 2xl:h-6 2xl:w-6 text-gray-300/90 hover:text-purple-400 transition-colors ease-in-out' />
           </Link>
         </div>

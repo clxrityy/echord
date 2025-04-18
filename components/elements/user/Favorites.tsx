@@ -1,6 +1,6 @@
 import { ImageComponent } from '@/components/ui/Image';
 import { ICONS } from '@/utils';
-import { EInteractionData } from '@prisma/client';
+import { EInteractionData } from '@/prisma/app/generated/prisma/client';
 
 interface FavoritesProps {
   interactionData: Partial<EInteractionData>[] | EInteractionData[];
