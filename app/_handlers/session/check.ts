@@ -1,7 +1,7 @@
 import { db } from '@/lib/db';
 import { fetchIp } from '@/utils';
 
-export async function checkForExistingSession() {
+export async function checkForExistingSession(sessionId?: string) {
   const ip = await fetchIp();
   if (!ip) {
     throw new Error('Failed to fetch IP');
@@ -12,6 +12,11 @@ export async function checkForExistingSession() {
         ipAddresses: {
           has: ip,
         },
+        OR: [
+          {
+            sessionId: sessionId
+          }
+        ]
       },
     });
 
