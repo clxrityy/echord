@@ -1,7 +1,9 @@
 import { db } from '@/lib/db';
-import { fetchIp } from '@/utils';
-import { createSession } from './create';
+import { BASE_URL, fetchIp } from '@/utils';
 import { getSessionByUserId } from './get';
+import axios from 'axios';
+import { createSession } from './create';
+import { ESession } from '@/prisma/app/generated/prisma/client';
 
 export async function handleCurrentSession(userId?: string) {
   const ip = await fetchIp();
@@ -28,11 +30,15 @@ export async function handleCurrentSession(userId?: string) {
         },
       },
     });
-
     if (currentSession) {
       return currentSession;
     } else {
-      return await createSession();
+      const res = await axios.post(`${BASE_URL}/api/session`);
+      const { session } = res.data;
+      if (!session) {
+        throw new Error('Failed to create session');
+      }
+      return session as ESession;
     }
   } catch (e) {
     console.error('Error fetching current session:', e);
