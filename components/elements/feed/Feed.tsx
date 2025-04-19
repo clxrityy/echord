@@ -1,5 +1,9 @@
-"use client";
-import { EData, EInteraction, EInteractionData } from '@/prisma/app/generated/prisma/client';
+'use client';
+import {
+  EData,
+  EInteraction,
+  EInteractionData,
+} from '@/prisma/app/generated/prisma/client';
 import { FeedItemContainer } from './Containers';
 import { Suspense } from 'react';
 import Skeleton from '@/components/ui/Skeleton';
@@ -98,8 +102,6 @@ export function FeedItem({
       );
 
     default:
-      return (
-        <FeedListItemSkeleton />
-      );
+      return <FeedListItemSkeleton />;
   }
 }

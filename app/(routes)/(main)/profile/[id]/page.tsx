@@ -1,11 +1,12 @@
 import { Settings } from '@/components/elements/user/Settings';
 import { Favorites } from '@/components/elements/user/Favorites';
 import Skeleton from '@/components/ui/Skeleton';
-import { handleCurrentSession } from '@/app/_handlers/session';
+import { handleCurrentSession } from '@/app/_actions/session';
 import { db } from '@/lib/db';
 import { Suspense } from 'react';
 import { SavesGrid } from '@/components/elements/user/save/SavesGrid';
 import { Window } from '@/components/layout/screen/Window';
+import Loading from '@/app/loading';
 
 type Props = {
   params: Promise<{
@@ -21,7 +22,7 @@ export default async function Page({ params }: Props) {
       userId: id,
     },
     include: {
-      sessions: true,
+      session: true,
       interactions: true,
     },
   });
@@ -79,7 +80,7 @@ export default async function Page({ params }: Props) {
   };
 
   return (
-    <Suspense fallback={<Skeleton className='w-full h-full' />}>
+    <Suspense fallback={<Loading />}>
       <Window sessionId={session.sessionId || ''}>
         <div className='w-full flex flex-col gap-10 items-center justify-around'>
           <div className='flex items-center justify-start gap-2 w-fit'>

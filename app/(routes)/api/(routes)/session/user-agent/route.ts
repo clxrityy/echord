@@ -1,13 +1,27 @@
 import {
   addUserAgentToSession,
   checkSessionUserAgent,
+  getSessionById,
   handleCurrentSession,
-} from '@/app/_handlers/session';
+} from '@/app/_actions/session';
 import { UserAgent } from '@/types';
 import { NextRequest, NextResponse, userAgent } from 'next/server';
 
 export async function GET(req: NextRequest) {
-  const session = await handleCurrentSession();
+  const sessionId = req.nextUrl.searchParams.get('sessionId');
+
+  const session = await getSessionById(sessionId || '');
+
+  if (!session) {
+    return NextResponse.json(
+      {
+        error: 'Session not found',
+      },
+      {
+        status: 404,
+      }
+    );
+  }
 
   const userId = session.userId;
 

@@ -6,14 +6,13 @@ import {
 import { Hero } from '@/components/elements/Hero';
 import { Window } from '@/components/layout/screen/Window';
 import Skeleton from '@/components/ui/Skeleton';
-import { handleCurrentSession } from '@/app/_handlers/session';
+import { handleCurrentSession } from '@/app/_actions/session';
 import { db } from '@/lib/db';
 import { Suspense } from 'react';
 import { FEED_ITEMS_PER_PAGE } from '@/utils';
-import { getUserBySessionId } from './_handlers/user';
-import dynamic from 'next/dynamic';
+import { getUserBySessionId } from '@/app/_actions/user';
 import { FeedItem } from '../components/elements/feed/Feed';
-
+import Loading from './loading';
 
 export default async function Home() {
   const session = await handleCurrentSession();
@@ -36,12 +35,11 @@ export default async function Home() {
         id: item.dataId,
       },
     });
-    const { ...interactionData } =
-      await db.eInteractionData.findFirst({
-        where: {
-          dataId: item.dataId,
-        },
-      });
+    const { ...interactionData } = await db.eInteractionData.findFirst({
+      where: {
+        dataId: item.dataId,
+      },
+    });
 
     const user = await getUserBySessionId(data.sessionId);
 
@@ -51,7 +49,7 @@ export default async function Home() {
       interactionData,
       user,
     };
-  })
+  });
 
   return (
     <main className='w-full h-full relative items-center justify-center mx-auto flex flex-col gap-10 mt-20 pt-8 xl:mt-10 2xl:mt-0 overflow-y-auto 2xl:overflow-clip scroll-smooth'>
@@ -59,37 +57,51 @@ export default async function Home() {
        *
        */}
       <div className='w-full h-full xl:h-[100vh] flex flex-col xl:flex-row gap-2 items-start justify-start xl:justify-between xl:items-start xl:gap-0'>
-        <Suspense fallback={<Skeleton className='w-full h-full animate-pulse bg-gray-500/50' />}>
+        <Suspense fallback={<Loading />}>
           <Window sessionId={session!.userId ?? session?.userId!}>
             <Hero userId={session!.userId ?? session?.userId!} />
           </Window>
         </Suspense>
         <div className='relative flex justify-center items-center w-full mt-20'>
           <div className='w-full h-fit flex items-center justify-center relative pb-20'>
-            <FeedList itemsPerPage={FEED_ITEMS_PER_PAGE}>
-              {array.map(async (item, idx) => {
-                const { interaction, data, interactionData, user: userData } = await item
+            <Suspense
+              fallback={
+                <Skeleton className='w-full h-full bg-gray-400/30 animate-pulse rounded-full shadow-2xl' />
+              }
+            >
+              <FeedList itemsPerPage={FEED_ITEMS_PER_PAGE}>
+                {array.map(async (item, idx) => {
+                  const {
+                    interaction,
+                    data,
+                    interactionData,
+                    user: userData,
+                  } = await item;
 
-                return (
-                    <FeedListItem key={idx}>
-                      {interaction && data && interactionData ? (
-                        <FeedItem
-                          interaction={interaction}
-                          data={data}
-                          interactionData={interactionData}
-                          userId={session?.userId ?? session?.userId!}
-                          username={userData?.username ? userData.username : null}
-                        />
-                      ) : (
-                        <Skeleton className='w-full h-20 rounded-md' />
-                      )}
-                    </FeedListItem>
-                );
-              })}
-            </FeedList>
+                  return (
+                    <Suspense key={idx} fallback={<FeedListItemSkeleton />}>
+                      <FeedListItem key={idx}>
+                        {interaction && data && interactionData && userData ? (
+                          <FeedItem
+                            interaction={interaction}
+                            data={data}
+                            interactionData={interactionData}
+                            userId={session?.userId ?? session?.userId!}
+                            username={
+                              userData.username ? userData.username : null
+                            }
+                          />
+                        ) : (
+                          <Skeleton className='w-full h-20 rounded-md animate-pulse' />
+                        )}
+                      </FeedListItem>
+                    </Suspense>
+                  );
+                })}
+              </FeedList>
+            </Suspense>
           </div>
         </div>
-
       </div>
     </main>
   );

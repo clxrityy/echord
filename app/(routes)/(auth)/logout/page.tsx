@@ -1,4 +1,4 @@
-import { handleCurrentSession } from '@/app/_handlers/session';
+import { handleCurrentSession } from '@/app/_actions/session';
 // import axios from "axios";
 import { redirect } from 'next/navigation';
 

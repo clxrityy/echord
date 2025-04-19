@@ -120,7 +120,7 @@ model EUser {
   password     String
   interactions EInteraction[]
   searches     ESearch[]
-  sessions     ESession?
+  session      ESession?
 }
 
 model EData {

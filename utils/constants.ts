@@ -39,7 +39,7 @@ export const ICONS = {
   right: ChevronRight,
   left: ChevronLeft,
   close: X,
-  home: House
+  home: House,
 };
 
 export const ENV = {

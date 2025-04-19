@@ -4,10 +4,11 @@ import { DEEZER_API_URL } from '@/utils';
 import { DEEZER_SEARCH_RESPONSE } from '@/types';
 import axios from 'axios';
 import { Suspense } from 'react';
-import { handleCurrentSession } from '@/app/_handlers/session';
+import { handleCurrentSession } from '@/app/_actions/session';
 import './index.css';
 import { connection } from 'next/server';
 import { Window } from '@/components/layout/screen/Window';
+import Loading from '@/app/loading';
 
 type Props = {
   params: Promise<{
@@ -47,7 +48,7 @@ export default async function SearchPage({ params }: Props) {
   }
 
   return (
-    <Suspense fallback={<Skeleton className='w-full h-full' />}>
+    <Suspense fallback={<Loading />}>
       <Window sessionId={session.sessionId || ''}>
         <div className='search-page'>
           <h1 className='fixed top-10'>

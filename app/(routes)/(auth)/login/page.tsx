@@ -1,15 +1,23 @@
 import { Login } from '@/components/elements/forms/Login';
 import { Window } from '@/components/layout/screen/Window';
 import Skeleton from '@/components/ui/Skeleton';
-import { handleCurrentSession } from '@/app/_handlers/session';
+import { handleCurrentSession } from '@/app/_actions/session';
 import Link from 'next/link';
 import { Suspense } from 'react';
+import { redirect } from 'next/navigation';
+import { connection } from 'next/server';
+import Loading from '@/app/loading';
 
 export default async function Page() {
+  await connection();
   const session = await handleCurrentSession();
 
+  if (session.userId) {
+    return redirect(`/profile/${session.userId}`);
+  }
+
   return (
-    <Suspense fallback={<Skeleton className='w-full h-full' />}>
+    <Suspense fallback={<Loading />}>
       <Window sessionId={session.sessionId || ''}>
         <div className='w-full h-full mx-auto flex items-center justify-start'>
           <div className='flex flex-col w-full h-full mx-auto gap-6 items-center justify-center'>

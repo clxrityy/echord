@@ -3,7 +3,7 @@ import { AR_One_Sans, Tomorrow } from 'next/font/google';
 import './globals.css';
 import { ReactNode, Suspense } from 'react';
 import Skeleton from '@/components/ui/Skeleton';
-import { handleCurrentSession } from '@/app/_handlers/session';
+import { handleCurrentSession } from '@/app/_actions/session';
 import { SessionProvider } from '@/contexts/session';
 import { Navbar } from '@/components/layout/nav/Navbar';
 import { Toaster } from 'react-hot-toast';
@@ -23,8 +23,8 @@ const TMR = Tomorrow({
   subsets: ['latin'],
   variable: '--font-tmr',
   display: 'swap',
-  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
-})
+  weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
+});
 
 export const metadata: Metadata = {
   keywords: [
@@ -116,7 +116,6 @@ export default async function RootLayout({
 }: Readonly<{
   children: ReactNode;
 }>) {
-
   const session = await handleCurrentSession();
 
   await connection();
@@ -186,7 +185,9 @@ export default async function RootLayout({
           <SessionProvider>
             <WindowProvider>
               <Backdrop />
-              <Navbar userId={(session && session.userId) ?? (session!.userId!)} />
+              <Navbar
+                userId={(session && session.userId) ?? session!.userId!}
+              />
               {children}
             </WindowProvider>
           </SessionProvider>

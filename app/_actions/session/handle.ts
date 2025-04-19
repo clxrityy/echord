@@ -18,7 +18,7 @@ export async function handleCurrentSession(userId?: string) {
       await appendSessionIpAddress(session.sessionId);
       return session;
     } else {
-      return await createSession();
+      return await createSession(userId);
     }
   }
 

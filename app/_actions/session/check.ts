@@ -14,9 +14,9 @@ export async function checkForExistingSession(sessionId?: string) {
         },
         OR: [
           {
-            sessionId: sessionId
-          }
-        ]
+            sessionId: sessionId,
+          },
+        ],
       },
     });
 

@@ -3,7 +3,7 @@ import {
   createSession,
   deleteSession,
   getSessionById,
-} from '@/app/_handlers/session';
+} from '@/app/_actions/session';
 import { ENV } from '@/utils/constants';
 import { cookies } from 'next/headers';
 import { NextRequest, NextResponse } from 'next/server';

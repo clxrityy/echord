@@ -69,12 +69,16 @@ export function Navbar({ userId }: { userId?: string | undefined }) {
         <div className='flex items-center gap-4 justify-end px-4 py-2'>
           <Search />
           {userId ? (
-            <Button aria-label='Profile' onClick={handleProfileClick}>
+            <Button
+              aria-label='Profile'
+              title='profile'
+              onClick={handleProfileClick}
+            >
               <ICONS.user />
               <span className='sr-only'>Profile</span>
             </Button>
           ) : (
-            <Button aria-label='Login' onClick={handleLoginClick}>
+            <Button aria-label='Login' title='login' onClick={handleLoginClick}>
               <ICONS.login />
               <span className='sr-only'>Login</span>
             </Button>

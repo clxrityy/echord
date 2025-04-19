@@ -3,7 +3,7 @@ import {
   DeleteInteractionProps,
   handleInteraction,
   InteractionProps,
-} from '@/app/_handlers/interaction';
+} from '@/app/_actions/interaction';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(req: NextRequest) {

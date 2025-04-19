@@ -1,5 +1,5 @@
-import { addSearchToUser } from '@/app/_handlers/search';
-import { getUserBySessionId } from '@/app/_handlers/user';
+import { addSearchToUser } from '@/app/_actions/search';
+import { getUserBySessionId } from '@/app/_actions/user';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(req: NextRequest) {

@@ -1,3 +1,7 @@
 export default function Loading() {
-  return <div className='loader' />;
+  return (
+    <div className='w-full h-full flex items-center justify-center'>
+      <div className='loader' />
+    </div>
+  );
 }

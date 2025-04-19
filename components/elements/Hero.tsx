@@ -18,7 +18,9 @@ export function Hero({ userId }: { userId: StringOrUndefined }) {
             </p>
           </div>
           <Button className='bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition duration-200'>
-            <Link prefetch={false} href={'/login'}>Get Started</Link>
+            <Link prefetch={false} href={'/login'}>
+              Get Started
+            </Link>
           </Button>
         </div>
       ) : (

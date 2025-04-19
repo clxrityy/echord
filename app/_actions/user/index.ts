@@ -41,7 +41,7 @@ export async function createUser(
       data: {
         userId: uuidv4(),
         username: username,
-        sessions: {
+        session: {
           connectOrCreate: {
             where: {
               sessionId: session.sessionId,

@@ -1,4 +1,5 @@
-import { handleCurrentSession } from '@/app/_handlers/session';
+import { handleCurrentSession } from '@/app/_actions/session';
+import Loading from '@/app/loading';
 import { UserAgentDisplay } from '@/components/elements/UserAgentDisplay';
 import { Window } from '@/components/layout/screen/Window';
 import Skeleton from '@/components/ui/Skeleton';
@@ -16,7 +17,7 @@ export default async function Page() {
   }
 
   return (
-    <Suspense>
+    <Suspense fallback={<Loading />}>
       <Window sessionId={session.sessionId || ''}>
         <div className='flex flex-col w-full gap-6 items-center py-5'>
           <h3>User Agent</h3>

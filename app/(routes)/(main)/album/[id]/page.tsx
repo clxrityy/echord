@@ -1,10 +1,10 @@
 import { Album } from '@/components/elements/data/Album';
 import { Window } from '@/components/layout/screen/Window';
-import Skeleton from '@/components/ui/Skeleton';
-import { handleCurrentSession } from '@/app/_handlers/session';
+import { handleCurrentSession } from '@/app/_actions/session';
 import { db } from '@/lib/db';
 import { connection } from 'next/server';
 import { Suspense } from 'react';
+import Loading from '@/app/loading';
 
 type Props = {
   params: Promise<{
@@ -30,7 +30,7 @@ export default async function Page({ params }: Props) {
   }
 
   return (
-    <Suspense fallback={<Skeleton className='w-full h-full' />}>
+    <Suspense fallback={<Loading />}>
       <Window sessionId={session.sessionId || ''}>
         <Album album={album} />
       </Window>

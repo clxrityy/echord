@@ -1,6 +1,7 @@
 'use client';
 
 import { useSession } from '@/contexts/session';
+import { useWindow } from '@/contexts/window';
 import { BASE_URL, ICONS } from '@/utils';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
@@ -17,6 +18,10 @@ export const Login = ({
   const [username, setUsername] = useState<string>('');
   const [password, setPassword] = useState<string>('');
 
+  const { getUserAgent } = useWindow();
+
+  const userAgent = getUserAgent();
+
   const { setUserId } = useSession();
   const router = useRouter();
 
@@ -32,6 +37,8 @@ export const Login = ({
         .post(`${BASE_URL}/api/auth/login`, {
           username,
           password,
+          userAgent,
+          sessionId,
         })
         .then((res) => res.data);
 

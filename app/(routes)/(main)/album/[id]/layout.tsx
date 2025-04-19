@@ -1,4 +1,4 @@
-import { checkAlbumFromInteraction } from '@/app/_handlers/data';
+import { checkAlbumFromInteraction } from '@/app/_actions/data';
 import { db } from '@/lib/db';
 import { Metadata } from 'next';
 import { connection } from 'next/server';

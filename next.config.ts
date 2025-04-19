@@ -11,6 +11,13 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  compiler: {
+    reactRemoveProperties: true,
+    styledComponents: {
+      ssr: true,
+      minify: true,
+    },
+  },
   async headers() {
     return [
       {
