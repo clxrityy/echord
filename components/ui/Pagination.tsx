@@ -75,6 +75,7 @@ export function Pagination({
               key={i}
               onClick={() => handlePageChange(i)}
               aria-current={page === i ? 'page' : undefined}
+              className='text-base xl:text-lg'
             >
               {i}
             </Button>
@@ -104,23 +105,25 @@ export function Pagination({
   };
 
   return (
-    <div className='flex items-center justify-center gap-4 py-4'>
+    <div className='flex items-center justify-center gap-4 py-6 mb-10 xl:mb-4 font-[var(--font-tmr)]'>
       <Button
         onClick={() => handlePageChange(page - 1)}
         disabled={page === 1}
         aria-label='Previous Page'
         className='transition-colors duration-200 ease-in-out enabled:hover:scale-105'
       >
-        <ICONS.left className='h-4 w-4' />
+        <ICONS.left className='h-4 w-4 xl:h-6 xl:w-6' />
       </Button>
-      <div className='flex items-center gap-2'>{renderPageNumbers()}</div>
+      <div className='flex items-center gap-2 font-semibold'>
+        {renderPageNumbers()}
+      </div>
       <Button
         onClick={() => handlePageChange(page + 1)}
         disabled={page === totalPages}
         aria-label='Next Page'
         className='transition-colors duration-200 ease-in-out enabled:hover:scale-105'
       >
-        <ICONS.right className='h-4 w-4' />
+        <ICONS.right className='h-4 w-4 xl:w-6 xl:h-6' />
       </Button>
     </div>
   );
