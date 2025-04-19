@@ -2,7 +2,7 @@ import { db } from '@/lib/db';
 import { handleCurrentSession } from '../session';
 import { v4 as uuidv4 } from 'uuid';
 import { decrypt, encrypt } from '@/utils';
-import { EUser } from '@/prisma/app/generated/prisma/client';
+import { EUser, EUserAgent } from '@/prisma/app/generated/prisma/client';
 
 export async function detectCurrentUserBySession(): Promise<string> {
   const session = await handleCurrentSession();
@@ -65,7 +65,9 @@ export async function createUser(
 
 export async function checkUser(
   username: string,
-  pass: string
+  pass: string,
+  userAgent: Partial<EUserAgent>,
+  sessionId?: string
 ): Promise<string | undefined> {
   const existingUser = await detectCurrentUserBySession();
 
@@ -77,6 +79,16 @@ export async function checkUser(
     const user = await db.eUser.findFirst({
       where: {
         username: username,
+        session: {
+          userAgent: {
+            every: {
+              os: userAgent.os,
+              browser: userAgent.browser,
+              device: userAgent.device,
+            },
+          },
+          sessionId: sessionId,
+        },
       },
     });
 
