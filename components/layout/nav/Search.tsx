@@ -5,6 +5,7 @@ import { BASE_URL, ICONS } from '@/utils';
 import { OutsideClick } from '@/components/ui/wrappers/OutsideClick';
 import { useSession } from '@/contexts/session';
 import axios from 'axios';
+import { Button } from '@/components/ui/Button';
 
 export function Search() {
   const [searchField, setSearchField] = useState<string>('');
@@ -16,20 +17,14 @@ export function Search() {
 
   useEffect(() => {
     async function addSearchToSession(search: string) {
-      return await axios
+      const res = await axios
         .post(`${BASE_URL}/api/session/search`, {
           search: search,
           sessionId: getSessionId(),
         })
-        .then((res) => {
-          if (res.status === 200) {
-            return res.data;
-          } else if (res.status === 401) {
-            console.log('Unauthorized to save search');
-          } else {
-            console.error('Error saving search');
-          }
-        });
+        .then((res) => res.data);
+
+      return res;
     }
 
     if (searchField.length > 2) {
@@ -62,16 +57,18 @@ export function Search() {
   }, [clicked]);
 
   return (
-    <search role='search' className=''>
+    <div role='search' className=''>
       <OutsideClick onOutsideClick={() => setClicked(false)}>
         <div className='flex flex-col items-center relative gap-5'>
-          <button
+          <Button
             role='button'
+            title='Search'
+            aria-label='Search'
             onClick={handleClick}
             className={`${clicked ? 'ring-2 ring-blue-500' : ''} p-2 transition duration-200 focus:outline-none rounded-md`}
           >
             <ICONS.search />
-          </button>
+          </Button>
           {clicked && (
             <input
               type='text'
@@ -83,6 +80,6 @@ export function Search() {
           )}
         </div>
       </OutsideClick>
-    </search>
+    </div>
   );
 }
