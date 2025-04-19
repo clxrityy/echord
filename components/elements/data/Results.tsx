@@ -52,6 +52,8 @@ export function Result({ data, sessionId, userId }: Props) {
   };
 
   const handleSave = useCallback(async () => {
+    const toastId = toast.loading('Saving interaction...');
+
     const response = await axios.post<{
       interaction: EInteraction;
       error?: string;
@@ -66,13 +68,15 @@ export function Result({ data, sessionId, userId }: Props) {
     const { interaction, error } = response.data;
 
     if (error) {
-      console.error('Error saving interaction:', error);
-      toast.error('Failed to save interaction');
+      toast.error(`Failed to save interaction: ${error}`, {
+        id: toastId,
+      });
     }
 
     if (interaction) {
       toast.success(`Saved ${title} by ${artist.name}`, {
         icon: <ICONS.save />,
+        id: toastId,
       });
     }
   }, [data, sessionId, userId, interactionData, artist.name, title]);
