@@ -68,7 +68,7 @@ export default async function Home() {
           <div className='w-full h-fit flex items-center justify-center relative pb-20'>
             <FeedList itemsPerPage={FEED_ITEMS_PER_PAGE}>
               {array.map(async (item, idx) => {
-                const { interaction, data, interactionData, user } = await item
+                const { interaction, data, interactionData, user: userData } = await item
 
                 return (
                     <FeedListItem key={idx}>
@@ -77,8 +77,8 @@ export default async function Home() {
                           interaction={interaction}
                           data={data}
                           interactionData={interactionData}
-                          userId={user?.userId ?? user?.id!}
-                          username={user?.username ? user.username : null}
+                          userId={session?.userId ?? session?.userId!}
+                          username={userData?.username ? userData.username : null}
                         />
                       ) : (
                         <Skeleton className='w-full h-20 rounded-md' />
