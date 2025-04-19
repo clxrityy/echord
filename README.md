@@ -55,7 +55,8 @@ A music cataloging, rating, reviewing, and recommendation web app.
 #### fixes
 
 - [x] Fix feed display (server) within `<Window />` (client) **Hydration Error**
-  - [x] **Fix**: Just wrapped the `<Hero />` component within the `<Window />` component. This way the window will still be rendered on the client side, but the feed will be rendered on the server side.
+  - [x] ~~**Fix**: Just wrapped the `<Hero />` component within the `<Window />` component. This way the window will still be rendered on the client side, but the feed will be rendered on the server side~~
+    - [x] **NOTE:** This was not the actual issue, it was with rendering the database functions within a client component. Fixed by moving the database functions to the server side and passing the data to the client component.
 
 ##### Features
 
