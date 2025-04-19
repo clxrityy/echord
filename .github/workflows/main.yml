@@ -9,4 +9,4 @@ jobs:
       - name: Install dependencies
         run: npm install
       - name: Run prettier
-        run: npm run prettier
+        run: prettier --write .
