@@ -1,6 +1,7 @@
 'use client';
 import { useSession } from '@/contexts/session';
 import { useWindow } from '@/contexts/window';
+import { useLocalStorage } from '@/hooks/useLocalStorage';
 import { useScreenSize } from '@/hooks/useScreenSize';
 import { EUserAgent } from '@/prisma/app/generated/prisma/client';
 import { UserAgent } from '@/types';
@@ -16,6 +17,7 @@ export const Window = ({ sessionId, children }: WindowProps) => {
     useWindow();
   const { width, height } = useScreenSize();
   const { setSessionId, getSessionId } = useSession();
+  const [ value, setValue ] = useLocalStorage('sessionId', sessionId);
 
   const [userAgentObject, setUserAgentObject] = useState<UserAgent | null>(
     null
@@ -32,6 +34,9 @@ export const Window = ({ sessionId, children }: WindowProps) => {
   useEffect(() => {
     if (sessionId && sessionId !== getSessionId()) {
       setSessionId(sessionId);
+      if (sessionId !== value) {
+        setValue(sessionId);
+      }
     }
   }, [sessionId]);
 
@@ -39,7 +44,8 @@ export const Window = ({ sessionId, children }: WindowProps) => {
     async function fetchUserAgent() {
       const res = await fetch('/api/session/user-agent', {
         method: 'GET',
-        cache: "force-cache",
+        cache: "only-if-cached",
+        mode: "same-origin"
       });
 
       if (!res.ok) {
