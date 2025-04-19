@@ -54,7 +54,7 @@ export function Navbar({ userId }: { userId?: string | undefined }) {
               height={35}
               className='grayscale-75 brightness-150'
             />
-            <h1 className='tracking-wide'>
+            <h1 className='tracking-tighter font-[var(--font-tmr)]'>
               <span className='font-extrabold'>乇</span>
               <span className='uppercase'>chord</span>
               <span className='sr-only'>Echord</span>
