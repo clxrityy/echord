@@ -37,17 +37,7 @@ export const Window = ({ sessionId, children }: WindowProps) => {
 
   useEffect(() => {
     async function fetchUserAgent() {
-      const res = await fetch('/api/session/user-agent', {
-        method: 'GET',
-        cache: 'only-if-cached',
-        mode: 'same-origin',
-      });
-
-      if (!res.ok) {
-        console.error('Failed to fetch user agent');
-        return;
-      }
-
+      const res = await fetch(`/api/session/user-agent?sessionId=${sessionId}`);
       const { userAgent } = await res.json();
       return userAgent;
     }
@@ -81,12 +71,19 @@ export const Window = ({ sessionId, children }: WindowProps) => {
         }
       );
 
-      if (!res.ok) {
-        console.error('Failed to add user agent');
-      }
+      const data = await res.json();
+      return data;
     }
     if (usr && sessionId) {
-      addUserAgent();
+      addUserAgent()
+        .then((res) => {
+          if (res.userAgent) {
+            setUserAgentObject(res.userAgent);
+          }
+        })
+        .catch((err) => {
+          console.error('Error adding user agent:', err);
+        });
     }
   }, [usr, sessionId]);
 
