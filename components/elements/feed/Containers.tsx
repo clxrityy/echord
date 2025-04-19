@@ -100,15 +100,15 @@ export function FeedItemContainer({
   }
 
   return (
-    <div className='flex items-start justify-start gap-2 w-full sm:w-2/3 md:w-1/2 lg:w-fit xl:w-full relative pb-8 border-l-4 pl-6 border-white/25 rounded-l-sm bg-[var(--color-blue-pastelic-pale)]/[2%] px-10 py-4 shadow-2xl drop-shadow-sm drop-shadow-gray-600/30 mx-2'>
+    <div className='flex items-start justify-start lg:justify-center 2xl:justify-start gap-2 w-full sm:w-2/3 md:w-1/2 lg:w-[90%] xl:w-full relative pb-8 border-l-4 pl-6 border-white/25 rounded-l-sm bg-[var(--color-blue-pastelic-pale)]/[4.25%] px-10 py-4 shadow-2xl drop-shadow-sm drop-shadow-gray-600/30 mx-2'>
       <div className='flex flex-col items-start justify-center w-full gap-4'>
         <div className='flex flex-col items-center justify-start w-fit gap-5'>
-          <div className='flex items-center justify-start gap-4 w-full flex-col md:flex-row'>
+          <div className='flex items-start justify-start gap-4 w-full flex-col md:flex-row'>
             <FeedUserContainer>
               <Icon className='h-7 w-7 lg:h-9 lg:w-9 text-blue-400/70 rounded-full shadow' />
               {userId && <FeedUser userId={userId} />}
             </FeedUserContainer>
-            <div className='flex items-start justify-center gap-2 h-full'>
+            <div className='flex items-start justify-center gap-2 h-full lg:flex-col 2xl:flex-row'>
               <span className='text-xs md:text-sm text-gray-400'>
                 {isToday
                   ? 'Today'
@@ -158,7 +158,7 @@ export function FeedItemContainer({
             <ICONS.link className='h-4 w-4 md:h-5 md:w-5 2xl:h-6 2xl:w-6 text-gray-300/90 hover:text-purple-400 transition-colors ease-in-out' />
           </Link>
         </div>
-        <div className='asbolute top-0 right-0 ml-4 px-2'>
+        <div className='asbolute top-0 right-2 ml-4 px-2'>
           {isCurrentUser && (
             <button
               type='button'
