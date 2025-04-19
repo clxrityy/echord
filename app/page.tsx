@@ -2,7 +2,6 @@ import { FeedItem } from '@/components/elements/feed/Feed';
 import {
   FeedList,
   FeedListItem,
-  FeedListItemSkeleton,
 } from '@/components/elements/feed/FeedList';
 import { Hero } from '@/components/elements/Hero';
 import { Window } from '@/components/layout/screen/Window';
@@ -60,8 +59,7 @@ export default async function Home() {
                 const user = await getUserBySessionId(data.sessionId);
 
                 return (
-                  <Suspense key={idx}>
-                    <FeedListItem>
+                    <FeedListItem key={idx}>
                       {interaction && data && interactionData ? (
                         <FeedItem
                           interaction={interaction}
@@ -74,7 +72,6 @@ export default async function Home() {
                         <Skeleton className='w-full h-20 rounded-md' />
                       )}
                     </FeedListItem>
-                  </Suspense>
                 );
               })}
             </FeedList>
