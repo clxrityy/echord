@@ -8,7 +8,7 @@ import { UserAgent } from '@/types';
 import { NextRequest, NextResponse, userAgent } from 'next/server';
 
 export async function GET(req: NextRequest) {
-  const sessionId = req.nextUrl.searchParams.get('sessionId');
+  const sessionId = new URL(req.url).searchParams.get('sessionId');
 
   const session = await getSessionById(sessionId || '');
 
@@ -71,10 +71,11 @@ export async function GET(req: NextRequest) {
 
 export async function POST(req: NextRequest) {
   const { browser, device, os } = userAgent(req);
-  const session = await handleCurrentSession();
+  const sessionId = new URL(req.url).searchParams.get('sessionId');
 
-  const userId = session.userId;
-  const sessionId = session.sessionId;
+  const session = await getSessionById(sessionId || '');
+
+  const userId = session?.userId;
 
   if (!userId) {
     return NextResponse.json(
@@ -87,7 +88,7 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  const existingUserAgent = await checkSessionUserAgent(sessionId);
+  const existingUserAgent = await checkSessionUserAgent(session.sessionId);
 
   if (existingUserAgent) {
     return NextResponse.json(
@@ -118,7 +119,10 @@ export async function POST(req: NextRequest) {
     },
   } as UserAgent;
 
-  const newUserAgent = await addUserAgentToSession(sessionId, userAgentInfo);
+  const newUserAgent = await addUserAgentToSession(
+    session.sessionId,
+    userAgentInfo
+  );
 
   if (!newUserAgent) {
     return NextResponse.json(
