@@ -1,4 +1,4 @@
-import { EAlbum } from '@prisma/client';
+import { EAlbum } from '@/prisma/app/generated/prisma/client';
 
 type Props = {
   album: EAlbum;
