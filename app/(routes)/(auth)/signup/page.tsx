@@ -4,9 +4,16 @@ import Skeleton from '@/components/ui/Skeleton';
 import { handleCurrentSession } from '@/app/_actions/session';
 import { Suspense } from 'react';
 import Loading from '@/app/loading';
+import { connection } from 'next/server';
+import { redirect } from 'next/navigation';
 
 export default async function Page() {
+  await connection();
   const session = await handleCurrentSession();
+
+  if (session.userId) {
+    return redirect(`/profile/${session.userId}`);
+  }
 
   return (
     <Suspense fallback={<Loading />}>
