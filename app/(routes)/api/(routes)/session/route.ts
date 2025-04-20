@@ -6,12 +6,11 @@ import {
 } from '@/app/_actions/session';
 import { ENV } from '@/utils/constants';
 import { cookies } from 'next/headers';
-import { connection, NextRequest, NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { sign, verify } from 'jsonwebtoken';
 import { serialize } from 'cookie';
 
 export async function POST(_req: NextRequest) {
-  await connection();
 
   const cookieStore = await cookies();
   const isExisting = await checkForExistingSession();
