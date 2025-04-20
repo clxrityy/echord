@@ -1,8 +1,10 @@
 import { handleCurrentSession } from '@/app/_actions/session';
 // import axios from "axios";
 import { redirect } from 'next/navigation';
+import { connection } from 'next/server';
 
 export default async function Page() {
+  await connection();
   const session = await handleCurrentSession();
 
   if (session.userId) {
