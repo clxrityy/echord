@@ -26,6 +26,8 @@ const TMR = Tomorrow({
   weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
 });
 
+export const dynamic = 'force-dynamic'; // Force dynamic rendering
+
 export const metadata: Metadata = {
   keywords: [
     'Echord',
