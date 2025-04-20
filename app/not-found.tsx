@@ -2,7 +2,7 @@ import { Button } from '@/components/ui/Button';
 import Link from 'next/link';
 import { ICONS } from '@/utils';
 
-export default async function NotFound() {
+export default function NotFound() {
   return (
     <div className='font-[var(--font-tmr)] w-full h-full flex items-center justify-center gap-4 bg-black/35 backdrop-blur-sm'>
       <div className='relative flex justify-center items-center w-full'>

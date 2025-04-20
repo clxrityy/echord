@@ -33,7 +33,9 @@ export async function handleCurrentSession(userId?: string) {
     if (currentSession) {
       return currentSession;
     } else {
-      const res = await axios.post(`${BASE_URL}/api/session`);
+      const res = await axios.post(`${BASE_URL}/api/session`, {
+        userId,
+      });
       const { session } = res.data;
       if (!session) {
         throw new Error('Failed to create session');
