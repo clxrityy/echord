@@ -7,6 +7,9 @@ import Loading from '@/app/loading';
 import { connection } from 'next/server';
 import { redirect } from 'next/navigation';
 
+export const dynamic = 'force-dynamic'; // Force dynamic rendering
+export const revalidate = 0; // Disable revalidation
+
 export default async function Page() {
   await connection();
   const session = await handleCurrentSession();
