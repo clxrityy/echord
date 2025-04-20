@@ -105,7 +105,15 @@ export default async function RootLayout({
 }: Readonly<{
   children: ReactNode;
 }>) {
-  const session = await handleCurrentSession();
+  const getSession = async () => {
+    try {
+      return await handleCurrentSession();
+    } catch (e) {
+      console.error('Error fetching session:', e);
+      return null;
+    }
+  }
+  const session = await getSession();
 
   await connection();
 

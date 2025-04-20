@@ -11,6 +11,21 @@ export async function createSession(userId?: string) {
 
   const sessionId = uuidv4();
 
+  if (!userId) {
+    try {
+      const newSession = await db.eSession.create({
+        data: {
+          sessionId,
+          ipAddresses: [ip],
+        },
+      });
+      return newSession;
+    } catch (e) {
+      console.error('Error creating session:', e);
+      throw new Error('Database error');
+    }
+  }
+
   const existingSessions = await db.eSession.findMany({
     where: {
       userId,
