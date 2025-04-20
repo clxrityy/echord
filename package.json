@@ -67,7 +67,8 @@
     "onlyBuiltDependencies": [
       "@prisma/engines",
       "prisma",
-      "sharp"
+      "sharp",
+      "unrs-resolver"
     ]
   },
   "husky": {
