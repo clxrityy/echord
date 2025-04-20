@@ -2,7 +2,6 @@ import { Results } from '@/components/elements/data/Results';
 import Skeleton from '@/components/ui/Skeleton';
 import { DEEZER_API_URL } from '@/utils';
 import { DEEZER_SEARCH_RESPONSE } from '@/types';
-import axios from 'axios';
 import { Suspense } from 'react';
 import { handleCurrentSession } from '@/app/_actions/session';
 import './index.css';
@@ -22,13 +21,13 @@ export default async function SearchPage({ params }: Props) {
   const id = (await params).id;
 
   async function fetchSearchResults(): Promise<DEEZER_SEARCH_RESPONSE> {
-    const response = await axios.get(`${DEEZER_API_URL}/search?q=${id}`);
+    const response = await fetch(`${DEEZER_API_URL}/search?q=${id}`);
 
     if (response.status !== 200) {
       throw new Error('Failed to fetch search results');
     }
 
-    return response.data as DEEZER_SEARCH_RESPONSE;
+    return (await response.json()) as DEEZER_SEARCH_RESPONSE;
   }
 
   const data = await fetchSearchResults();

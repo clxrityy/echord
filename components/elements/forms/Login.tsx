@@ -3,7 +3,6 @@
 import { useSession } from '@/contexts/session';
 import { useWindow } from '@/contexts/window';
 import { BASE_URL, ICONS } from '@/utils';
-import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import { useCallback, useState } from 'react';
 import toast from 'react-hot-toast';
@@ -33,14 +32,15 @@ export const Login = ({
   const handleLogin = useCallback(async () => {
     const toastId = toast.loading('Logging in...');
     try {
-      const { id } = await axios
-        .post(`${BASE_URL}/api/auth/login`, {
+      const { id } = await fetch(`${BASE_URL}/api/auth/login`, {
+        method: 'POST',
+        body: JSON.stringify({
           username,
           password,
           userAgent,
           sessionId,
-        })
-        .then((res) => res.data);
+        }),
+      }).then((res) => res.json());
 
       if (id) {
         setUserId(id);

@@ -4,20 +4,15 @@ import Link from 'next/link';
 import ImageComponent from 'next/image';
 import { useEffect, useState } from 'react';
 import { EUser } from '@/prisma/app/generated/prisma/client';
-import axios from 'axios';
 import { BASE_URL } from '@/utils';
 
 export function FeedUser({ userId }: { userId: string }) {
   const [user, setUser] = useState<EUser | null>(null);
 
   async function fetchUser() {
-    const res = await axios.get(`${BASE_URL}/api/user`, {
-      params: {
-        userId,
-      },
-    });
+    const res = await fetch(`${BASE_URL}/api/user?userId=${userId}`);
 
-    const { user: fetchedUser } = (await res.data) as { user: EUser };
+    const { user: fetchedUser } = (await res.json()) as { user: EUser };
 
     if (fetchedUser) {
       setUser(fetchedUser);

@@ -8,7 +8,7 @@ import { redirect } from 'next/navigation';
 import { connection } from 'next/server';
 import Loading from '@/app/loading';
 
-export const dynamic = "force-dynamic";
+export const dynamic = 'force-dynamic';
 
 export default async function Page() {
   await connection();

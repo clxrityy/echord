@@ -11,7 +11,6 @@ import { sign, verify } from 'jsonwebtoken';
 import { serialize } from 'cookie';
 
 export async function POST(_req: NextRequest) {
-
   const cookieStore = await cookies();
   const isExisting = await checkForExistingSession();
 

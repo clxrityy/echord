@@ -37,10 +37,13 @@ export const Window = ({ sessionId, children }: WindowProps) => {
 
   useEffect(() => {
     async function fetchUserAgent() {
-      const res = await fetch(`/api/session/user-agent?sessionId=${sessionId}`, {
-        cache: 'no-store',
-        method: 'GET',
-      });
+      const res = await fetch(
+        `/api/session/user-agent?sessionId=${sessionId}`,
+        {
+          cache: 'no-store',
+          method: 'GET',
+        }
+      );
       const { userAgent } = await res.json();
       return userAgent;
     }

@@ -1,7 +1,6 @@
 import { db } from '@/lib/db';
 import { BASE_URL, fetchIp } from '@/utils';
 import { getSessionByUserId } from './get';
-import axios from 'axios';
 import { createSession } from './create';
 import { ESession } from '@/prisma/app/generated/prisma/client';
 
@@ -33,10 +32,17 @@ export async function handleCurrentSession(userId?: string) {
     if (currentSession) {
       return currentSession;
     } else {
-      const res = await axios.post(`${BASE_URL}/api/session`, {
-        userId,
+      const res = await fetch(`${BASE_URL}/api/session`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify({
+          userId: userId,
+        }),
       });
-      const { session } = res.data;
+      const { session } = await res.json();
       if (!session) {
         throw new Error('Failed to create session');
       }

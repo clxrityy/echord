@@ -8,7 +8,6 @@ import {
 } from '@/prisma/app/generated/prisma/client';
 import Link from 'next/link';
 import ImageComponent from 'next/image';
-import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
 import { FeedUser } from './User';
@@ -70,14 +69,18 @@ export function FeedItemContainer({
     const toastId = toast.loading('Deleting interaction...');
 
     try {
-      const { status, message, error } = await axios
-        .delete(`${BASE_URL}/api/interaction`, {
-          data: {
-            userId,
-            interactionId: dataId,
-          },
-        })
-        .then((res) => res.data);
+      const { status, message, error } = await fetch(
+        `${BASE_URL}/api/interaction`,
+        {
+          method: 'DELETE',
+          body: JSON.stringify({
+            data: {
+              userId,
+              interactionId: dataId,
+            },
+          }),
+        }
+      ).then((res) => res.json());
 
       if (status !== 200) {
         console.error('Error deleting interaction:', message || error);

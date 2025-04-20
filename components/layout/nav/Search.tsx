@@ -4,7 +4,6 @@ import { useRouter } from 'next/navigation';
 import { BASE_URL, ICONS } from '@/utils';
 import { OutsideClick } from '@/components/ui/wrappers/OutsideClick';
 import { useSession } from '@/contexts/session';
-import axios from 'axios';
 import { Button } from '@/components/ui/Button';
 
 export function Search() {
@@ -17,12 +16,13 @@ export function Search() {
 
   useEffect(() => {
     async function addSearchToSession(search: string) {
-      const res = await axios
-        .post(`${BASE_URL}/api/session/search`, {
+      const res = await fetch(`${BASE_URL}/api/session/search`, {
+        method: 'POST',
+        body: JSON.stringify({
           search: search,
           sessionId: getSessionId(),
-        })
-        .then((res) => res.data);
+        }),
+      }).then((res) => res.json());
 
       return res;
     }

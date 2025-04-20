@@ -4,11 +4,7 @@ import { ImageComponent } from '@/components/ui/Image';
 import { BASE_URL, ICONS } from '@/utils';
 import { useSession } from '@/contexts/session';
 import { useEffect, useCallback } from 'react';
-import axios from 'axios';
-import {
-  EInteraction,
-  EInteractionData,
-} from '@/prisma/app/generated/prisma/client';
+import { EInteractionData } from '@/prisma/app/generated/prisma/client';
 import toast from 'react-hot-toast';
 
 type Props = {
@@ -54,18 +50,18 @@ export function Result({ data, sessionId, userId }: Props) {
   const handleSave = useCallback(async () => {
     const toastId = toast.loading('Saving interaction...');
 
-    const response = await axios.post<{
-      interaction: EInteraction;
-      error?: string;
-    }>(`${BASE_URL}/api/interaction`, {
-      dataType: 'ALBUM',
-      interactionType: 'SAVED',
-      userId: userId,
-      sessionId: sessionId,
-      interactionData: JSON.parse(JSON.stringify(interactionData)),
+    const response = await fetch(`${BASE_URL}/api/interaction`, {
+      method: 'POST',
+      body: JSON.stringify({
+        dataType: 'ALBUM',
+        interactionType: 'SAVED',
+        userId: userId,
+        sessionId: sessionId,
+        interactionData: JSON.parse(JSON.stringify(interactionData)),
+      }),
     });
 
-    const { interaction, error } = response.data;
+    const { interaction, error } = await response.json();
 
     if (error) {
       toast.error(`Failed to save interaction: ${error}`, {
@@ -82,18 +78,18 @@ export function Result({ data, sessionId, userId }: Props) {
   }, [data, sessionId, userId, interactionData, artist.name, title]);
 
   const handleFavorite = useCallback(async () => {
-    const response = await axios.post<{
-      interaction: EInteraction;
-      error?: string;
-    }>(`${BASE_URL}/api/interaction`, {
-      dataType: 'ALBUM',
-      interactionType: 'FAVORITED',
-      userId: userId,
-      sessionId: sessionId,
-      interactionData: JSON.parse(JSON.stringify(interactionData)),
+    const response = await fetch(`${BASE_URL}/api/interaction`, {
+      method: 'POST',
+      body: JSON.stringify({
+        dataType: 'ALBUM',
+        interactionType: 'FAVORITED',
+        userId: userId,
+        sessionId: sessionId,
+        interactionData: JSON.parse(JSON.stringify(interactionData)),
+      }),
     });
 
-    const { interaction, error } = response.data;
+    const { interaction, error } = await response.json();
 
     if (error) {
       console.error('Error saving interaction:', error);

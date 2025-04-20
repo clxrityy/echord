@@ -112,7 +112,7 @@ export default async function RootLayout({
       console.error('Error fetching session:', e);
       return null;
     }
-  }
+  };
   const session = await getSession();
 
   await connection();
