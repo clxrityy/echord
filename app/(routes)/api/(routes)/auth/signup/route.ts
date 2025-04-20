@@ -2,7 +2,7 @@ import { checkUser, createUser } from '@/app/_actions/user';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(req: NextRequest) {
-  const { username, password } = await req.json();
+  const { username, password, sessionId, userAgent } = await req.json();
 
   if (!username || !password) {
     return NextResponse.json(
@@ -12,7 +12,12 @@ export async function POST(req: NextRequest) {
   }
 
   try {
-    const existingUserId = await checkUser(username, password);
+    const existingUserId = await checkUser(
+      username,
+      password,
+      userAgent,
+      sessionId
+    );
 
     if (existingUserId) {
       return NextResponse.json(

@@ -5,6 +5,7 @@ import { useCallback, useState } from 'react';
 import { BASE_URL, DEFAULT_VALUES } from '@/utils';
 import axios from 'axios';
 import toast from 'react-hot-toast';
+import { useWindow } from '@/contexts/window';
 
 export const Signup = ({
   sessionId,
@@ -27,6 +28,8 @@ export const Signup = ({
 
   const { setUserId } = useSession();
   const router = useRouter();
+  const { getUserAgent } = useWindow();
+  const userAgent = getUserAgent();
 
   if (userId) {
     setUserId(userId);
@@ -64,6 +67,8 @@ export const Signup = ({
         .post(`${BASE_URL}/api/auth/signup`, {
           username,
           password,
+          sessionId,
+          userAgent,
         })
         .then((res) => res.data);
 
