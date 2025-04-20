@@ -1,5 +1,4 @@
 import type { Metadata } from 'next';
-import { AR_One_Sans, Tomorrow } from 'next/font/google';
 import './globals.css';
 import { ReactNode, Suspense } from 'react';
 import Skeleton from '@/components/ui/Skeleton';
@@ -12,19 +11,7 @@ import { BASE_URL } from '@/utils';
 import { connection } from 'next/server';
 import { Backdrop } from '@/components/layout/screen/Backdrop';
 import type { Viewport } from 'next';
-
-const AR = AR_One_Sans({
-  subsets: ['latin'],
-  variable: '--font-ar',
-  display: 'swap',
-});
-
-const TMR = Tomorrow({
-  subsets: ['latin'],
-  variable: '--font-tmr',
-  display: 'swap',
-  weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
-});
+import { AR, TMR } from '@/styles/fonts';
 
 export const dynamic = 'force-dynamic'; // Force dynamic rendering
 
