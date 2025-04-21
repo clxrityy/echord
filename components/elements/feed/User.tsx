@@ -10,9 +10,12 @@ export function FeedUser({ userId }: { userId: string }) {
   const [user, setUser] = useState<EUser | null>(null);
 
   async function fetchUser() {
-    const res = await fetch(`${BASE_URL}/api/user`, {
-      body: JSON.stringify({ userId }),
+    const res = await fetch(`${BASE_URL}/api/user?userId=${userId}`, {
       method: 'GET',
+      cache: 'no-store',
+      next: {
+        revalidate: 0,
+      },
       headers: {
         'Content-Type': 'application/json',
       },
@@ -34,7 +37,7 @@ export function FeedUser({ userId }: { userId: string }) {
     if (!user) {
       fetchUser();
     }
-  }, [userId]);
+  }, [userId, user]);
 
   if (user) {
     const { username, avatar } = user;
