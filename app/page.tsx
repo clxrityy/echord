@@ -84,7 +84,7 @@ export default async function Home() {
                                   interaction={interaction}
                                   data={data}
                                   interactionData={interactionData}
-                                  userId={user?.userId ?? user?.userId!}
+                                  userId={user?.userId || ''}
                                   username={
                                     userData.username ? userData.username : null
                                   }
