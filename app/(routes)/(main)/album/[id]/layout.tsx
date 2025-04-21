@@ -1,3 +1,5 @@
+import { checkAlbumFromInteraction } from '@/app/_actions/data';
+import { db } from '@/lib';
 import { Metadata } from 'next';
 import { connection } from 'next/server';
 import { ReactNode } from 'react';
@@ -11,20 +13,7 @@ type Props = {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const id = (await params).id;
 
-  const fetchAlbum = async () => {
-    const res = await fetch(`/api/interaction/album`, {
-      body: JSON.stringify({ id }),
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-
-    const { album } = await res.json();
-    return album;
-  };
-
-  const album = await fetchAlbum();
+  const album = await checkAlbumFromInteraction(id)
 
   if (!album) {
     return {
