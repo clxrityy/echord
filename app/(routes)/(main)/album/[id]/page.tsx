@@ -3,7 +3,7 @@ import { Window } from '@/components/layout/screen/Window';
 import { connection } from 'next/server';
 import { Suspense } from 'react';
 import Loading from '@/app/loading';
-import { getUserSessionId } from '@/lib';
+import { db, getUserSessionId } from '@/lib';
 
 type Props = {
   params: Promise<{
@@ -17,15 +17,11 @@ export default async function Page({ params }: Props) {
 
   const id = (await params).id;
 
-  const fetchAlbum = async () => {
-    const res = await fetch(`/api/interaction/album`, {
-      body: JSON.stringify({ id }),
-    });
-
-    const { album } = await res.json();
-    return album;
-  };
-  const album = await fetchAlbum();
+  const album = await db.eAlbum.findUnique({
+    where: {
+      albumId: id,
+    }
+  });
 
   if (!album) {
     return <h1 className=''>Album not found</h1>;
