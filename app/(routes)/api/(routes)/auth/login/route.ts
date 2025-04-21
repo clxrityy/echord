@@ -1,12 +1,11 @@
 import { checkUser } from '@/app/_actions/user';
-import { EUserAgent } from '@/prisma/app/generated/prisma/client';
+import { updateUserSession } from '@/lib';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(req: NextRequest) {
-  const { username, password, userAgent, sessionId } = (await req.json()) as {
+  const { username, password, sessionId } = (await req.json()) as {
     username: string;
     password: string;
-    userAgent: Partial<EUserAgent>;
     sessionId: string;
   };
 
@@ -18,7 +17,7 @@ export async function POST(req: NextRequest) {
   }
 
   try {
-    const userId = await checkUser(username, password, userAgent, sessionId);
+    const userId = await checkUser(username, sessionId);
 
     if (!userId) {
       return NextResponse.json(
@@ -26,6 +25,8 @@ export async function POST(req: NextRequest) {
         { status: 401 }
       );
     }
+
+    await updateUserSession(req);
 
     return NextResponse.json(
       {

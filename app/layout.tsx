@@ -2,7 +2,6 @@ import type { Metadata } from 'next';
 import './globals.css';
 import { ReactNode, Suspense } from 'react';
 import Skeleton from '@/components/ui/Skeleton';
-import { handleCurrentSession } from '@/app/_actions/session';
 import { SessionProvider } from '@/contexts/session';
 import { Navbar } from '@/components/layout/nav/Navbar';
 import { Toaster } from 'react-hot-toast';
@@ -12,6 +11,8 @@ import { connection } from 'next/server';
 import { Backdrop } from '@/components/layout/screen/Backdrop';
 import type { Viewport } from 'next';
 import { AR, TMR } from '@/styles/fonts';
+import { getUserSessionId } from '@/lib';
+import { getUserBySessionId } from './_actions/user';
 
 export const dynamic = 'force-dynamic'; // Force dynamic rendering
 
@@ -105,17 +106,10 @@ export default async function RootLayout({
 }: Readonly<{
   children: ReactNode;
 }>) {
-  const getSession = async () => {
-    try {
-      return await handleCurrentSession();
-    } catch (e) {
-      console.error('Error fetching session:', e);
-      return null;
-    }
-  };
-  const session = await getSession();
-
   await connection();
+
+  const sessionId = await getUserSessionId();
+  const user = await getUserBySessionId(sessionId || '');
 
   return (
     <html lang='en'>
@@ -182,9 +176,7 @@ export default async function RootLayout({
           <SessionProvider>
             <WindowProvider>
               <Backdrop />
-              <Navbar
-                userId={(session && session.userId) ?? session!.userId!}
-              />
+              <Navbar userId={user?.userId ?? user?.userId!} />
               {children}
             </WindowProvider>
           </SessionProvider>

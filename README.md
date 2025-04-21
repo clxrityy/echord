@@ -45,78 +45,19 @@ A music cataloging, rating, reviewing, and recommendation web app.
 - [x] `/signup` - Sign up
 - [ ] `/logout` - Sign out
 
-#### 19-04-2025 Tweaks
+#### 21-04-2025 Auth Refactor
 
-- [x] Fix duplicate sessions & users
-  - Ensure the session is unique to the user
-  - Ensure the user is unique to the session
-- [x] Fix layout on mobile
-  - [x] Add more padding to the bottom and/or adjust scroll behavior on mobile
-- [x] Fix search API
-  - [x] Basically remove the unnecessary errors from being unauthenticated
-- [x] Tidy up the feed item style
-
-##### Refactor structure and stacking of components (07-04-2025)
-
-- [x] Move feed display only to the home page
-- [x] Refactor a new layout component that uses client capabilities to adjust the layout based on the screen size
-  - [x] ~~Kind of done, doesn't work on mobile yet~~
-    - [x] Add more padding to the bottom and/or adjust scroll behavior on mobile
-- [x] Refactor the feed component to use a grid layout for the home page
-
-#### Hydration error fix ✅
-
-- [x] Fix feed display (server) within `<Window />` (client)
-
-  - [x] ~~**Fix**: Just wrapped the `<Hero />` component within the `<Window />` component. This way the window will still be rendered on the client side, but the feed will be rendered on the server side~~
-
-    - [x] **NOTE:** This was not the actual issue, it was with rendering the database functions within a client component. Fixed by moving the database functions to the server side and passing the data to the client component.
-      <details>
-        <summary><b>Expand</b></summary>
-        
-        - Fixed by using `Promise.all()` to fetch all the data at once and then passing it to the client component. This way the data is fetched on the server side and passed to the client component, which prevents the hydration error.
-
-      ```tsx
-      // app/page.tsx
-      const feedItems = await Promise.all(array); /*
-        - Fetch all the data at once
-        - Pass the data to the client component
-      */
-      ```
-
-      - Also fixed by rendering just the **child** _directly_ within `<FeedList />` instead of a `<template>` element. This allows the `<li />` elements to be rendered within the `<ul />` element, which prevents the hydration error.
-
-      ```tsx
-      // components/(...)/FeedList.tsx
-
-      // BEFORE ❌
-      <ul>
-        {Children.map(children, (child, index) => {
-          if (
-            // index logic for pagination
-          ) {
-            return (
-              <template key={index}>
-                {child}
-              </template>
-            )
-          }
-        })}
-      </ul>
-
-      // AFTER ✅
-      <ul>
-        {Children.map(children, (child, index) => {
-          if (
-            // index logic for pagination
-          ) {
-            return child; // Render the child directly
-          }
-        })}
-      </ul>
-      ```
-
-      </details>
+- [x] Remove `jsonwebtoken` & `cookie` packages
+  - [x] Replaced with `jose`
+    - [x] Use `SignJWT` to create a JWT token
+    - [x] Use `jwtVerify` to verify/decrypt the JWT token
+- [x] No longer create a cookie when handling the database session (anytime a page is loaded).
+  - [x] Remove the `handleSession()` function from the server actions.
+  - [x] Instead, create a JWT token and store it in a cookie upon authentication.
+  - [x] Use middleware to update the session.
+    - [x] Get the session from the cookie
+    - [x] Decrypt the JWT token
+    - [x] Update the expiration date of the session
 
 ##### Features
 

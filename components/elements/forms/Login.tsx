@@ -1,7 +1,6 @@
 'use client';
 
 import { useSession } from '@/contexts/session';
-import { useWindow } from '@/contexts/window';
 import { BASE_URL, ICONS } from '@/utils';
 import { useRouter } from 'next/navigation';
 import { useCallback, useState } from 'react';
@@ -17,10 +16,6 @@ export const Login = ({
   const [username, setUsername] = useState<string>('');
   const [password, setPassword] = useState<string>('');
 
-  const { getUserAgent } = useWindow();
-
-  const userAgent = getUserAgent();
-
   const { setUserId } = useSession();
   const router = useRouter();
 
@@ -32,15 +27,16 @@ export const Login = ({
   const handleLogin = useCallback(async () => {
     const toastId = toast.loading('Logging in...');
     try {
-      const { id } = await fetch(`${BASE_URL}/api/auth/login`, {
+      const res = await fetch(`${BASE_URL}/api/auth/login`, {
         method: 'POST',
         body: JSON.stringify({
           username,
           password,
-          userAgent,
           sessionId,
         }),
-      }).then((res) => res.json());
+      });
+
+      const { id } = (await res.json()) as { id: string | null };
 
       if (id) {
         setUserId(id);
@@ -56,6 +52,8 @@ export const Login = ({
     } catch (e) {
       console.error('Login error:', e);
       toast.error('Login error. Please try again.');
+    } finally {
+      toast.dismiss(toastId);
     }
   }, [username, password, sessionId, setUserId]);
 

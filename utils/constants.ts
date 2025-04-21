@@ -46,6 +46,7 @@ export const ENV = {
   COOKIE_NAME: process.env.COOKIE_NAME!,
   JWT_SECRET: process.env.JWT_SECRET!,
   CRON_SECRET: process.env.CRON_SECRET!,
+  ENCRYPTION_SECRET: process.env.ENCRYPTION_KEY!,
 };
 
 export const DEFAULT_VALUES = {

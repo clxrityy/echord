@@ -1,8 +1,10 @@
+import { getSessionByUserId } from '@/app/_actions/session';
 import { checkUser, createUser } from '@/app/_actions/user';
+import { buildUserSession } from '@/lib';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(req: NextRequest) {
-  const { username, password, sessionId, userAgent } = await req.json();
+  const { username, password, sessionId } = await req.json();
 
   if (!username || !password) {
     return NextResponse.json(
@@ -11,13 +13,45 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  try {
-    const existingUserId = await checkUser(
+  if (!sessionId) {
+    const user = await createUser(username, password);
+    if (!user) {
+      return NextResponse.json(
+        { error: 'Failed to create user' },
+        { status: 500 }
+      );
+    }
+
+    const session = await getSessionByUserId(user.userId);
+
+    if (!session) {
+      return NextResponse.json(
+        { error: 'Failed to retrieve session from user ID' },
+        { status: 500 }
+      );
+    }
+
+    const newSession = await buildUserSession({
+      sessionId: session.sessionId,
+      userId: user.userId,
       username,
-      password,
-      userAgent,
-      sessionId
+    });
+
+    if (!newSession) {
+      return NextResponse.json(
+        { error: 'Failed to create session' },
+        { status: 500 }
+      );
+    }
+
+    return NextResponse.json(
+      { message: 'User created successfully', id: user.userId },
+      { status: 201 }
     );
+  }
+
+  try {
+    const existingUserId = await checkUser(username, sessionId);
 
     if (existingUserId) {
       return NextResponse.json(
@@ -29,17 +63,31 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const userId = await createUser(username, password);
+    const user = await createUser(username, password);
 
-    if (!userId) {
+    if (!user) {
       return NextResponse.json(
         { error: 'Failed to create user' },
         { status: 500 }
       );
     }
 
+    // Create a session for the user
+    const session = await buildUserSession({
+      sessionId,
+      userId: user.userId,
+      username,
+    });
+
+    if (!session) {
+      return NextResponse.json(
+        { error: 'Failed to create session' },
+        { status: 500 }
+      );
+    }
+
     return NextResponse.json(
-      { message: 'User created successfully', id: userId },
+      { message: 'User created successfully', id: user.userId },
       { status: 201 }
     );
   } catch (e) {

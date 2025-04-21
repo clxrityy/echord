@@ -24,7 +24,7 @@ export function Navbar({ userId }: { userId?: string | undefined }) {
     if (userId && userId !== getUserId()) {
       setUserId(userId);
     }
-  }, [userId, getUserId]);
+  }, [userId, getUserId()]);
 
   const handleProfileClick = () => router.push(`/profile/${userId}`);
   const handleLoginClick = () => router.push('/login');

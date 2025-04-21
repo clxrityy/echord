@@ -1,10 +1,9 @@
 import { Album } from '@/components/elements/data/Album';
 import { Window } from '@/components/layout/screen/Window';
-import { handleCurrentSession } from '@/app/_actions/session';
-import { db } from '@/lib/db';
 import { connection } from 'next/server';
 import { Suspense } from 'react';
 import Loading from '@/app/loading';
+import { getUserSessionId } from '@/lib';
 
 type Props = {
   params: Promise<{
@@ -14,16 +13,19 @@ type Props = {
 
 export default async function Page({ params }: Props) {
   await connection();
-
-  const session = await handleCurrentSession();
+  const sessionId = await getUserSessionId();
 
   const id = (await params).id;
 
-  const album = await db.eAlbum.findFirst({
-    where: {
-      albumId: id,
-    },
-  });
+  const fetchAlbum = async () => {
+    const res = await fetch(`/api/interaction/album`, {
+      body: JSON.stringify({ id }),
+    });
+
+    const { album } = await res.json();
+    return album;
+  };
+  const album = await fetchAlbum();
 
   if (!album) {
     return <h1 className=''>Album not found</h1>;
@@ -31,7 +33,7 @@ export default async function Page({ params }: Props) {
 
   return (
     <Suspense fallback={<Loading />}>
-      <Window sessionId={session.sessionId || ''}>
+      <Window sessionId={sessionId || ''}>
         <Album album={album} />
       </Window>
     </Suspense>

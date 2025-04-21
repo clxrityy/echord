@@ -1,12 +1,12 @@
 import { Settings } from '@/components/elements/user/Settings';
 import { Favorites } from '@/components/elements/user/Favorites';
 import Skeleton from '@/components/ui/Skeleton';
-import { handleCurrentSession } from '@/app/_actions/session';
-import { db } from '@/lib/db';
 import { Suspense } from 'react';
 import { SavesGrid } from '@/components/elements/user/save/SavesGrid';
 import { Window } from '@/components/layout/screen/Window';
 import Loading from '@/app/loading';
+import { db, getUserSessionId } from '@/lib';
+import { getUserBySessionId } from '@/app/_actions/user';
 
 type Props = {
   params: Promise<{
@@ -17,19 +17,15 @@ type Props = {
 export default async function Page({ params }: Props) {
   const id = (await params).id;
 
-  const profileUser = await db.eUser.findFirst({
+  const profileUser = await db.eUser.findUnique({
     where: {
       userId: id,
     },
-    include: {
-      session: true,
-      interactions: true,
-    },
   });
 
-  const session = await handleCurrentSession(id);
-
-  const isCurrentUser = session.userId === profileUser?.userId;
+  const sessionId = await getUserSessionId();
+  const user = await getUserBySessionId(sessionId || '');
+  const isCurrentUser = user?.userId === profileUser?.userId;
 
   if (!profileUser) {
     return <h1 className='mt-30'>User not found</h1>;
@@ -81,7 +77,7 @@ export default async function Page({ params }: Props) {
 
   return (
     <Suspense fallback={<Loading />}>
-      <Window sessionId={session.sessionId || ''}>
+      <Window sessionId={sessionId || ''}>
         <div className='w-full flex flex-col gap-10 items-center justify-around'>
           <div className='flex items-center justify-start gap-2 w-fit'>
             {isCurrentUser && (

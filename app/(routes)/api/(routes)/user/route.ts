@@ -1,31 +1,38 @@
+import { getUserSessionId } from '@/lib';
 import { db } from '@/lib/db';
 import { NextRequest, NextResponse } from 'next/server';
 
-export async function GET(req: NextRequest) {
-  const { searchParams } = new URL(req.url);
-  const userId = searchParams.get('userId');
+export async function GET(_req: NextRequest) {
+  const sessionId = await getUserSessionId();
 
-  if (!userId) {
-    return NextResponse.json({ error: 'No userId provided' }, { status: 400 });
+  if (!sessionId) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
-  try {
-    const user = await db.eUser.findFirst({
-      where: {
-        userId: userId,
-      },
-    });
+  const session = await db.eSession.findUnique({
+    where: {
+      sessionId: sessionId,
+    },
+  });
 
-    if (!user) {
-      return NextResponse.json({ error: 'User not found' }, { status: 404 });
-    }
-
-    return NextResponse.json({ user }, { status: 200 });
-  } catch (error) {
-    console.error('Error fetching user:', error);
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    );
+  if (!session) {
+    return NextResponse.json({ error: 'Session not found' }, { status: 404 });
   }
+
+  const user = await db.eUser.findUnique({
+    where: {
+      userId: session.userId,
+    },
+  });
+
+  if (!user) {
+    return NextResponse.json({ error: 'User not found' }, { status: 404 });
+  }
+
+  return NextResponse.json(
+    {
+      user: user,
+    },
+    { status: 200 }
+  );
 }

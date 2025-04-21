@@ -16,6 +16,9 @@ export function Search() {
 
   useEffect(() => {
     async function addSearchToSession(search: string) {
+      if (getSessionId() === '') {
+        return;
+      }
       const res = await fetch(`${BASE_URL}/api/session/search`, {
         method: 'POST',
         body: JSON.stringify({

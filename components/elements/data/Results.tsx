@@ -6,6 +6,7 @@ import { useSession } from '@/contexts/session';
 import { useEffect, useCallback } from 'react';
 import { EInteractionData } from '@/prisma/app/generated/prisma/client';
 import toast from 'react-hot-toast';
+import { Button } from '@/components/ui/Button';
 
 type Props = {
   data: DEEZER_SEARCH_DATA;
@@ -91,15 +92,13 @@ export function Result({ data, sessionId, userId }: Props) {
 
     const { interaction, error } = await response.json();
 
-    if (error) {
-      console.error('Error saving interaction:', error);
-      toast.error('Failed to save interaction');
-    }
-
     if (interaction) {
       toast.success(`Favorited ${title} by ${artist.name}`, {
         icon: <ICONS.favorite />,
       });
+    } else if (error) {
+      console.error('Error saving interaction:', error);
+      toast.error('Failed to save interaction');
     }
   }, [data, sessionId, userId, interactionData]);
 
@@ -123,22 +122,26 @@ export function Result({ data, sessionId, userId }: Props) {
       {userId && (
         <section className='absolute bg-zinc-900/5 rounded-md transition-opacity duration-200 right-0 top-0 w-full h-full flex items-center justify-center'>
           <div className='flex items-center justify-end gap-2 p-2 w-full *:hover:text-gray-300 *:focus:text-blue-400 mr-5'>
-            <button role='button' title='Save to Library' onClick={handleSave}>
+            <Button
+              role='button'
+              title='Save to Library'
+              onClick={async () => await handleSave()}
+            >
               <ICONS.save />{' '}
               <span className='sr-only'>
                 Save {title} by {artist.name} to your library
               </span>
-            </button>
-            <button
+            </Button>
+            <Button
               role='button'
               title='Add to Favorites'
-              onClick={handleFavorite}
+              onClick={async () => await handleFavorite()}
             >
               <ICONS.favorite />{' '}
               <span className='sr-only'>
                 Add {title} by {artist.name} to your favorites
               </span>
-            </button>
+            </Button>
           </div>
         </section>
       )}

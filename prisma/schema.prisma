@@ -100,13 +100,13 @@ model EUserAgent {
 
 model ESession {
   id          String       @id @default(cuid())
-  userId      String?      @unique
+  userId      String       @unique
   sessionId   String       @unique
   createdAt   DateTime     @default(now())
   updatedAt   DateTime     @default(now())
   ipAddresses String[]
   data        EData[]
-  EUser       EUser?       @relation(fields: [userId], references: [userId], onDelete: Cascade)
+  EUser       EUser        @relation(fields: [userId], references: [userId], onDelete: Cascade)
   userAgent   EUserAgent[]
 }
 

@@ -99,14 +99,8 @@ export async function addUserAgentToSession(
         browser: `${userAgent.browser.name} ${userAgent.browser.version}`,
         device: `${userAgent.device.vendor} ${userAgent.device.model} ${userAgent.device.type}`,
         session: {
-          connectOrCreate: {
-            create: {
-              sessionId: session.sessionId,
-              updatedAt: new Date(),
-            },
-            where: {
-              sessionId: session.sessionId,
-            },
+          connect: {
+            sessionId: session.sessionId,
           },
         },
       },

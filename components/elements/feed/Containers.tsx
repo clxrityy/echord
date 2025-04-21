@@ -12,6 +12,7 @@ import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
 import { FeedUser } from './User';
 import { ReactNode } from 'react';
+import { Button } from '@/components/ui/Button';
 
 export function FeedUserContainer({ children }: { children: ReactNode }) {
   return (
@@ -163,14 +164,14 @@ export function FeedItemContainer({
         </div>
         <div className='asbolute top-0 right-2 ml-4 px-2'>
           {isCurrentUser && (
-            <button
+            <Button
               type='button'
               title='delete'
               className='text-gray-300/90 hover:text-red-400 focus:text-red-500 focus:ring focus:ring-offset-0 focus:ring-red-400/25 focus:ring-offset-white/5 rounded-2xl transition-colors ease-in-out px-1 py-1'
               onClick={async () => await handleDelete()}
             >
               <ICONS.trash className='h-4 w-4 md:h-5 md:w-5 4xl:h-6 4xl:w-6' />
-            </button>
+            </Button>
           )}
         </div>
       </div>

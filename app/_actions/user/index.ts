@@ -1,39 +1,67 @@
 import { db } from '@/lib/db';
-import { handleCurrentSession } from '../session';
 import { v4 as uuidv4 } from 'uuid';
-import { decrypt, encrypt } from '@/utils';
-import { EUser, EUserAgent } from '@/prisma/app/generated/prisma/client';
-
-export async function detectCurrentUserBySession(): Promise<string> {
-  const session = await handleCurrentSession();
-
-  if (!session) {
-    throw new Error('No active session found');
-  }
-
-  const userId = session.userId;
-
-  if (!userId) {
-    return '';
-  } else {
-    return userId;
-  }
-}
+import { encrypt, fetchIp } from '@/utils';
+import { EUser } from '@/prisma/app/generated/prisma/client';
+import { getUserSession, logoutUserSession } from '@/lib';
 
 export async function createUser(
   username: string,
   pass: string
-): Promise<string> {
-  const existingUser = await detectCurrentUserBySession();
+): Promise<EUser | undefined> {
+  const existingUser = await getUserSession();
 
-  if (existingUser.length > 1) {
-    return existingUser;
-  }
+  const newUserId = uuidv4();
+  const sessionId = uuidv4();
 
-  const session = await handleCurrentSession();
+  if (existingUser) {
+    const dbUser = await db.eUser.findFirst({
+      where: {
+        username: username,
+        session: {
+          sessionId: sessionId,
+        },
+      },
+    });
 
-  if (!session) {
-    throw new Error('Failed to create session');
+    if (dbUser) {
+      return dbUser;
+    }
+
+    try {
+      await logoutUserSession();
+
+      await db.eUser.deleteMany({
+        where: {
+          session: {
+            sessionId: sessionId,
+          },
+        },
+      });
+
+      const usr = await db.eUser.create({
+        data: {
+          userId: newUserId,
+          username: username,
+          password: encrypt(pass),
+          session: {
+            connectOrCreate: {
+              where: {
+                sessionId: sessionId,
+              },
+              create: {
+                sessionId: sessionId,
+                ipAddresses: [await fetchIp()],
+              },
+            },
+          },
+        },
+      });
+
+      return usr;
+    } catch (e) {
+      console.error('Error creating user:', e);
+      throw new Error('Database error');
+    }
   }
 
   try {
@@ -41,22 +69,21 @@ export async function createUser(
       data: {
         userId: uuidv4(),
         username: username,
+        password: encrypt(pass),
         session: {
           connectOrCreate: {
             where: {
-              sessionId: session.sessionId,
+              sessionId: sessionId,
             },
             create: {
-              sessionId: session.sessionId,
-              ipAddresses: session.ipAddresses,
-              updatedAt: new Date(),
+              sessionId: sessionId,
+              ipAddresses: [await fetchIp()],
             },
           },
         },
-        password: encrypt(pass),
       },
     });
-    return user.userId;
+    return user;
   } catch (e) {
     console.error('Error creating user:', e);
     throw new Error('Database error');
@@ -65,63 +92,48 @@ export async function createUser(
 
 export async function checkUser(
   username: string,
-  pass: string,
-  userAgent: Partial<EUserAgent>,
-  sessionId?: string
+  sessionId: string
 ): Promise<string | undefined> {
-  const existingUser = await detectCurrentUserBySession();
+  const existingUser = await getUserSession();
 
-  if (existingUser.length > 1) {
-    return existingUser;
-  }
-
-  try {
-    const user = await db.eUser.findFirst({
+  if (existingUser) {
+    const dbUser = await db.eUser.findFirst({
       where: {
         username: username,
         session: {
-          userAgent: {
-            every: {
-              os: userAgent.os,
-              browser: userAgent.browser,
-              device: userAgent.device,
-            },
-          },
           sessionId: sessionId,
         },
       },
     });
 
-    if (user) {
-      if (decrypt(user.password) === pass) {
-        const session = await handleCurrentSession();
-
-        if (!session) {
-          throw new Error('Failed to create session');
-        }
-
-        await db.eSession.update({
-          where: {
-            sessionId: session.sessionId,
-          },
-          data: {
-            userId: user.userId,
-            ipAddresses: {
-              set: session.ipAddresses,
-            },
-          },
-        });
-
-        return user.userId;
-      } else {
-        return await createUser(username, pass);
-      }
-    } else {
-      return undefined;
+    if (dbUser) {
+      return dbUser.userId;
     }
-  } catch (e) {
-    console.error('Error checking user:', e);
-    throw new Error('Database error');
+
+    const user = await getUserBySessionId(sessionId);
+
+    if (user) {
+      await db.eUser.deleteMany({
+        where: {
+          session: {
+            sessionId: sessionId,
+          },
+        },
+      });
+    }
+  }
+
+  const user = await db.eUser.findFirst({
+    where: {
+      username: username,
+      session: {
+        sessionId: sessionId,
+      },
+    },
+  });
+
+  if (!user) {
+    return undefined;
   }
 }
 

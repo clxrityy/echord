@@ -1,31 +1,33 @@
 import { Login } from '@/components/elements/forms/Login';
 import { Window } from '@/components/layout/screen/Window';
 import Skeleton from '@/components/ui/Skeleton';
-import { handleCurrentSession } from '@/app/_actions/session';
 import Link from 'next/link';
 import { Suspense } from 'react';
 import { redirect } from 'next/navigation';
 import { connection } from 'next/server';
 import Loading from '@/app/loading';
+import { getUserSessionId } from '@/lib';
+import { getUserBySessionId } from '@/app/_actions/user';
 
 export const dynamic = 'force-dynamic';
 
 export default async function Page() {
   await connection();
-  const session = await handleCurrentSession();
+  const sessionId = await getUserSessionId();
+  const user = await getUserBySessionId(sessionId || '');
 
-  if (session.userId) {
-    return redirect(`/profile/${session.userId}`);
+  if (user) {
+    return redirect(`/profile/${user.userId}`);
   }
 
   return (
     <Suspense fallback={<Loading />}>
-      <Window sessionId={session.sessionId || ''}>
+      <Window sessionId={sessionId || ''}>
         <div className='w-full h-full mx-auto flex items-center justify-start'>
           <div className='flex flex-col w-full h-full mx-auto gap-6 items-center justify-center'>
             <h2>Login</h2>
             <Suspense fallback={<Skeleton />}>
-              <Login sessionId={session.sessionId} userId={session.userId} />
+              <Login sessionId={sessionId ?? sessionId!} />
             </Suspense>
             <Link
               href={'/signup'}
