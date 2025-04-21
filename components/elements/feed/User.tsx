@@ -10,7 +10,13 @@ export function FeedUser({ userId }: { userId: string }) {
   const [user, setUser] = useState<EUser | null>(null);
 
   async function fetchUser() {
-    const res = await fetch(`${BASE_URL}/api/user?userId=${userId}`);
+    const res = await fetch(`${BASE_URL}/api/user`, {
+      body: JSON.stringify({ userId }),
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
 
     const { user: fetchedUser } = (await res.json()) as { user: EUser };
 
