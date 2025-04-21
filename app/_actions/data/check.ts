@@ -46,8 +46,44 @@ export async function checkAlbumFromInteraction(id: string) {
       });
     }
 
-    return data;
+    const interactionData = await db.eInteractionData.findFirst({
+      where: {
+        dataId: id,
+      },
+    });
+
+    if (!interactionData) {
+      return null;
+    }
+
+    return await db.eAlbum.create({
+      data: {
+        albumId: id,
+        title: interactionData.title!,
+        artistName: interactionData.artistName!,
+        imageUrl: interactionData.imageUrl,
+        updatedAt: new Date(),
+      },
+    });
   }
 
-  return interaction;
+  const interactionData = await db.eInteractionData.findFirst({
+    where: {
+      dataId: interaction.dataId,
+    }
+  });
+
+  if (!interactionData) {
+    return null;
+  }
+
+  return await db.eAlbum.create({
+    data: {
+      albumId: id,
+      title: interactionData.title!,
+      artistName: interactionData.artistName!,
+      imageUrl: interactionData.imageUrl,
+      updatedAt: new Date(),
+    },
+  });
 }
