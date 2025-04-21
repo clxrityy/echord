@@ -71,6 +71,11 @@ export function FeedItemContainer({
   async function handleDelete() {
     const toastId = toast.loading('Deleting interaction...');
 
+    if (!userId) {
+      toast.error('User not found', { id: toastId });
+      return;
+    }
+    
     try {
       const { status, message, error } = await fetch(
         `${BASE_URL}/api/interaction`,
