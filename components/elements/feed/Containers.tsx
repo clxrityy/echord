@@ -33,6 +33,7 @@ export interface FeedItemContainerProps {
   dataType: EDataType;
   interactionType: EInteractionType;
   isCurrentUser: boolean;
+  interactionUserId: StringOrUndefined;
 }
 
 export function FeedItemContainer({
@@ -46,6 +47,7 @@ export function FeedItemContainer({
   // dataType,
   interactionType,
   isCurrentUser,
+  interactionUserId,
 }: FeedItemContainerProps) {
   const isToday =
     new Date(createdAt).toLocaleDateString('en-US') ===
@@ -110,7 +112,7 @@ export function FeedItemContainer({
           <div className='flex items-start justify-start gap-4 w-full flex-col md:flex-row'>
             <FeedUserContainer>
               <Icon className='h-7 w-7 lg:h-9 lg:w-9 text-blue-400/70 rounded-full shadow' />
-              {userId && <FeedUser userId={userId} />}
+              {interactionUserId && <FeedUser userId={interactionUserId} />}
             </FeedUserContainer>
             <div className='flex items-start justify-center gap-2 h-full lg:flex-col 2xl:flex-row'>
               <span className='text-xs md:text-sm text-gray-400'>

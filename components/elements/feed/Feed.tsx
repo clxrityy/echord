@@ -59,6 +59,7 @@ export function FeedItem({
               albumName && albumName !== 'undefined' ? albumName : undefined
             }
             dataId={dataId}
+            interactionUserId={interactionUserId}
           />
           <span className='sr-only'>
             {username ? username : 'Unknown User'} favorited{' '}
@@ -76,6 +77,7 @@ export function FeedItem({
           fallback={<Skeleton className='w-[5rem] h-full rounded-md' />}
         >
           <FeedItemContainer
+            interactionUserId={interactionUserId}
             isCurrentUser={isCurrentUser}
             interactionType='SAVED'
             dataType={dataType}
