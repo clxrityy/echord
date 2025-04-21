@@ -14,7 +14,7 @@ export default function NotFound() {
           <Button>
             <Link
               href={'/'}
-              className='flex items-center justify-center bg-[var(--color-blue-popsicle)]/25 hover:bg-[var(--color-blue-popsicle)]/50 focus:bg-[var(--color-blue-popsicle)]/75 transition-colors focus:ring ease-out px-6 py-2 rounded-lg'
+              className='flex items-center justify-center bg-blue-500 text-white hover:bg-blue-600 duration-200 transition-colors focus:ring ease-out px-6 py-2 rounded-lg'
             >
               <ICONS.home className='w-8 h-8' />
               <span className='sr-only'>Go to home page</span>
