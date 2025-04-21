@@ -45,7 +45,7 @@ A music cataloging, rating, reviewing, and recommendation web app.
 - [x] `/signup` - Sign up
 - [ ] `/logout` - Sign out
 
-#### 21-04-2025 Auth Refactor
+#### 21-04-2025 Auth Refactor [commit](https://github.com/clxrityy/echord/commit/b6afe3ea49b85a9476ac2d76f1a9c4b68015380f)
 
 - [x] Remove `jsonwebtoken` & `cookie` packages
   - [x] Replaced with `jose`
