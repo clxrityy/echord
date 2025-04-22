@@ -15,8 +15,14 @@ export function Tooltip({
   return (
     <div
       className='relative inline-block'
-      onMouseEnter={() => setIsVisible(true)}
-      onMouseLeave={() => setIsVisible(false)}
+      onMouseEnter={(e) => {
+        e.stopPropagation();
+        setIsVisible(true);
+      }}
+      onMouseLeave={(e => {
+        e.stopPropagation();
+        setIsVisible(false);
+      })}
     >
       {children}
       {isVisible && (
