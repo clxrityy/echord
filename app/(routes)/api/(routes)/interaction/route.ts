@@ -4,6 +4,8 @@ import {
   handleInteraction,
   InteractionProps,
 } from '@/app/_actions';
+import { db } from '@/lib';
+import { Interaction } from '@/types';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(req: NextRequest) {
@@ -80,6 +82,52 @@ export async function DELETE(req: NextRequest) {
     console.error('Error deleting interaction:', e);
     return NextResponse.json(
       { error: 'Failed to delete interaction' },
+      { status: 500 }
+    );
+  }
+}
+
+export async function GET(req: NextRequest) {
+  const { searchParams } = new URL(req.url);
+  const interactionId = searchParams.get('id');
+
+  if (!interactionId) {
+    return NextResponse.json(
+      { error: 'Missing required fields' },
+      { status: 400 }
+    );
+  }
+
+  try {
+    const interaction: Interaction = await db.eInteraction.findUnique({
+      where: {
+        id: interactionId,
+      },
+      include: {
+        user: true,
+        eAlbum: true,
+        eTrack: true,
+        eData: true,
+      }
+    });
+
+    if (!interaction) {
+      return NextResponse.json(
+        { error: 'Interaction not found' },
+        { status: 404 }
+      );
+    }
+
+    return NextResponse.json(
+      {
+        interaction,
+      },
+      { status: 200 }
+    );
+  } catch (e) {
+    console.error('Error fetching interaction:', e);
+    return NextResponse.json(
+      { error: 'Failed to fetch interaction' },
       { status: 500 }
     );
   }
