@@ -88,9 +88,7 @@ export default async function Page({ params }: Props) {
                 />
               </Suspense>
             )}
-            <div className='flex flex-row items-center gap-2'>
-              <h1 className='text-2xl font-bold'>{profileUser.username}</h1>
-            </div>
+            <h1 className='text-2xl font-bold'>{profileUser.username}</h1>
             {/**
              * - Profile data (bio, etc.)
              */}
