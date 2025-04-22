@@ -24,7 +24,7 @@ export function FeedItem({
   userId,
   username,
 }: FeedItemProps) {
-  const { createdAt, interactionType, userId: interactionUserId } = interaction;
+  const { createdAt, interactionType, userId: interactionUserId, id: interactionId } = interaction;
   const {
     imageUrl,
     title,
@@ -45,6 +45,7 @@ export function FeedItem({
           fallback={<Skeleton className='w-[5rem] h-full rounded-md' />}
         >
           <FeedItemContainer
+            interactionId={interactionId}
             isCurrentUser={isCurrentUser}
             interactionType='FAVORITED'
             dataType={dataType}
@@ -77,6 +78,7 @@ export function FeedItem({
           fallback={<Skeleton className='w-[5rem] h-full rounded-md' />}
         >
           <FeedItemContainer
+            interactionId={interactionId}
             interactionUserId={interactionUserId}
             isCurrentUser={isCurrentUser}
             interactionType='SAVED'
