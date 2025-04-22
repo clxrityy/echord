@@ -2,13 +2,13 @@ import {
   FeedList,
   FeedListItemSkeleton,
   FeedListItem,
-} from '@/components/elements/feed/FeedList';
+  FeedItem
+} from '@/components/elements/feed';
 import { Hero } from '@/components/elements/Hero';
 import { Window } from '@/components/layout/screen/Window';
 import Skeleton from '@/components/ui/Skeleton';
 import { Suspense } from 'react';
 import { BASE_URL, FEED_ITEMS_PER_PAGE } from '@/utils';
-import { FeedItem } from '../components/elements/feed/Feed';
 import Loading from './loading';
 import {
   EData,
@@ -17,7 +17,7 @@ import {
   EUser,
 } from '@/prisma/app/generated/prisma/client';
 import { getUserSessionId } from '@/lib';
-import { getUserBySessionId } from './_actions/user';
+import { getUserBySessionId } from '@/app/_actions';
 
 export default async function Home() {
   const sessionId = await getUserSessionId();
