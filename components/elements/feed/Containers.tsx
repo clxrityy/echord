@@ -11,7 +11,8 @@ import ImageComponent from 'next/image';
 import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
 import { FeedUser } from './User';
-import { ReactNode, Suspense } from 'react';
+import { ReactNode, Suspense, useCallback, useState } from 'react';
+import { InteractionModal } from '../modals/InteractionModal';
 
 export function FeedUserContainer({ children }: { children: ReactNode }) {
   return (
@@ -33,6 +34,7 @@ export interface FeedItemContainerProps {
   interactionType: EInteractionType;
   isCurrentUser: boolean;
   interactionUserId: StringOrUndefined;
+  interactionId: string;
 }
 
 export function FeedItemContainer({
@@ -47,12 +49,19 @@ export function FeedItemContainer({
   interactionType,
   isCurrentUser,
   interactionUserId,
+  interactionId,
 }: FeedItemContainerProps) {
   const isToday =
     new Date(createdAt).toLocaleDateString('en-US') ===
     new Date().toLocaleDateString('en-US');
   const isSameYear =
     new Date(createdAt).getFullYear() === new Date().getFullYear();
+
+    const [isOpen, setIsOpen] = useState<boolean>(false);
+
+  const handleClose = useCallback(() => {
+    setIsOpen(false);
+  }, []);
 
   const interactionTypeIcon = () => {
     switch (interactionType) {
@@ -127,6 +136,7 @@ export function FeedItemContainer({
   }
 
   return (
+    <>
     <div className='flex items-start justify-start lg:justify-center 2xl:justify-start gap-2 w-full sm:w-2/3 md:w-1/2 lg:w-[90%] xl:w-full relative pb-8 border-l-4 pl-6 border-white/25 rounded-l-sm bg-[var(--color-blue-pastelic-pale)]/[4.25%] px-10 py-4 shadow-2xl drop-shadow-sm drop-shadow-gray-600/30 mx-2'>
       <div className='flex flex-col items-start justify-center w-full gap-4'>
         <div className='flex flex-col items-center justify-start w-fit gap-5'>
@@ -200,9 +210,9 @@ export function FeedItemContainer({
       </div>
       <div className='absolute flex flex-col items-end right-0 h-full'>
         <div className='absolute bottom-5 right-2 ml-4'>
-          <Link href={`/feed/${dataId}`} prefetch={false}>
-            <ICONS.link className='h-4 w-4 md:h-5 md:w-5 2xl:h-6 2xl:w-6 text-gray-300/90 hover:text-purple-400 transition-colors ease-in-out' />
-          </Link>
+          <Button onClick={() => setIsOpen((prev) => !prev)} className='h-4 w-4 md:h-5 md:w-5 2xl:h-6 2xl:w-6 text-gray-300/90 hover:text-purple-300/90 focus:text-purple-400/80 focus:scale-105 duration-100 transition-all ease-in-out'>
+            <ICONS.link className='' />
+          </Button>
         </div>
         <div className='asbolute top-0 right-2 ml-4 px-2'>
           {isCurrentUser && (
@@ -220,5 +230,9 @@ export function FeedItemContainer({
         </div>
       </div>
     </div>
+    <div className='absolute'>
+      <InteractionModal onClose={handleClose} open={isOpen} title={title ?? ""} interactionId={interactionId} />
+    </div>
+    </>
   );
 }
