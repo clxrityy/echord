@@ -1,0 +1,8 @@
+User-agent: Googlebot
+Disallow: /api/*
+
+User-agent: *
+Allow: /
+
+Sitemap: https://echord.uk/sitemap.xml
+Sitemap: https://www.echord.uk/sitemap.xml
