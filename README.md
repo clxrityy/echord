@@ -9,10 +9,12 @@ A music cataloging, rating, reviewing, and recommendation web app.
 - [ ] Ratings !!!
 - [ ] Reviews !!!
 - [x] `/` - Home (Feed)
-  - [ ] `/feed/[id]` - Specific feed item
+      ~~- [ ] `/feed/[id]` - Specific feed item~~
   - [x] Pagination
 - [x] `/search/[id]` - Search
-  - [ ] Pagination
+  - [x] Search for albums
+  - [x] Search for tracks
+  - [ ] Search for users
 - [ ] Item routes
   - [x] `/album/[id]` - Album
     - [ ] Album details
@@ -26,6 +28,7 @@ A music cataloging, rating, reviewing, and recommendation web app.
     - [ ] Track favorites
 - [x] `/profile/[id]` - User profiles
   - [ ] User settings
+    - [x] Open settings modal
     - [ ] Change password
     - [ ] Change username
     - [ ] Change avatar
@@ -43,7 +46,7 @@ A music cataloging, rating, reviewing, and recommendation web app.
   - [ ] Connect with Spotify / Apple Music
 - [x] `/login` - Sign in
 - [x] `/signup` - Sign up
-- [ ] `/logout` - Sign out
+- [x] `/logout` - Sign out
 
 #### 21-04-2025 Auth Refactor [commit](https://github.com/clxrityy/echord/commit/b6afe3ea49b85a9476ac2d76f1a9c4b68015380f)
 
@@ -66,7 +69,7 @@ A music cataloging, rating, reviewing, and recommendation web app.
   - [ ] Show the most recent activity from users you follow
   - [x] Show the most recent activity from all users
   - [ ] Show your most recent activity on your own profile
-- [ ] Open feed items in a modal
+- [x] Open feed items in a modal
 - [x] Ability to remove your own feed items
 - [x] Remove your own favorited/saved songs
 - [ ] Click on a liked song (on someone's profile) to open a modal with the track
@@ -80,3 +83,4 @@ A music cataloging, rating, reviewing, and recommendation web app.
 - [ ] Randomly recommend other user's feed based on your interactions
 
 - [ ] Make it so the average rating is shown by color gradient ranking system for albums and/or tracks
+- [ ] Ability to customize/move album images from your saves on your profile (react draggable)
