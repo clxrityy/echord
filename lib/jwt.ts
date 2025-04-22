@@ -1,4 +1,4 @@
-import { ENV } from '../utils/constants';
+import { ENV } from '@/utils';
 import { jwtVerify, SignJWT } from 'jose';
 
 const secret = ENV.JWT_SECRET;

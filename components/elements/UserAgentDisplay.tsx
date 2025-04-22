@@ -2,7 +2,7 @@
 
 import { UserAgent } from '@/types';
 import { useEffect, useState } from 'react';
-import Skeleton from '../ui/Skeleton';
+import Skeleton from '@/components/ui/Skeleton';
 import toast from 'react-hot-toast';
 
 export const UserAgentDisplay = () => {

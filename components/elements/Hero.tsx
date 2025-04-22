@@ -1,5 +1,5 @@
 import { StringOrUndefined } from '@/types';
-import { ImageComponent } from '../ui/Image';
+import { ImageComponent } from '@/components/ui/Image';
 import '@/styles/css/hero.css';
 import Link from 'next/link';
 import { Button } from '@/components/ui/Button';
