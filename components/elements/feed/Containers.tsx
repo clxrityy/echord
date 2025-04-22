@@ -119,7 +119,7 @@ export function FeedItemContainer({
               <Icon className='rounded-xl shadow text-gray-200/90' aria-label={interactionType} />
               {interactionUserId && <FeedUser userId={interactionUserId} />}
             </FeedUserContainer>
-            <div className='flex items-start justify-center gap-2 h-full lg:flex-col 2xl:flex-row'>
+            <div className='flex items-center lg:items-start justify-center gap-2 h-full xl:flex-col 2xl:flex-row'>
               <span className='text-xs md:text-sm text-gray-400'>
                 {isToday
                   ? 'Today'
