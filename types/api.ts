@@ -1,3 +1,5 @@
+import { EAlbum, EInteraction, ETrack, EUser } from "@/prisma/app/generated/prisma/client";
+
 export type DEEZER_SEARCH_DATA = {
   id: string | number;
   readable: boolean;
@@ -106,3 +108,9 @@ export type UserAgent = {
       | undefined;
   };
 };
+
+export type Interaction = (EInteraction | null) & {
+  eAlbum: EAlbum | null;
+  eTrack: ETrack | null;
+  user: EUser;
+} | null;
