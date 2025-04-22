@@ -1,4 +1,4 @@
-import { checkUser } from '@/app/_actions/user';
+import { checkUser } from '@/app/_actions';
 import { updateUserSession } from '@/lib';
 import { NextRequest, NextResponse } from 'next/server';
 

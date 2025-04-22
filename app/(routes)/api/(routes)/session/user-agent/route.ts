@@ -2,7 +2,7 @@ import {
   addUserAgentToSession,
   checkSessionUserAgent,
   getSessionById,
-} from '@/app/_actions/session';
+} from '@/app/_actions';
 import { UserAgent } from '@/types';
 import { NextRequest, NextResponse, userAgent } from 'next/server';
 

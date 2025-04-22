@@ -2,8 +2,8 @@ import {
   checkForExistingSession,
   createSession,
   getSessionById,
-} from '@/app/_actions/session';
-import { getUserBySessionId } from '@/app/_actions/user';
+  getUserBySessionId
+} from '@/app/_actions';
 import { getUserSessionId } from '@/lib';
 import { NextRequest, NextResponse } from 'next/server';
 

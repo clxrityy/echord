@@ -1,5 +1,4 @@
-import { getSessionByUserId } from '@/app/_actions/session';
-import { checkUser, createUser } from '@/app/_actions/user';
+import { getSessionByUserId, checkUser, createUser  } from '@/app/_actions';
 import { buildUserSession } from '@/lib';
 import { NextRequest, NextResponse } from 'next/server';
 
