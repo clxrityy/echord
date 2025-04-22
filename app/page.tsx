@@ -5,8 +5,8 @@ import {
   FeedItem
 } from '@/components/elements/feed';
 import { Hero } from '@/components/elements/Hero';
-import { Window } from '@/components/layout/screen/Window';
-import Skeleton from '@/components/ui/Skeleton';
+import { Window } from '@/components/layout/screen';
+import { Skeleton } from '@/components/ui';
 import { Suspense } from 'react';
 import { BASE_URL, FEED_ITEMS_PER_PAGE } from '@/utils';
 import Loading from './loading';

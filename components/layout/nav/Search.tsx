@@ -2,7 +2,7 @@
 import { ChangeEvent, useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import { BASE_URL, ICONS } from '@/utils';
-import { OutsideClick } from '@/components/ui/wrappers/OutsideClick';
+import { OutsideClick } from '@/components/ui/OutsideClick';
 import { useSession } from '@/contexts/session';
 import { Button } from '@/components/ui/Button';
 

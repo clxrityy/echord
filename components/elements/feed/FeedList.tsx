@@ -1,7 +1,6 @@
 'use client';
 import { Children, ReactNode, Suspense, useState } from 'react';
-import { Pagination } from '../../ui/Pagination';
-import Skeleton from '@/components/ui/Skeleton';
+import { Pagination, Skeleton } from '@/components/ui';
 
 export function FeedList({
   children,

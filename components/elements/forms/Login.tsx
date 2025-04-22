@@ -3,7 +3,7 @@
 import { useSession } from '@/contexts/session';
 import { BASE_URL, ICONS } from '@/utils';
 import { useRouter } from 'next/navigation';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 import toast from 'react-hot-toast';
 
 export const Login = ({

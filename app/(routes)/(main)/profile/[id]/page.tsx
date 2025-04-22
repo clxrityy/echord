@@ -1,6 +1,5 @@
-import { Settings } from '@/components/elements/user/Settings';
-import { Favorites } from '@/components/elements/user/Favorites';
-import Skeleton from '@/components/ui/Skeleton';
+import { Favorites, Settings } from '@/components/elements/user';
+import { Skeleton } from '@/components/ui';
 import { Suspense } from 'react';
 import { SavesGrid } from '@/components/elements/user/save/SavesGrid';
 import { Window } from '@/components/layout/screen/Window';

@@ -1,8 +1,7 @@
-import { ImageComponent } from '@/components/ui/Image';
 import { EInteractionData } from '@/prisma/app/generated/prisma/client';
 import { Save } from './Save';
 import { Suspense } from 'react';
-import Skeleton from '@/components/ui/Skeleton';
+import { Skeleton, ImageComponent } from '@/components/ui';
 
 interface SavesGridProps {
   saves: EInteractionData[];

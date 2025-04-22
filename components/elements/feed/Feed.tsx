@@ -6,7 +6,7 @@ import {
 } from '@/prisma/app/generated/prisma/client';
 import { FeedItemContainer } from './Containers';
 import { Suspense } from 'react';
-import Skeleton from '@/components/ui/Skeleton';
+import { Skeleton } from '@/components/ui';
 import { FeedListItemSkeleton } from './FeedList';
 
 interface FeedItemProps {

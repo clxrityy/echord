@@ -1,8 +1,7 @@
 import { StringOrUndefined } from '@/types';
-import { ImageComponent } from '@/components/ui/Image';
 import '@/styles/css/hero.css';
 import Link from 'next/link';
-import { Button } from '@/components/ui/Button';
+import { Button, ImageComponent } from '@/components/ui';
 
 export function Hero({ userId }: { userId: StringOrUndefined }) {
   return (

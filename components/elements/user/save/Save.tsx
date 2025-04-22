@@ -1,8 +1,8 @@
 'use client';
 
-import { Button } from '@/components/ui/Button';
+import { Button } from '@/components/ui';
 import { ReactNode, useCallback, useState } from 'react';
-import { AlbumModal } from '@/components/elements/modals/AlbumModal';
+import { AlbumModal } from '@/components/elements/modals';
 
 export function Save({
   children,

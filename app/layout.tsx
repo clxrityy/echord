@@ -1,18 +1,18 @@
 import type { Metadata } from 'next';
 import './globals.css';
 import { ReactNode, Suspense } from 'react';
-import Skeleton from '@/components/ui/Skeleton';
+import { Skeleton } from '@/components/ui';
 import { SessionProvider } from '@/contexts/session';
-import { Navbar } from '@/components/layout/nav/Navbar';
+import { Navbar } from '@/components/layout/nav';
 import { Toaster } from 'react-hot-toast';
 import { WindowProvider } from '@/contexts/window';
 import { BASE_URL } from '@/utils';
 import { connection } from 'next/server';
-import { Backdrop } from '@/components/layout/screen/Backdrop';
+import { Backdrop } from '@/components/layout/screen';
 import type { Viewport } from 'next';
 import { AR, TMR } from '@/styles/fonts';
 import { getUserSessionId } from '@/lib';
-import { getUserBySessionId } from './_actions/user';
+import { getUserBySessionId } from '@/app/_actions';
 
 export const dynamic = 'force-dynamic'; // Force dynamic rendering
 

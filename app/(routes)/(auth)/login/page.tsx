@@ -1,13 +1,13 @@
-import { Login } from '@/components/elements/forms/Login';
-import { Window } from '@/components/layout/screen/Window';
-import Skeleton from '@/components/ui/Skeleton';
+import { Login } from '@/components/elements/forms';
+import { Window } from '@/components/layout/screen';
+import { Skeleton } from '@/components/ui';
 import Link from 'next/link';
 import { Suspense } from 'react';
 import { redirect } from 'next/navigation';
 import { connection } from 'next/server';
 import Loading from '@/app/loading';
 import { getUserSessionId } from '@/lib';
-import { getUserBySessionId } from '@/app/_actions/user';
+import { getUserBySessionId } from '@/app/_actions';
 
 export const dynamic = 'force-dynamic';
 

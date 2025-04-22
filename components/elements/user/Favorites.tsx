@@ -1,4 +1,4 @@
-import { ImageComponent } from '@/components/ui/Image';
+import { ImageComponent } from '@/components/ui';
 import { ICONS } from '@/utils';
 import { EInteractionData } from '@/prisma/app/generated/prisma/client';
 

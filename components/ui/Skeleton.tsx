@@ -10,7 +10,7 @@ export interface SkeletonProps extends ComponentPropsWithoutRef<'div'> {
   targetRef?: RefObject<HTMLDivElement | HTMLImageElement>;
 }
 
-export default function Skeleton({ targetRef, ...props }: SkeletonProps) {
+export function Skeleton({ targetRef, ...props }: SkeletonProps) {
   const [width, setWidth] = useState<number>(0);
   const [height, setHeight] = useState<number>(0);
 

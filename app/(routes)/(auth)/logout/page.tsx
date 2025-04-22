@@ -1,8 +1,8 @@
 import { getUserBySessionId } from "@/app/_actions";
 import Loading from "@/app/loading";
-import { LogoutButton } from "@/components/elements/forms/Logout";
-import { Window } from "@/components/layout/screen/Window";
-import Skeleton from "@/components/ui/Skeleton";
+import { LogoutButton } from "@/components/elements/forms";
+import { Window } from "@/components/layout/screen";
+import { Skeleton } from "@/components/ui";
 import { getUserSessionId } from "@/lib";
 import { redirect } from "next/navigation";
 import { Suspense } from "react";

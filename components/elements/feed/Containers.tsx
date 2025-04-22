@@ -1,5 +1,5 @@
 'use client';
-import Skeleton from '@/components/ui/Skeleton';
+import { Skeleton, Button, Tooltip } from '@/components/ui';
 import { StringOrUndefined } from '@/types';
 import { BASE_URL, ICONS } from '@/utils';
 import {
@@ -11,8 +11,7 @@ import ImageComponent from 'next/image';
 import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
 import { FeedUser } from './User';
-import { ReactNode } from 'react';
-import { Button } from '@/components/ui/Button';
+import { ReactNode, Suspense } from 'react';
 
 export function FeedUserContainer({ children }: { children: ReactNode }) {
   return (
@@ -63,6 +62,23 @@ export function FeedItemContainer({
         return ICONS.save;
     }
   };
+
+  const deleteInteractionToolTipText = () => {
+    switch (interactionType) {
+      case 'FAVORITED':
+        return 'Unfavorite';
+      case "SAVED":
+        return 'Unsave';
+      case "RATED":
+        return 'Unrate';
+      case "REVIEWED":
+        return 'Unreview';
+      case "FOLLOWED":
+        return 'Unfollow';
+      default:
+        return 'Delete';
+    }
+  }
 
   const router = useRouter();
 
@@ -116,17 +132,23 @@ export function FeedItemContainer({
         <div className='flex flex-col items-center justify-start w-fit gap-5'>
           <div className='flex items-start justify-start gap-4 w-full flex-col md:flex-row'>
             <FeedUserContainer>
-              <Icon className='rounded-xl shadow text-gray-200/90' aria-label={interactionType} />
-              {interactionUserId && <FeedUser userId={interactionUserId} />}
+              <Suspense fallback={<Skeleton className='w-8 h-8 rounded-4xl animate-pulse bg-zinc-400/65' />}>
+                <Tooltip text={`${interactionType.toLowerCase()}`}>
+                  <Icon className='rounded-xl shadow text-gray-200/90 cursor-pointer' aria-label={interactionType} />
+                </Tooltip>
+              </Suspense>
+              {interactionUserId && <Suspense fallback={<Skeleton className='w-[6px] rounded-4xl animate-pulse bg-zinc-400/65' />}>
+                <FeedUser userId={interactionUserId} />
+              </Suspense>}
             </FeedUserContainer>
             <div className='flex items-center lg:items-start justify-center gap-2 h-full xl:flex-col 2xl:flex-row'>
               <span className='text-xs md:text-sm text-gray-400'>
                 {isToday
                   ? 'Today'
                   : new Date(createdAt).toLocaleDateString('en-US', {
-                      month: 'short',
-                      day: '2-digit',
-                    })}
+                    month: 'short',
+                    day: '2-digit',
+                  })}
                 {isSameYear ? '' : ', ' + new Date(createdAt).getFullYear()}
               </span>
               <span className='text-xs 2xl:text-sm text-gray-400'>
@@ -171,14 +193,16 @@ export function FeedItemContainer({
         </div>
         <div className='asbolute top-0 right-2 ml-4 px-2'>
           {isCurrentUser && (
-            <Button
-              type='button'
-              title='delete'
-              className='text-gray-300/90 hover:text-red-400 focus:text-red-500 focus:ring focus:ring-offset-0 focus:ring-red-400/25 focus:ring-offset-white/5 rounded-2xl transition-colors ease-in-out px-1 py-1'
-              onClick={async () => await handleDelete()}
-            >
-              <ICONS.trash className='h-4 w-4 md:h-5 md:w-5 4xl:h-6 4xl:w-6' />
-            </Button>
+            <Tooltip text={`${deleteInteractionToolTipText()}`}>
+              <Button
+                type='button'
+                title='delete'
+                className='text-gray-300/90 hover:text-red-400 focus:text-red-500 focus:ring focus:ring-offset-0 focus:ring-red-400/25 focus:ring-offset-white/5 rounded-2xl transition-colors ease-in-out px-1 py-1'
+                onClick={async () => await handleDelete()}
+              >
+                <ICONS.trash className='h-4 w-4 md:h-5 md:w-5 4xl:h-6 4xl:w-6' />
+              </Button>
+            </Tooltip>
           )}
         </div>
       </div>

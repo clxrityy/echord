@@ -1,11 +1,11 @@
-import { Results } from '@/components/elements/data/Results';
-import Skeleton from '@/components/ui/Skeleton';
+import { Results } from '@/components/elements/data';
+import { Skeleton } from '@/components/ui';
 import { DEEZER_API_URL } from '@/utils';
 import { DEEZER_SEARCH_RESPONSE } from '@/types';
 import { Suspense } from 'react';
 import './index.css';
 import { connection } from 'next/server';
-import { Window } from '@/components/layout/screen/Window';
+import { Window } from '@/components/layout/screen';
 import Loading from '@/app/loading';
 import { getUserSessionId } from '@/lib';
 import { getUserBySessionId } from '@/app/_actions/user';

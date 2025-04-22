@@ -1,8 +1,8 @@
 'use client';
 
-import { ICONS } from '@/utils/constants';
+import { ICONS } from '@/utils';
 import { useRef, useState } from 'react';
-import { OutsideClick } from '@/components/ui/wrappers/OutsideClick';
+import { OutsideClick } from '@/components/ui';
 
 export function Settings() {
   const [clicked, setClicked] = useState<boolean>(false);

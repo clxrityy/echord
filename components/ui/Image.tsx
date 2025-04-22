@@ -1,7 +1,7 @@
 'use client';
 import Image, { type ImageProps } from 'next/image';
 import { useRef, useState, RefObject } from 'react';
-import Skeleton from './Skeleton';
+import { Skeleton } from '@/components/ui';
 
 export const ImageComponent = ({ ...props }: ImageProps) => {
   const [loading, setLoading] = useState<boolean>(true);

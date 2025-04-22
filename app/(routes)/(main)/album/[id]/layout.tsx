@@ -1,5 +1,4 @@
 import { checkAlbumFromInteraction } from '@/app/_actions/data';
-import { db } from '@/lib';
 import { Metadata } from 'next';
 import { connection } from 'next/server';
 import { ReactNode } from 'react';
