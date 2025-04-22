@@ -75,7 +75,7 @@ export function FeedItemContainer({
       toast.error('User not found', { id: toastId });
       return;
     }
-    
+
     try {
       const { status, message, error } = await fetch(
         `${BASE_URL}/api/interaction`,
@@ -116,7 +116,7 @@ export function FeedItemContainer({
         <div className='flex flex-col items-center justify-start w-fit gap-5'>
           <div className='flex items-start justify-start gap-4 w-full flex-col md:flex-row'>
             <FeedUserContainer>
-              <Icon className='h-7 w-7 lg:h-9 lg:w-9 text-blue-400/70 rounded-full shadow' />
+              <Icon className='rounded-xl shadow' aria-label={interactionType} />
               {interactionUserId && <FeedUser userId={interactionUserId} />}
             </FeedUserContainer>
             <div className='flex items-start justify-center gap-2 h-full lg:flex-col 2xl:flex-row'>
