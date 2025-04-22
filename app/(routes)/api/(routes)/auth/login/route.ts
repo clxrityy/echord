@@ -64,13 +64,13 @@ export async function POST(req: NextRequest) {
       sessionId,
       userId,
       username,
-    })
+    });
 
     return NextResponse.json(
       {
         message: 'User logged in successfully',
         id: userId,
-        session: session
+        session: session,
       },
       { status: 200 }
     );

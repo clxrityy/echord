@@ -1,1 +1,1 @@
-export * from "./AlbumModal"
+export * from './AlbumModal';

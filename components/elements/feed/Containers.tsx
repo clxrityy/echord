@@ -67,18 +67,18 @@ export function FeedItemContainer({
     switch (interactionType) {
       case 'FAVORITED':
         return 'Unfavorite';
-      case "SAVED":
+      case 'SAVED':
         return 'Unsave';
-      case "RATED":
+      case 'RATED':
         return 'Unrate';
-      case "REVIEWED":
+      case 'REVIEWED':
         return 'Unreview';
-      case "FOLLOWED":
+      case 'FOLLOWED':
         return 'Unfollow';
       default:
         return 'Delete';
     }
-  }
+  };
 
   const router = useRouter();
 
@@ -132,23 +132,36 @@ export function FeedItemContainer({
         <div className='flex flex-col items-center justify-start w-fit gap-5'>
           <div className='flex items-start justify-start gap-4 w-full flex-col md:flex-row'>
             <FeedUserContainer>
-              <Suspense fallback={<Skeleton className='w-8 h-8 rounded-4xl animate-pulse bg-zinc-400/65' />}>
+              <Suspense
+                fallback={
+                  <Skeleton className='w-8 h-8 rounded-4xl animate-pulse bg-zinc-400/65' />
+                }
+              >
                 <Tooltip text={`${interactionType.toLowerCase()}`}>
-                  <Icon className='rounded-xl shadow text-gray-200/90 cursor-pointer' aria-label={interactionType} />
+                  <Icon
+                    className='rounded-xl shadow text-gray-200/90 cursor-pointer'
+                    aria-label={interactionType}
+                  />
                 </Tooltip>
               </Suspense>
-              {interactionUserId && <Suspense fallback={<Skeleton className='w-[6px] rounded-4xl animate-pulse bg-zinc-400/65' />}>
-                <FeedUser userId={interactionUserId} />
-              </Suspense>}
+              {interactionUserId && (
+                <Suspense
+                  fallback={
+                    <Skeleton className='w-[6px] rounded-4xl animate-pulse bg-zinc-400/65' />
+                  }
+                >
+                  <FeedUser userId={interactionUserId} />
+                </Suspense>
+              )}
             </FeedUserContainer>
             <div className='flex items-center lg:items-start justify-center gap-2 h-full xl:flex-col 2xl:flex-row'>
               <span className='text-xs md:text-sm text-gray-400'>
                 {isToday
                   ? 'Today'
                   : new Date(createdAt).toLocaleDateString('en-US', {
-                    month: 'short',
-                    day: '2-digit',
-                  })}
+                      month: 'short',
+                      day: '2-digit',
+                    })}
                 {isSameYear ? '' : ', ' + new Date(createdAt).getFullYear()}
               </span>
               <span className='text-xs 2xl:text-sm text-gray-400'>

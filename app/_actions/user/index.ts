@@ -164,7 +164,7 @@ export async function getUserBySessionId(
 export async function checkUserByPasswordAndUsername(
   username: string,
   password: string
-): Promise<EUser & ESession | null> {
+): Promise<(EUser & ESession) | null> {
   try {
     const usersWithUsername = await db.eUser.findMany({
       where: {
@@ -172,7 +172,7 @@ export async function checkUserByPasswordAndUsername(
       },
       include: {
         session: true,
-      }
+      },
     });
 
     if (usersWithUsername.length === 0) {
@@ -180,7 +180,7 @@ export async function checkUserByPasswordAndUsername(
     }
 
     const getUser = async () => {
-      let matches: (EUser & {session: ESession | null})[] = [];
+      let matches: (EUser & { session: ESession | null })[] = [];
       usersWithUsername.forEach(async (user) => {
         if (decrypt(user.password) === password) {
           matches.push(user);
@@ -207,7 +207,7 @@ export async function checkUserByPasswordAndUsername(
       if (matches[0]) {
         return matches[0];
       }
-    }
+    };
 
     const user = await getUser();
 
@@ -219,24 +219,24 @@ export async function checkUserByPasswordAndUsername(
     } else {
       return null;
     }
-
-
   } catch (e) {
     console.error('Error checking user by password and username:', e);
     throw new Error('Database error');
   }
 }
 
-
 export async function handleDuplicateUsers({
   username,
-  password
+  password,
 }: {
   username: string;
   password: string;
-}): Promise<EUser & {
-  session: ESession | null;
-} | null> {
+}): Promise<
+  | (EUser & {
+      session: ESession | null;
+    })
+  | null
+> {
   const usersWithSameUsername = await db.eUser.findMany({
     where: {
       username: username,
@@ -275,7 +275,10 @@ export async function handleDuplicateUsers({
     }
   }
 
-  if (usersWithSameUsername[0] && usersWithSameUsername[0].username === username) {
+  if (
+    usersWithSameUsername[0] &&
+    usersWithSameUsername[0].username === username
+  ) {
     const user = usersWithSameUsername[0];
 
     if (decrypt(user.password) === password) {

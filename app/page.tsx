@@ -2,7 +2,7 @@ import {
   FeedList,
   FeedListItemSkeleton,
   FeedListItem,
-  FeedItem
+  FeedItem,
 } from '@/components/elements/feed';
 import { Hero } from '@/components/elements/Hero';
 import { Window } from '@/components/layout/screen';

@@ -70,7 +70,7 @@ export async function checkAlbumFromInteraction(id: string) {
   const interactionData = await db.eInteractionData.findFirst({
     where: {
       dataId: interaction.dataId,
-    }
+    },
   });
 
   if (!interactionData) {

@@ -2,7 +2,7 @@ import {
   checkForExistingSession,
   createSession,
   getSessionById,
-  getUserBySessionId
+  getUserBySessionId,
 } from '@/app/_actions';
 import { getUserSessionId } from '@/lib';
 import { NextRequest, NextResponse } from 'next/server';

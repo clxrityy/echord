@@ -15,7 +15,6 @@ export const Login = ({
 }) => {
   const [username, setUsername] = useState<string>('');
   const [password, setPassword] = useState<string>('');
-  const { setSessionId, getSessionId } = useSession();
 
   const { setUserId } = useSession();
   const router = useRouter();
@@ -25,7 +24,6 @@ export const Login = ({
     router.push(`/profile/${userId}`);
   }
 
-
   const handleLogin = useCallback(async () => {
     const toastId = toast.loading('Logging in...');
     try {
@@ -34,7 +32,7 @@ export const Login = ({
         body: JSON.stringify({
           username,
           password,
-          sessionId ,
+          sessionId,
         }),
       });
 

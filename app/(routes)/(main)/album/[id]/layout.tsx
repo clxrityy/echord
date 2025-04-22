@@ -12,7 +12,7 @@ type Props = {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const id = (await params).id;
 
-  const album = await checkAlbumFromInteraction(id)
+  const album = await checkAlbumFromInteraction(id);
 
   if (!album) {
     return {
