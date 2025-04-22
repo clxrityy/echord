@@ -1,4 +1,4 @@
-import { DialogProps, Dialog } from '@/components/ui/Dialog';
+import { DialogProps, Dialog } from '@/components/ui';
 import { Suspense } from 'react';
 
 interface AlbumModalProps extends DialogProps {
