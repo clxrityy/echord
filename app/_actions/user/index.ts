@@ -1,7 +1,7 @@
 import { db } from '@/lib/db';
 import { v4 as uuidv4 } from 'uuid';
-import { encrypt, fetchIp } from '@/utils';
-import { EUser } from '@/prisma/app/generated/prisma/client';
+import { decrypt, encrypt, fetchIp } from '@/utils';
+import { ESession, EUser } from '@/prisma/app/generated/prisma/client';
 import { getUserSession, logoutUserSession } from '@/lib';
 
 export async function createUser(
@@ -159,4 +159,129 @@ export async function getUserBySessionId(
     console.error('Error getting user by session ID:', e);
     throw new Error('Database error');
   }
+}
+
+export async function checkUserByPasswordAndUsername(
+  username: string,
+  password: string
+): Promise<EUser & ESession | null> {
+  try {
+    const usersWithUsername = await db.eUser.findMany({
+      where: {
+        username: username,
+      },
+      include: {
+        session: true,
+      }
+    });
+
+    if (usersWithUsername.length === 0) {
+      return null;
+    }
+
+    const getUser = async () => {
+      let matches: (EUser & {session: ESession | null})[] = [];
+      usersWithUsername.forEach(async (user) => {
+        if (decrypt(user.password) === password) {
+          matches.push(user);
+        }
+      });
+
+      if (matches.length === 1) {
+        return matches[0];
+      }
+
+      if (matches.length > 1) {
+        const handledMatch = await handleDuplicateUsers({
+          username: username,
+          password: password,
+        });
+
+        if (handledMatch) {
+          matches.push(handledMatch);
+        }
+
+        return null;
+      }
+
+      if (matches[0]) {
+        return matches[0];
+      }
+    }
+
+    const user = await getUser();
+
+    if (user && user.session) {
+      return {
+        ...user,
+        ...user.session,
+      };
+    } else {
+      return null;
+    }
+
+
+  } catch (e) {
+    console.error('Error checking user by password and username:', e);
+    throw new Error('Database error');
+  }
+}
+
+
+export async function handleDuplicateUsers({
+  username,
+  password
+}: {
+  username: string;
+  password: string;
+}): Promise<EUser & {
+  session: ESession | null;
+} | null> {
+  const usersWithSameUsername = await db.eUser.findMany({
+    where: {
+      username: username,
+    },
+    include: {
+      session: true,
+    },
+  });
+
+  if (usersWithSameUsername.length > 1) {
+    const usersWithSamePassword = usersWithSameUsername.filter((user) => {
+      return decrypt(user.password) === password;
+    });
+
+    if (usersWithSamePassword.length > 1) {
+      const user = usersWithSamePassword[0];
+
+      usersWithSamePassword.forEach(async (userData) => {
+        if (userData.userId !== user.userId) {
+          await db.eUser.delete({
+            where: {
+              userId: userData.userId,
+            },
+          });
+        }
+      });
+
+      return user;
+    }
+
+    if (usersWithSamePassword.length === 1) {
+      return usersWithSamePassword[0];
+    }
+    if (usersWithSamePassword.length === 0) {
+      return null;
+    }
+  }
+
+  if (usersWithSameUsername[0] && usersWithSameUsername[0].username === username) {
+    const user = usersWithSameUsername[0];
+
+    if (decrypt(user.password) === password) {
+      return user;
+    }
+  }
+
+  return null;
 }

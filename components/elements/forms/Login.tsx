@@ -3,18 +3,19 @@
 import { useSession } from '@/contexts/session';
 import { BASE_URL, ICONS } from '@/utils';
 import { useRouter } from 'next/navigation';
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 
 export const Login = ({
   sessionId,
   userId,
 }: {
-  sessionId: string;
+  sessionId?: string;
   userId?: string | null;
 }) => {
   const [username, setUsername] = useState<string>('');
   const [password, setPassword] = useState<string>('');
+  const { setSessionId, getSessionId } = useSession();
 
   const { setUserId } = useSession();
   const router = useRouter();
@@ -24,6 +25,7 @@ export const Login = ({
     router.push(`/profile/${userId}`);
   }
 
+
   const handleLogin = useCallback(async () => {
     const toastId = toast.loading('Logging in...');
     try {
@@ -32,7 +34,7 @@ export const Login = ({
         body: JSON.stringify({
           username,
           password,
-          sessionId,
+          sessionId ,
         }),
       });
 

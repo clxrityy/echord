@@ -24,7 +24,7 @@ export function Settings() {
         title='settings'
         role='button'
         onClick={handleClick}
-        className='transition duration-200 focus:outline-none rounded-md hover:text-gray-400 focus:text-blue-400'
+        className='transition duration-200 focus:outline-none rounded-md hover:text-gray-400 focus:text-blue-400 mt-[1.5]'
       >
         <span className='sr-only'>Settings</span>
         <ICONS.settings className='h-12 w-12' />

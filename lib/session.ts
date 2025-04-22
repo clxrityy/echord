@@ -68,9 +68,12 @@ export async function updateUserSession(request: NextRequest) {
 }
 
 export async function logoutUserSession() {
-  (await cookies()).set(ENV.COOKIE_NAME, '', {
-    expires: new Date(0),
-  });
+  try {
+    (await cookies()).delete(ENV.COOKIE_NAME);
+  } catch (error) {
+    console.error('Error logging out user session (deleting cookie):', error);
+    throw new Error('Failed to log out user session');
+  }
 }
 
 export async function getUserSessionId() {
