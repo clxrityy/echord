@@ -116,7 +116,7 @@ export function FeedItemContainer({
         <div className='flex flex-col items-center justify-start w-fit gap-5'>
           <div className='flex items-start justify-start gap-4 w-full flex-col md:flex-row'>
             <FeedUserContainer>
-              <Icon className='rounded-xl shadow' aria-label={interactionType} />
+              <Icon className='rounded-xl shadow text-gray-200/90' aria-label={interactionType} />
               {interactionUserId && <FeedUser userId={interactionUserId} />}
             </FeedUserContainer>
             <div className='flex items-start justify-center gap-2 h-full lg:flex-col 2xl:flex-row'>
