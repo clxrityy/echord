@@ -7,9 +7,9 @@ For a rough roadmap of the project, see the [ROADMAP](./assets/markdown/ROADMAP.
 - [Authentication Refactor](#authentication-refactor) (21-04-2025)
 - [Interaction API Refactor](#interaction-api-refactor) (24-04-2025)
 
-## Authentication Refactor [b6afe3e](https://github.com/clxrityy/echord/commit/b6afe3ea49b85a9476ac2d76f1a9c4b68015380f)
+## Authentication Refactor
 
-> April 21, 2025
+> - [b6afe3e](https://github.com/clxrityy/echord/commit/b6afe3ea49b85a9476ac2d76f1a9c4b68015380f) > `April 21, 2025`
 
 - [x] Remove `jsonwebtoken` & `cookie` packages
   - [x] Replaced with `jose`
@@ -23,9 +23,9 @@ For a rough roadmap of the project, see the [ROADMAP](./assets/markdown/ROADMAP.
     - [x] Decrypt the JWT token
     - [x] Update the expiration date of the session
 
-## Interaction API Refactor [fb71739](https://github.com/clxrityy/echord/commit/fb71739ea419d54e5a9b854c262222844d4c4dfe)
+## Interaction API Refactor
 
-> April 24, 2025
+> - [fb71739](https://github.com/clxrityy/echord/commit/fb71739ea419d54e5a9b854c262222844d4c4dfe) > `April 24, 2025`
 
 - [x] User interactions are now stored in **interaction context** on the client side.
   - [`@/contexts/interaction`](./contexts/interaction/)
@@ -63,7 +63,7 @@ For a rough roadmap of the project, see the [ROADMAP](./assets/markdown/ROADMAP.
   - [x] [CHANGELOG.md](./CHANGELOG.md)
   - [x] [ROADMAP.md](./assets/markdown/ROADMAP.md)
   - [ ] [INTERACTIONS.md](./assets/markdown/INTERACTIONS.md)
-  - [ ] [README.md](./README.md)
+  - [x] [README.md](./README.md)
 - Tweaked [middleware](./middleware.ts) to only update a user session when the user is authenticated.
 
   ```ts
@@ -71,7 +71,6 @@ For a rough roadmap of the project, see the [ROADMAP](./assets/markdown/ROADMAP.
     if (await getUserSessionId()) {
       return await updateSession(request);
     }
-
     return NextResponse.rewrite(request.url);
   }
   ```
