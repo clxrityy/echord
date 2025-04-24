@@ -1,10 +1,10 @@
 import {
   EDataType,
-  EInteraction,
   EInteractionData,
   EInteractionType,
 } from '@/prisma/app/generated/prisma/client';
 import { db } from '@/lib/db';
+import { Interaction } from '@/types';
 
 export interface InteractionProps {
   dataType: EDataType;
@@ -20,7 +20,7 @@ export async function handleInteraction({
   interactionType,
   userId,
   sessionId,
-}: InteractionProps): Promise<EInteraction | undefined> {
+}: InteractionProps): Promise<Interaction | undefined> {
   const existingInteraction = await db.eInteraction.findFirst({
     where: {
       userId,
@@ -32,12 +32,32 @@ export async function handleInteraction({
         },
       },
     },
+    include: {
+      eData: {
+        include: {
+          interactionData: true,
+        },
+      },
+      eAlbum: true,
+      eTrack: true,
+      user: true,
+    },
   });
 
-  if (existingInteraction) {
+  if (
+    existingInteraction &&
+    existingInteraction.eData &&
+    existingInteraction.eData.interactionData
+  ) {
     // If the interaction already exists, we can choose to update it or ignore it
     // For this example, we'll just return early
-    return existingInteraction;
+    return {
+      ...existingInteraction,
+      interactionData: {
+        ...existingInteraction.eData.interactionData,
+        ...interactionData,
+      },
+    };
   }
 
   // Create a new interaction
@@ -85,6 +105,16 @@ export async function handleInteraction({
         dataId: newData.id,
         userId,
         dataType,
+      },
+      include: {
+        eData: {
+          include: {
+            interactionData: true,
+          },
+        },
+        eAlbum: true,
+        eTrack: true,
+        user: true,
       },
     });
 
@@ -134,7 +164,17 @@ export async function handleInteraction({
           },
         });
 
-        return int;
+        if (int && int.eData.interactionData) {
+          return {
+            ...int,
+            interactionData: {
+              ...int.eData.interactionData,
+              ...interactionData,
+            },
+          };
+        } else {
+          return null;
+        }
       } catch (e) {
         console.error('Error creating album:', e);
         throw new Error('Database error');
@@ -148,6 +188,16 @@ export async function handleInteraction({
         dataId: existingData.id,
         userId,
         dataType,
+      },
+      include: {
+        eData: {
+          include: {
+            interactionData: true,
+          },
+        },
+        eAlbum: true,
+        eTrack: true,
+        user: true,
       },
     });
 
@@ -235,7 +285,17 @@ export async function handleInteraction({
             },
           });
 
-          return interaction;
+          if (interaction && interaction.eData.interactionData) {
+            return {
+              ...interaction,
+              interactionData: {
+                ...interaction.eData.interactionData,
+                ...interactionData,
+              },
+            };
+          } else {
+            return null;
+          }
         } else if (
           interaction.albumId &&
           interactionData.imageUrl &&
@@ -282,7 +342,17 @@ export async function handleInteraction({
         }
       }
 
-      return interaction;
+      if (interaction && interaction.eData.interactionData) {
+        return {
+          ...interaction,
+          interactionData: {
+            ...interaction.eData.interactionData,
+            ...interactionData,
+          },
+        };
+      }
+
+      return null;
     } catch (e) {
       console.error('Error updating interaction:', e);
       throw new Error('Database error');

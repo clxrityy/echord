@@ -2,9 +2,9 @@
 
 import { Button } from '@/components/ui';
 import { ReactNode, useCallback, useState } from 'react';
-import { AlbumModal } from '@/components/elements/modals';
+import { AlbumModal } from '@/components/categories/modals';
 
-export function Save({
+export function UserSave({
   children,
   save,
 }: {

@@ -1,6 +1,5 @@
 'use client';
-import { useSession } from '@/contexts/session';
-import { useWindow } from '@/contexts/window';
+import { useWindow, useSession } from '@/contexts';
 import { useScreenSize } from '@/hooks/useScreenSize';
 import { EUserAgent } from '@/prisma/app/generated/prisma/client';
 import { UserAgent } from '@/types';

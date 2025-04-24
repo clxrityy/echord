@@ -24,7 +24,12 @@ export function FeedItem({
   userId,
   username,
 }: FeedItemProps) {
-  const { createdAt, interactionType, userId: interactionUserId, id: interactionId } = interaction;
+  const {
+    createdAt,
+    interactionType,
+    userId: interactionUserId,
+    id: interactionId,
+  } = interaction;
   const {
     imageUrl,
     title,

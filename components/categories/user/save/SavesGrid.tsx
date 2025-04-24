@@ -1,5 +1,5 @@
 import { EInteractionData } from '@/prisma/app/generated/prisma/client';
-import { Save } from './Save';
+import { UserSave } from './UserSave';
 import { Suspense } from 'react';
 import { Skeleton, ImageComponent } from '@/components/ui';
 
@@ -51,7 +51,7 @@ export function SavesGrid({ saves }: SavesGridProps) {
             />
           }
         >
-          <Save key={idx} save={save}>
+          <UserSave key={idx} save={save}>
             {save.albumId && save.imageUrl && save.artistName && (
               <ImageComponent
                 src={save.imageUrl}
@@ -61,7 +61,7 @@ export function SavesGrid({ saves }: SavesGridProps) {
                 className='rounded-lg'
               />
             )}
-          </Save>
+          </UserSave>
         </Suspense>
       ))}
     </div>

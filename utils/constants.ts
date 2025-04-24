@@ -13,6 +13,7 @@ import {
   ChevronLeft,
   X,
   House,
+  Star,
 } from 'lucide-react';
 
 export const DEEZER_API_URL = 'https://api.deezer.com';
@@ -40,6 +41,7 @@ export const ICONS = {
   left: ChevronLeft,
   close: X,
   home: House,
+  star: Star,
 };
 
 export const ENV = {

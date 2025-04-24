@@ -1,8 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { updateUserSession } from '@/lib';
+import { getUserSessionId, updateUserSession } from '@/lib';
 
 export async function middleware(request: NextRequest) {
-  return await updateUserSession(request);
+  if (await getUserSessionId()) {
+    return await updateUserSession(request);
+  }
+
+  return NextResponse.rewrite(request.url);
 }
 
 export const config = {

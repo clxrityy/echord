@@ -168,6 +168,7 @@ model EInteractionData {
   rating          Int?
   review          String?
   albumId         String?
+  trackId         String?
   eData           EData            @relation(fields: [dataId], references: [id], onDelete: Cascade)
 }
 
@@ -187,7 +188,7 @@ model ETrack {
   artistName    String
   albumName     String
   imageUrl      String?
-  releaseDate   DateTime
+  releaseDate   DateTime?
   averageRating Int?
   createdAt     DateTime       @default(now())
   updatedAt     DateTime       @default(now())

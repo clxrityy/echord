@@ -1,18 +1,19 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import './globals.css';
 import { ReactNode, Suspense } from 'react';
 import { Skeleton } from '@/components/ui';
-import { SessionProvider } from '@/contexts/session';
-import { Navbar } from '@/components/layout/nav';
+import { Navbar, Backdrop } from '@/components/layout';
 import { Toaster } from 'react-hot-toast';
-import { WindowProvider } from '@/contexts/window';
 import { BASE_URL } from '@/utils';
 import { connection } from 'next/server';
-import { Backdrop } from '@/components/layout/screen';
-import type { Viewport } from 'next';
 import { AR, TMR } from '@/styles/fonts';
 import { getUserSessionId } from '@/lib';
 import { getUserBySessionId } from '@/app/_actions';
+import {
+  InteractionProvider,
+  WindowProvider,
+  SessionProvider,
+} from '@/contexts';
 
 export const dynamic = 'force-dynamic'; // Force dynamic rendering
 
@@ -45,6 +46,21 @@ export const metadata: Metadata = {
       'Echord is a music discovery platform that allows you to find new music based on your listening habits. It uses machine learning algorithms to analyze your listening history and recommend new songs, albums, and artists that you might like.',
     url: 'https://echord.uk',
     siteName: 'Echord',
+    type: 'website',
+    images: [
+      {
+        url: `${BASE_URL}/android-chrome-512x512.png`,
+        alt: 'Echord',
+        width: 512,
+        height: 512,
+      },
+      {
+        url: `${BASE_URL}/android-chrome-192x192.png`,
+        alt: 'Echord',
+        width: 192,
+        height: 192,
+      },
+    ],
   },
   twitter: {
     card: 'summary',
@@ -127,57 +143,63 @@ export default async function RootLayout({
           sizes='16x16'
           href='/favicon-16x16.png'
         />
+        <meta
+          property='og:image'
+          content={`${BASE_URL}/android-chrome-512x512.png`}
+        />
       </head>
       <body className={`${AR.variable} ${TMR.variable} antialiased`}>
         <Suspense fallback={<Skeleton className='w-full h-full' />}>
-          <Toaster
-            position='top-right'
-            toastOptions={{
-              custom: {
-                className:
-                  'bg-gray-900 text-gray-200 shadow-md rounded-lg border border-gray-700/50',
-                style: {
-                  background: '#0f2862',
-                  color: '#e5e7eb',
-                  fontSize: '0.875rem',
-                  padding: '1rem',
-                  zIndex: 9999,
-                },
-              },
-              success: {
-                duration: 3000,
-                style: {
-                  background: '#3b82f6',
-                  color: '#ffffff',
-                  fontSize: '0.875rem',
-                  padding: '1rem',
-                },
-              },
-              error: {
-                duration: 3000,
-                style: {
-                  background: '#9e363a',
-                  color: '#ffffff',
-                  fontSize: '0.875rem',
-                  padding: '1rem',
-                },
-              },
-              loading: {
-                duration: 3000,
-                style: {
-                  background: '#4f5f76',
-                  color: '#ffffff',
-                  fontSize: '0.875rem',
-                  padding: '1rem',
-                },
-              },
-            }}
-          />
           <SessionProvider>
             <WindowProvider>
-              <Backdrop />
-              <Navbar userId={user?.userId ?? user?.userId!} />
-              {children}
+              <InteractionProvider>
+                <Toaster
+                  position='top-right'
+                  toastOptions={{
+                    custom: {
+                      className:
+                        'bg-gray-900 text-gray-200 shadow-md rounded-lg border border-gray-700/50',
+                      style: {
+                        background: '#0f2862',
+                        color: '#e5e7eb',
+                        fontSize: '0.875rem',
+                        padding: '1rem',
+                        zIndex: 9999,
+                      },
+                    },
+                    success: {
+                      duration: 3000,
+                      style: {
+                        background: '#3b82f6',
+                        color: '#ffffff',
+                        fontSize: '0.875rem',
+                        padding: '1rem',
+                      },
+                    },
+                    error: {
+                      duration: 3000,
+                      style: {
+                        background: '#9e363a',
+                        color: '#ffffff',
+                        fontSize: '0.875rem',
+                        padding: '1rem',
+                      },
+                    },
+                    loading: {
+                      duration: 3000,
+                      style: {
+                        background: '#4f5f76',
+                        color: '#ffffff',
+                        fontSize: '0.875rem',
+                        padding: '1rem',
+                      },
+                    },
+                  }}
+                />
+                <Backdrop />
+                <Navbar userId={user?.userId ?? user?.userId!} />
+                {children}
+              </InteractionProvider>
             </WindowProvider>
           </SessionProvider>
         </Suspense>

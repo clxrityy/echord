@@ -1,5 +1,5 @@
-import { Login } from '@/components/elements/forms';
-import { Window } from '@/components/layout/screen';
+import { Login } from '@/components/categories/forms';
+import { Window } from '@/components/layout';
 import { Skeleton } from '@/components/ui';
 import Link from 'next/link';
 import { Suspense } from 'react';

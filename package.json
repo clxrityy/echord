@@ -60,9 +60,11 @@
   },
   "pnpm": {
     "ignoredBuiltDependencies": [
+      "@prisma/client",
       "esbuild"
     ],
     "onlyBuiltDependencies": [
+      "@prisma/client",
       "@prisma/engines",
       "prisma",
       "sharp",

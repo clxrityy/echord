@@ -3,9 +3,9 @@ import {
   FeedListItemSkeleton,
   FeedListItem,
   FeedItem,
-} from '@/components/elements/feed';
-import { Hero } from '@/components/elements/Hero';
-import { Window } from '@/components/layout/screen';
+} from '@/components/categories/feed';
+import { Hero } from '@/components/categories/elements';
+import { Window } from '@/components/layout';
 import { Skeleton } from '@/components/ui';
 import { Suspense } from 'react';
 import { BASE_URL, FEED_ITEMS_PER_PAGE } from '@/utils';
@@ -35,7 +35,7 @@ export default async function Home() {
   const { feedItems } = await feedRes.json();
 
   return (
-    <main className='w-full h-full relative items-center justify-center mx-auto flex flex-col gap-10 mt-20 pt-8 xl:mt-10 2xl:mt-0 overflow-y-auto 2xl:overflow-clip scroll-smooth'>
+    <main className='w-full h-full relative items-center justify-center mx-auto flex flex-col gap-10 pt-8 mt-20 xl:mt-10 2xl:mt-0 overflow-y-auto overflow-clip scroll-smooth'>
       {/**
        *
        */}
@@ -84,7 +84,7 @@ export default async function Home() {
                                   interaction={interaction}
                                   data={data}
                                   interactionData={interactionData}
-                                  userId={user?.userId || ''}
+                                  userId={user ? user.userId : ''}
                                   username={
                                     userData.username ? userData.username : null
                                   }

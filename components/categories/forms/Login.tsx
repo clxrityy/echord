@@ -1,6 +1,6 @@
 'use client';
 
-import { useSession } from '@/contexts/session';
+import { useSession } from '@/contexts';
 import { BASE_URL, ICONS } from '@/utils';
 import { useRouter } from 'next/navigation';
 import { useCallback, useState } from 'react';

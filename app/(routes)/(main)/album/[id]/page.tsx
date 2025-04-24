@@ -1,5 +1,5 @@
-import { Album } from '@/components/elements/data';
-import { Window } from '@/components/layout/screen';
+import { Album } from '@/components/categories/data';
+import { Window } from '@/components/layout';
 import { connection } from 'next/server';
 import { Suspense } from 'react';
 import Loading from '@/app/loading';

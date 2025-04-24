@@ -2,11 +2,12 @@
 import { ImageComponent } from '@/components/ui/Image';
 import Link from 'next/link';
 import { Search } from './Search';
-import { ReactNode, useEffect } from 'react';
+import { ReactNode, Suspense, useEffect } from 'react';
 import { ICONS } from '@/utils/constants';
-import { useSession } from '@/contexts/session';
+import { useSession } from '@/contexts';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/Button';
+import { InteractionHandler } from '../screen';
 
 export function NavbarContainer({ children }: { children: ReactNode }) {
   return (
@@ -85,6 +86,9 @@ export function Navbar({ userId }: { userId?: string | undefined }) {
           )}
         </div>
       </div>
+      <Suspense>
+        <InteractionHandler userId={userId} />
+      </Suspense>
     </NavbarContainer>
   );
 }

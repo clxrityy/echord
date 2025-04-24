@@ -2,9 +2,8 @@
 import { ChangeEvent, useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import { BASE_URL, ICONS } from '@/utils';
-import { OutsideClick } from '@/components/ui/OutsideClick';
-import { useSession } from '@/contexts/session';
-import { Button } from '@/components/ui/Button';
+import { useSession } from '@/contexts';
+import { Button, OutsideClick } from '@/components/ui';
 
 export function Search() {
   const [searchField, setSearchField] = useState<string>('');
@@ -78,7 +77,7 @@ export function Search() {
               placeholder='Search'
               value={searchField}
               onChange={handleChange}
-              className='w-64 p-2 border border-white/50 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200 absolute top-18 right-0 z-10 shadow-md'
+              className='w-64 p-2 border border-white/50 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200 absolute top-18 right-0 z-50 shadow-md'
             />
           )}
         </div>

@@ -1,11 +1,10 @@
-import { Favorites, Settings } from '@/components/elements/user';
 import { Skeleton } from '@/components/ui';
 import { Suspense } from 'react';
-import { SavesGrid } from '@/components/elements/user/save/SavesGrid';
-import { Window } from '@/components/layout/screen/Window';
+import { SavesGrid, Favorites, Settings } from '@/components/categories/user';
+import { Window } from '@/components/layout';
 import Loading from '@/app/loading';
 import { db, getUserSessionId } from '@/lib';
-import { getUserBySessionId } from '@/app/_actions/user';
+import { getUserBySessionId } from '@/app/_actions';
 
 type Props = {
   params: Promise<{

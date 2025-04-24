@@ -1,7 +1,7 @@
 import { getUserBySessionId } from '@/app/_actions';
 import Loading from '@/app/loading';
-import { LogoutButton } from '@/components/elements/forms';
-import { Window } from '@/components/layout/screen';
+import { LogoutButton } from '@/components/categories/forms';
+import { Window } from '@/components/layout';
 import { Skeleton } from '@/components/ui';
 import { getUserSessionId } from '@/lib';
 import { redirect } from 'next/navigation';

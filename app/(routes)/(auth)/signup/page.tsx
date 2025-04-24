@@ -1,5 +1,5 @@
-import { Signup } from '@/components/elements/forms';
-import { Window } from '@/components/layout/screen';
+import { Signup } from '@/components/categories/forms';
+import { Window } from '@/components/layout';
 import { Skeleton } from '@/components/ui';
 import { Suspense } from 'react';
 import Loading from '@/app/loading';

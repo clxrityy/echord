@@ -8,14 +8,19 @@ export async function encryptJWT(payload: any) {
   return await new SignJWT(payload)
     .setProtectedHeader({ alg: 'HS256' })
     .setIssuedAt()
-    .setExpirationTime('12h')
+    .setExpirationTime('7d') // 7 days
     .setSubject(payload.session.sessionId)
     .sign(key);
 }
 
 export async function decryptJWT(input: string) {
-  const { payload } = await jwtVerify(input, key, {
-    algorithms: ['HS256'],
-  });
-  return payload;
+  try {
+    const { payload } = await jwtVerify(input, key, {
+      algorithms: ['HS256'],
+    });
+    return payload;
+  } catch (error) {
+    console.error('Error decrypting JWT:', error);
+    return null;
+  }
 }

@@ -19,14 +19,14 @@ export function Tooltip({
         e.stopPropagation();
         setIsVisible(true);
       }}
-      onMouseLeave={(e => {
+      onMouseLeave={(e) => {
         e.stopPropagation();
         setIsVisible(false);
-      })}
+      }}
     >
       {children}
       {isVisible && (
-        <div className='absolute top-[calc(100%-55px)] transform-[translateX(-45%)] bg-gray-950/55 text-zinc-100/90 text-sm rounded py-1 px-2 z-10 whitespace-nowrap transition-all duration-200 ease-out font-mono font-semibold tracking-wide'>
+        <div className='absolute top-[calc(100%+0.35rem)] transform-[translateX(-45%)] bg-gray-950/55 text-zinc-100/90 text-sm rounded py-1 px-2 z-60 transition-all duration-200 ease-out font-mono font-semibold tracking-wide h-7 flex items-center justify-center'>
           {capitalizeFirstLetter(text)}
         </div>
       )}

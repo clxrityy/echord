@@ -1,4 +1,4 @@
-import { checkAlbumFromInteraction } from '@/app/_actions/data';
+import { checkAlbumFromInteraction } from '@/app/_actions';
 import { Metadata } from 'next';
 import { connection } from 'next/server';
 import { ReactNode } from 'react';

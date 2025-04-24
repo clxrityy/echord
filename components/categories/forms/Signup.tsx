@@ -1,10 +1,9 @@
 'use client';
-import { useSession } from '@/contexts/session';
 import { useRouter } from 'next/navigation';
 import { useCallback, useState } from 'react';
 import { BASE_URL, DEFAULT_VALUES } from '@/utils';
 import toast from 'react-hot-toast';
-import { useWindow } from '@/contexts/window';
+import { useWindow, useSession } from '@/contexts';
 
 export const Signup = ({
   sessionId,

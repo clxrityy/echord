@@ -43,7 +43,28 @@ export async function getUserSession() {
   const session = (await cookies()).get(ENV.COOKIE_NAME);
   if (!session) return null;
 
-  return await decryptJWT(session.value);
+  // return await decryptJWT(session.value);
+  try {
+    const parsed = await decryptJWT(session.value);
+
+    if (parsed) {
+      // Check if the session is expired
+      const now = Date.now();
+      if (parsed.exp && parsed.exp < now) {
+        parsed.exp = 1000 * 60 * 60 * 24 * 7; // 7 days
+      }
+      return parsed;
+    } else {
+      console.error(
+        'Error decrypting user session (invalid token):',
+        session.value
+      );
+      return null;
+    }
+  } catch (error) {
+    console.error('Error decrypting user session (invalid token):', error);
+    return null;
+  }
 }
 
 export async function updateUserSession(request: NextRequest) {
@@ -52,8 +73,9 @@ export async function updateUserSession(request: NextRequest) {
 
   // Refresh the session
   const parsed = await decryptJWT(userSession.value);
-  parsed.exp = 1000 * 60 * 60 * 24 * 7; // 7 days
-  const expires = new Date(Date.now() + parsed.exp);
+
+  if (!parsed) return;
+  const expires = new Date(Date.now() + 1000 * 60 * 60 * 24 * 7); // 7 days
 
   const res = NextResponse.next();
   res.cookies.set({
@@ -62,6 +84,7 @@ export async function updateUserSession(request: NextRequest) {
     expires,
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
+    maxAge: 60 * 60 * 24 * 7, // 7 days
   });
 
   return res;
