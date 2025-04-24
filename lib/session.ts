@@ -55,15 +55,26 @@ export async function getUserSession() {
       }
       return parsed;
     } else {
-      console.error(
-        'Error decrypting user session (invalid token):',
-        session.value
-      );
-      return null;
+      try {
+        await logoutUserSession();
+        console.log('Session expired, logging out user session');
+        return null;
+      } catch (error) {
+        console.error('Error logging out user session (deleting cookie):', error);
+        throw new Error('Failed to log out user session');
+      }
     }
   } catch (error) {
-    console.error('Error decrypting user session (invalid token):', error);
-    return null;
+    console.error('Error decrypting user session:', error);
+    try {
+      await logoutUserSession();
+      console.log('Session expired, logging out user session');
+    } catch (error) {
+      console.error('Error logging out user session (deleting cookie):', error);
+      throw new Error('Failed to log out user session');
+    } finally {
+      return null;
+    }
   }
 }
 
