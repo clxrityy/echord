@@ -72,9 +72,8 @@ export async function getUserSession() {
     } catch (error) {
       console.error('Error logging out user session (deleting cookie):', error);
       throw new Error('Failed to log out user session');
-    } finally {
-      return null;
     }
+    return null;
   }
 }
 
