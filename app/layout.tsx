@@ -9,11 +9,10 @@ import { connection } from 'next/server';
 import { AR, TMR } from '@/styles/fonts';
 import { getUserSessionId } from '@/lib';
 import { getUserBySessionId } from '@/app/_actions';
-import {
-  InteractionProvider,
-  WindowProvider,
-  SessionProvider,
-} from '@/contexts';
+import { SessionProvider } from '@/contexts/session';
+import { WindowProvider } from '@/contexts/window';
+import { InteractionProvider } from '@/contexts/interaction';
+
 
 export const dynamic = 'force-dynamic'; // Force dynamic rendering
 
