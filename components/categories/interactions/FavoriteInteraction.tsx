@@ -15,34 +15,13 @@ export function FavoriteInteraction({
 }) {
   const [favorited, setFavorited] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(true);
+  const [nodeTimeout, setNodeTimeout] = useState<NodeJS.Timeout | null>(null);
+
   const { addInteraction, getInteractions } = useInteractions();
 
   const interactions = getInteractions();
 
   const checkFavorited = useCallback(() => {
-    // const isFavorited = () => {
-    //   if (interactions) {
-    //     const interaction = interactions.find((interaction) => {
-    //       return (
-    //         interaction?.interactionType === 'FAVORITED' &&
-    //         interaction.interactionData?.trackId === trackId &&
-    //         interaction.userId === userId
-    //       );
-    //     });
-
-    //     if (interaction && interaction.interactionData) {
-    //       return true;
-    //     } else {
-    //       return false;
-    //     }
-    //   } else {
-    //     return false;
-    //   }
-    // }
-
-    // if (isFavorited()) {
-    //   setFavorited(isFavorited());
-    // }
     if (interactions) {
       const interaction = interactions.find((interaction) => {
         return (
@@ -65,7 +44,14 @@ export function FavoriteInteraction({
       console.log('Checking favorited status...');
       checkFavorited();
     }
-  }, [interactions, favorited, trackId, userId, loading]);
+
+    return () => {
+      if (nodeTimeout) {
+        clearTimeout(nodeTimeout);
+      }
+      setNodeTimeout(null);
+    };
+  }, [interactions, favorited, trackId, userId, loading, checkFavorited, nodeTimeout]);
 
   const handleFavorite = async () => {
     const toastId = toast.loading('Favoriting...');
@@ -84,20 +70,35 @@ export function FavoriteInteraction({
 
       const { interaction, error } = await response.json();
 
-      if (error) {
-        toast.error(`Failed to favorite interaction: ${error}`, {
+      if (response.status !== 200) {
+        console.error('Error favoriting:', error);
+        toast.error('Failed to favorite', {
           id: toastId,
         });
-      } else if (interaction !== null) {
-        addInteraction(interaction);
-        setFavorited(true);
-        toast.success(`Favorited successfully`, {
-          id: toastId,
-        });
+        return;
       }
+
+      if (error) {
+        toast.error(`Failed to favorite track: ${error}`, {
+          id: toastId,
+        });
+        return;
+      }
+
+      if (interaction) {
+        const timeout = setTimeout(() => {
+          addInteraction(interaction);
+          setFavorited(true);
+          toast.success('Favorited successfully', {
+            id: toastId,
+          });
+        }, 1000);
+        setNodeTimeout(timeout);
+      }
+
     } catch (error) {
-      console.error('Error favoriting interaction:', error);
-      toast.error('Failed to favorite interaction', {
+      console.error('Error favoriting:', error);
+      toast.error('Failed to favorite', {
         id: toastId,
       });
     }
@@ -105,12 +106,19 @@ export function FavoriteInteraction({
 
   return (
     <Button
-      className='disabled:text-red-500/80 hover:text-gray-300 focus:text-blue-400 disabled:hover:text-red-500/80 disabled:cursor-not-allowed transition-all duration-200 ease-in-out'
+      className={`${loading ? "cursor-none" : "disabled:text-red-500/80 hover:text-gray-300 focus:text-blue-400 disabled:hover:text-red-500/80 disabled:cursor-not-allowed transition-all duration-200 ease-in-out" }`}
       title='Favorite'
-      disabled={favorited}
+      disabled={favorited || loading}
       onClick={async () => await handleFavorite()}
     >
-      <ICONS.favorite />
+      {
+        loading ? (
+          <ICONS.loading className='animate-spin' />
+        ) : (
+          <ICONS.favorite
+          />
+        )
+      }
       <span className='sr-only'>{favorited ? 'Favorited' : 'Favorite'}</span>
     </Button>
   );

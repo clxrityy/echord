@@ -1,6 +1,5 @@
 'use client';
 import { useInteractions } from '@/contexts';
-import { Interaction } from '@/types';
 import { ICONS } from '@/utils';
 import { useCallback, useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
@@ -15,6 +14,7 @@ export function RatingInteraction({
   const [rating, setRating] = useState<number | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isHovered, setIsHovered] = useState<number | null>(null);
+  const [nodeTimeout, setNodeTimeout] = useState<NodeJS.Timeout | null>(null);
 
   const { addInteraction, getInteractions } = useInteractions();
   const interactions = getInteractions();
@@ -41,10 +41,17 @@ export function RatingInteraction({
   }, [interactions, trackId, userId]);
 
   useEffect(() => {
-    if (isLoading && rating === null && interactions) {
+    if (rating === null && interactions) {
       checkRating();
     }
-  }, [interactions, isLoading, trackId, userId, isLoading]);
+
+    return () => {
+      if (nodeTimeout) {
+        clearTimeout(nodeTimeout);
+      }
+      setNodeTimeout(null);
+    }
+  }, [interactions, isLoading, trackId, userId, isLoading, nodeTimeout]);
 
   const rate = useCallback(
     async (value: number) => {
@@ -61,9 +68,7 @@ export function RatingInteraction({
             value,
           }),
         });
-        const { interaction } = (await response.json()) as {
-          interaction: Interaction;
-        };
+        const { interaction } = (await response.json());
 
         if (interaction) {
           addInteraction(interaction);
@@ -76,10 +81,11 @@ export function RatingInteraction({
         toast.error('Failed to rate', { id: toastId });
         console.error('Error rating:', error);
       } finally {
-        setTimeout(() => {
+        const timeout = setTimeout(() => {
           setIsHovered(null);
           toast.dismiss(toastId);
         }, 1000);
+        setNodeTimeout(timeout);
       }
     },
     [trackId, userId, rating]
@@ -107,7 +113,9 @@ export function RatingInteraction({
   return (
     <div className='flex items-center gap-1 justify-end w-full'>
       {[1, 2, 3, 4, 5].map((value, idx) => {
-        return (
+        return isLoading ? (
+          <ICONS.loading key={idx} className='animate-spin' />
+        ) : (
           <ICONS.star
             onMouseOver={(e) => {
               e.preventDefault();
