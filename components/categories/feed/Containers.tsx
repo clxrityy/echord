@@ -12,7 +12,7 @@ import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
 import { FeedUser } from './User';
 import { ReactNode, Suspense, useCallback, useState } from 'react';
-import { InteractionModal } from '../modals/InteractionModal';
+import { InteractionModal } from '../modals';
 
 export function FeedUserContainer({ children }: { children: ReactNode }) {
   return (
@@ -67,8 +67,12 @@ export function FeedItemContainer({
     switch (interactionType) {
       case 'FAVORITED':
         return ICONS.favorite;
-      default:
+      case 'SAVED':
         return ICONS.save;
+      case 'RATED':
+        return ICONS.star;
+      default:
+        return ICONS.loading;
     }
   };
 
