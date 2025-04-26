@@ -2,6 +2,7 @@ import {
   checkTrackFromInteraction,
   getInteraction,
   getTrack,
+  handleInteraction,
 } from '@/app/_actions';
 import { db, getUserSessionId } from '@/lib';
 import { Interaction } from '@/types';
@@ -82,21 +83,21 @@ export async function POST(req: NextRequest) {
 
   const existingTrack = await checkTrackFromInteraction(trackId);
 
-  let interaction: Interaction | null = null;
+  let interaction: Interaction | undefined = undefined;
+  const track = await getTrack(trackId);
+
+  if (!track) {
+    return NextResponse.json(
+      {
+        error: 'Track not found',
+      },
+      {
+        status: 404,
+      }
+    );
+  }
 
   if (!existingTrack) {
-    const track = await getTrack(trackId);
-
-    if (!track) {
-      return NextResponse.json(
-        {
-          error: 'Track not found',
-        },
-        {
-          status: 404,
-        }
-      );
-    }
 
     await db.eTrack.create({
       data: {
@@ -159,10 +160,8 @@ export async function POST(req: NextRequest) {
         interactionType: 'RATED',
         trackId: trackId,
         eData: {
-          session: {
-            userId,
-          },
-        },
+          sessionId: sessionId,
+        }
       },
     });
 
@@ -208,11 +207,38 @@ export async function POST(req: NextRequest) {
     );
   }
 
+  interaction = await handleInteraction({
+    dataType: 'TRACK',
+    interactionType: 'RATED',
+    userId,
+    sessionId,
+    interactionData: {
+      trackId,
+      imageUrl: track.album.cover_medium,
+      title: track.title,
+      artistName: track.artist.name,
+      albumName: track.album.title,
+      albumId: String(track.album.id),
+      rating: value,
+    }
+  });
+
+  if (!interaction) {
+    return NextResponse.json(
+      {
+        error: 'Unable to locate interaction data',
+      },
+      {
+        status: 500,
+      }
+    );
+  }
+
   const ratingsData = await db.eInteractionData.findMany({
     where: {
       interactionType: 'RATED',
       trackId: trackId,
-    },
+      },
   });
 
   const ratingsMapped = ratingsData.map((rating) => rating.rating!);
@@ -231,8 +257,7 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json(
       {
-        message: 'Album rated successfully',
-        success: true,
+        interaction
       },
       {
         status: 200,
