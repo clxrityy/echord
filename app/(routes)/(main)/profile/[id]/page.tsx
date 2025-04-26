@@ -1,10 +1,10 @@
-import { Skeleton } from '@/components/ui';
 import { Suspense } from 'react';
-import { SavesGrid, Favorites, Settings } from '@/components/categories/user';
+import { SavesGrid, Favorites } from '@/components/categories/user';
 import { Window } from '@/components/layout';
 import Loading from '@/app/loading';
 import { db, getUserSessionId } from '@/lib';
 import { getUserBySessionId } from '@/app/_actions';
+import { SettingsModal } from '@/components/categories/modals';
 
 type Props = {
   params: Promise<{
@@ -77,16 +77,13 @@ export default async function Page({ params }: Props) {
     <Suspense fallback={<Loading />}>
       <Window sessionId={sessionId || ''}>
         <div className='w-full flex flex-col gap-10 items-center justify-around'>
-          <div className='flex items-center justify-start gap-2 w-fit'>
+          <div className='flex items-center justify-center gap-2 w-fit'>
+            <h1 className='text-2xl font-bold'>{profileUser.username}</h1>
             {isCurrentUser && (
-              <Suspense fallback={<Skeleton />}>
-                <Settings
-                // sessionId={session.sessionId}
-                // userId={profileUser.userId}
-                />
+              <Suspense>
+                <SettingsModal userId={profileUser.userId} />
               </Suspense>
             )}
-            <h1 className='text-2xl font-bold'>{profileUser.username}</h1>
             {/**
              * - Profile data (bio, etc.)
              */}

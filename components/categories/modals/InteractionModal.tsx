@@ -1,3 +1,4 @@
+'use client';
 import { Dialog, DialogProps, Skeleton } from '@/components/ui';
 import { Interaction } from '@/types';
 import { Suspense, useEffect, useState } from 'react';
