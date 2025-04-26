@@ -1,4 +1,5 @@
 import { db } from '@/lib';
+import { User } from '@/types';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET(req: NextRequest) {
@@ -13,7 +14,12 @@ export async function GET(req: NextRequest) {
     where: {
       userId: userId,
     },
-  });
+    include: {
+      interactions: true,
+      session: true,
+      searches: true,
+    }
+  }) as User;
 
   if (!user) {
     return NextResponse.json({ user: null }, { status: 404 });
