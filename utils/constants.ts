@@ -14,6 +14,7 @@ import {
   X,
   House,
   Star,
+  LoaderCircle,
 } from 'lucide-react';
 
 export const DEEZER_API_URL = 'https://api.deezer.com';
@@ -42,6 +43,7 @@ export const ICONS = {
   close: X,
   home: House,
   star: Star,
+  loading: LoaderCircle,
 };
 
 export const ENV = {
