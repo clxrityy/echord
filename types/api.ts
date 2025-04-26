@@ -2,6 +2,8 @@ import {
   EAlbum,
   EInteraction,
   EInteractionData,
+  ESearch,
+  ESession,
   ETrack,
   EUser,
 } from '@/prisma/app/generated/prisma/client';
@@ -272,3 +274,9 @@ export type DEEZER_TRACK_DATA = {
   }[];
   track_token: string;
 };
+
+export type User = EUser & {
+  interactions: EInteraction[];
+  session: ESession | null;
+  searches: ESearch[];
+}
