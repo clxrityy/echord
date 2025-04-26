@@ -1,5 +1,5 @@
 import { Skeleton } from '@/components/ui';
-import { BASE_URL, DEEZER_API_URL } from '@/utils';
+import { BASE_URL, DEEZER_API_URL, replaceUrlEncodeWithSpace } from '@/utils';
 import { DEEZER_SEARCH_RESPONSE } from '@/types';
 import { Suspense } from 'react';
 import './index.css';
@@ -73,7 +73,7 @@ export default async function SearchPage({ params }: Props) {
         <div className='search-page'>
           <h1 className='fixed top-6 flex gap-3 items-center'>
             Search Results for:{' '}
-            <span className='italic font-medium'>{id.replace('%20', ' ')}</span>
+            <span className='italic font-medium'>{replaceUrlEncodeWithSpace(id)}</span>
           </h1>
           <Suspense fallback={<Skeleton />}>
             <Results data={data} userId={user?.userId} />
