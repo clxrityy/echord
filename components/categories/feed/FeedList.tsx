@@ -49,8 +49,8 @@ export function FeedListItem({ children }: { children: ReactNode }) {
 
 export function FeedListItemSkeleton() {
   return (
-    <li className='w-full h-full flex items-center justify-center py-10 px-4'>
+    <div className='w-full h-full flex items-center justify-center py-10 px-4'>
       <div className='w-[14rem] h-[7.5rem] rounded-md bg-gray-700/30 animate-pulse' />
-    </li>
+    </div>
   );
 }
