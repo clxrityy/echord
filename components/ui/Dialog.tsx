@@ -4,7 +4,7 @@ import { Button } from './Button';
 import { ICONS } from '@/utils';
 
 export interface DialogProps extends ComponentProps<'dialog'> {
-  title: string;
+  title?: string;
   description?: string;
   onClose: () => void;
   open: boolean;
