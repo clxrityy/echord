@@ -27,6 +27,9 @@ const eslintConfig = [
         },
       ],
     },
+    globals: {
+      NodeJS: true,
+    },
   }),
 ];
 
