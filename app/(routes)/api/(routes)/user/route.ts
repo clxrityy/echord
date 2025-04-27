@@ -10,7 +10,7 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ user: null }, { status: 400 });
   }
 
-  const user = await db.eUser.findUnique({
+  const user = (await db.eUser.findUnique({
     where: {
       userId: userId,
     },
@@ -18,8 +18,8 @@ export async function GET(req: NextRequest) {
       interactions: true,
       session: true,
       searches: true,
-    }
-  }) as User;
+    },
+  })) as User;
 
   if (!user) {
     return NextResponse.json({ user: null }, { status: 404 });

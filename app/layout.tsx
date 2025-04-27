@@ -12,8 +12,7 @@ import { getUserBySessionId } from '@/app/_actions';
 import { SessionProvider } from '@/contexts/session';
 import { WindowProvider } from '@/contexts/window';
 import { InteractionProvider } from '@/contexts/interaction';
-import { Analytics } from "@vercel/analytics/react"
-
+import { Analytics } from '@vercel/analytics/react';
 
 export const dynamic = 'force-dynamic'; // Force dynamic rendering
 

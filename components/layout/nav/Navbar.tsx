@@ -86,13 +86,11 @@ export function Navbar({ userId }: { userId?: string | undefined }) {
           )}
         </div>
       </div>
-      {
-        userId && (
-          <Suspense>
-            <InteractionHandler userId={userId} />
-          </Suspense>
-        )
-      }
+      {userId && (
+        <Suspense>
+          <InteractionHandler userId={userId} />
+        </Suspense>
+      )}
     </NavbarContainer>
   );
 }

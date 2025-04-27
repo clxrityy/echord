@@ -51,7 +51,15 @@ export function FavoriteInteraction({
       }
       setNodeTimeout(null);
     };
-  }, [interactions, favorited, trackId, userId, loading, checkFavorited, nodeTimeout]);
+  }, [
+    interactions,
+    favorited,
+    trackId,
+    userId,
+    loading,
+    checkFavorited,
+    nodeTimeout,
+  ]);
 
   const handleFavorite = async () => {
     const toastId = toast.loading('Favoriting...');
@@ -95,7 +103,6 @@ export function FavoriteInteraction({
         }, 1000);
         setNodeTimeout(timeout);
       }
-
     } catch (error) {
       console.error('Error favoriting:', error);
       toast.error('Failed to favorite', {
@@ -106,19 +113,16 @@ export function FavoriteInteraction({
 
   return (
     <Button
-      className={`${loading ? "cursor-none" : "disabled:text-red-500/80 hover:text-gray-300 focus:text-blue-400 disabled:hover:text-red-500/80 disabled:cursor-not-allowed transition-all duration-200 ease-in-out" }`}
+      className={`${loading ? 'cursor-none' : 'disabled:text-red-500/80 hover:text-gray-300 focus:text-blue-400 disabled:hover:text-red-500/80 disabled:cursor-not-allowed transition-all duration-200 ease-in-out'}`}
       title='Favorite'
       disabled={favorited || loading}
       onClick={async () => await handleFavorite()}
     >
-      {
-        loading ? (
-          <ICONS.loading className='animate-spin' />
-        ) : (
-          <ICONS.favorite
-          />
-        )
-      }
+      {loading ? (
+        <ICONS.loading className='animate-spin' />
+      ) : (
+        <ICONS.favorite />
+      )}
       <span className='sr-only'>{favorited ? 'Favorited' : 'Favorite'}</span>
     </Button>
   );

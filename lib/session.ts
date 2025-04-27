@@ -60,7 +60,10 @@ export async function getUserSession() {
         console.log('Session expired, logging out user session');
         return null;
       } catch (error) {
-        console.error('Error logging out user session (deleting cookie):', error);
+        console.error(
+          'Error logging out user session (deleting cookie):',
+          error
+        );
         throw new Error('Failed to log out user session');
       }
     }

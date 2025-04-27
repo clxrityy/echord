@@ -53,7 +53,7 @@ export function SaveInteraction({
         clearTimeout(nodeTimeout);
       }
       setNodeTimeout(null);
-    }
+    };
   }, [loading, interactions, saved, trackId, userId, checkSaved, nodeTimeout]);
 
   const handleSave = async () => {
@@ -90,7 +90,7 @@ export function SaveInteraction({
             id: toastId,
           });
         }
-      }, 1000)
+      }, 1000);
       setNodeTimeout(timeout);
     } catch (error) {
       console.error('Error saving interaction:', error);
@@ -103,24 +103,20 @@ export function SaveInteraction({
       } else {
         const timeout = setTimeout(() => {
           toast.dismiss(toastId);
-        }, 1000)
+        }, 1000);
         setNodeTimeout(timeout);
       }
     }
-  }
+  };
 
   return (
     <Button
       title='Save'
       disabled={saved || loading}
       onClick={async () => await handleSave()}
-      className={`${loading ? "cursor-none" : "disabled:text-green-500/80 hover:text-gray-300 focus:text-blue-400 disabled:hover:text-green-500/80 disabled:cursor-not-allowed transition-all duration-200 ease-in-out"}`}
+      className={`${loading ? 'cursor-none' : 'disabled:text-green-500/80 hover:text-gray-300 focus:text-blue-400 disabled:hover:text-green-500/80 disabled:cursor-not-allowed transition-all duration-200 ease-in-out'}`}
     >
-      {loading ? (
-        <ICONS.loading className='animate-spin' />
-      ) : (
-        <ICONS.save />
-      )}
+      {loading ? <ICONS.loading className='animate-spin' /> : <ICONS.save />}
       <span className='sr-only'>{saved ? 'Saved' : 'Save to Library'}</span>
     </Button>
   );

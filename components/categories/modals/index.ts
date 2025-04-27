@@ -1,3 +1,3 @@
 export * from './AlbumModal';
-export * from "./InteractionModal";
-export * from "./SettingsModal";
+export * from './InteractionModal';
+export * from './SettingsModal';

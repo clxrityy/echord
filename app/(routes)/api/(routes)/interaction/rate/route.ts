@@ -98,7 +98,6 @@ export async function POST(req: NextRequest) {
   }
 
   if (!existingTrack) {
-
     await db.eTrack.create({
       data: {
         trackId: trackId,
@@ -161,7 +160,7 @@ export async function POST(req: NextRequest) {
         trackId: trackId,
         eData: {
           sessionId: sessionId,
-        }
+        },
       },
     });
 
@@ -220,7 +219,7 @@ export async function POST(req: NextRequest) {
       albumName: track.album.title,
       albumId: String(track.album.id),
       rating: value,
-    }
+    },
   });
 
   if (!interaction) {
@@ -238,7 +237,7 @@ export async function POST(req: NextRequest) {
     where: {
       interactionType: 'RATED',
       trackId: trackId,
-      },
+    },
   });
 
   const ratingsMapped = ratingsData.map((rating) => rating.rating!);
@@ -257,7 +256,7 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json(
       {
-        interaction
+        interaction,
       },
       {
         status: 200,

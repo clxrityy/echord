@@ -50,7 +50,7 @@ export function RatingInteraction({
         clearTimeout(nodeTimeout);
       }
       setNodeTimeout(null);
-    }
+    };
   }, [interactions, isLoading, trackId, userId, isLoading, nodeTimeout]);
 
   const rate = useCallback(
@@ -68,7 +68,7 @@ export function RatingInteraction({
             value,
           }),
         });
-        const { interaction } = (await response.json());
+        const { interaction } = await response.json();
 
         if (interaction) {
           addInteraction(interaction);

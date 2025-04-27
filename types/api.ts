@@ -279,4 +279,4 @@ export type User = EUser & {
   interactions: EInteraction[];
   session: ESession | null;
   searches: ESearch[];
-}
+};
