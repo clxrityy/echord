@@ -53,7 +53,9 @@ export const Login = ({
       console.error('Login error:', e);
       toast.error('Login error. Please try again.');
     } finally {
-      toast.dismiss(toastId);
+      setTimeout(() => {
+        toast.dismiss(toastId);
+      }, 5000);
     }
   }, [username, password, sessionId, setUserId]);
 
