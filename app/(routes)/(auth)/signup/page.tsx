@@ -17,8 +17,8 @@ export default async function Page() {
   return (
     <Suspense fallback={<Loading />}>
       <Window sessionId={sessionId || ''}>
-        <div className='h-full w-full mx-auto'>
-          <div className='flex flex-col w-full h-full mx-auto mt-30 gap-6 items-center justify-center'>
+        <div className='h-1/2 w-full mx-auto'>
+          <div className='flex flex-col w-ful h-full mx-auto gap-6 items-center justify-center'>
             <h2>Sign Up</h2>
             <Suspense fallback={<Skeleton />}>
               <Signup
