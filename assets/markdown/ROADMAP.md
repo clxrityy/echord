@@ -51,6 +51,27 @@
 - [x] `/signup` - Sign up
 - [x] `/logout` - Sign out
 
+#### Seamless routing experience
+
+- [x] Navigation
+- [x] Add a loading spinner
+- [x] Add proper skeletons and suspense
+- [ ] Album/track routes
+  - [ ] Review modal
+  - [ ] Interaction feed
+  - [ ] Sidebar with related albums/tracks `*`
+- [x] User profile route
+  - [ ] User reviews
+  - [ ] User ratings
+  - [ ] User favorites
+    - [x] Almost done but needs to be cleaned up
+  - [x] User saves
+  - [ ] User followers
+  - [ ] User following
+  - [ ] User settings
+  - [ ] Interaction feed
+  - [ ] Sidebar with related users `*`
+
 ##### Features
 
 - [x] Add a search bar to the home page
