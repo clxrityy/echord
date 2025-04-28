@@ -51,7 +51,11 @@ export async function POST(req: NextRequest) {
       where: {
         trackId: existingTrackData.trackId,
         interactionData: {
-          trackId: existingTrackData.trackId,
+          trackId: existingTrackData.trackId || track.id.toString(),
+          albumId: existingTrackData.albumId || track.album.id.toString(),
+          title: track.title,
+          artistName: track.artist.name,
+          albumName: track.album.title,
         },
       },
       include: {
@@ -66,6 +70,7 @@ export async function POST(req: NextRequest) {
         interactionData: {
           ...existingData,
           ...existingTrackData,
+          imageUrl: track.album.cover_medium,
         },
         interactionType: 'FAVORITED',
         userId,
@@ -138,6 +143,7 @@ export async function POST(req: NextRequest) {
         artistName: track.artist.name,
         albumName: track.album.title,
         imageUrl: track.album.cover_medium,
+        albumId: track.album.id.toString(),
       },
       interactionType: 'FAVORITED',
       userId,

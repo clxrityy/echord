@@ -58,6 +58,10 @@ export async function POST(req: NextRequest) {
         trackId: existingTrackData.trackId,
         interactionData: {
           trackId: existingTrackData.trackId,
+          albumName: track.album.title,
+          artistName: track.artist.name,
+          title: track.title,
+          albumId: String(track.album.id),
         },
       },
       include: {
@@ -71,6 +75,7 @@ export async function POST(req: NextRequest) {
         dataType: existingData.dataType,
         interactionData: {
           ...existingData,
+          imageUrl: track.album.cover_medium,
         },
         interactionType: EInteractionType.SAVED,
         userId,
@@ -100,6 +105,7 @@ export async function POST(req: NextRequest) {
           artistName: track.artist.name,
           title: track.title,
           imageUrl: track.album.cover_medium,
+          albumId: String(track.album.id),
         },
       });
 
@@ -128,6 +134,7 @@ export async function POST(req: NextRequest) {
         albumName: track.album.title,
         artistName: track.artist.name,
         title: track.title,
+        albumId: String(track.album.id),
         imageUrl: track.album.cover_medium,
       },
     });

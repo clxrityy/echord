@@ -143,11 +143,11 @@ export async function POST(req: NextRequest) {
               albumId: String(track.album.id),
               title: track.album.title,
               artistName: track.artist.name,
-              imageUrl: track.album.cover_xl,
+              imageUrl: track.album.cover_medium,
             },
           },
         },
-        imageUrl: track.album.cover_xl,
+        imageUrl: track.album.cover_medium,
         title: track.title,
         artistName: track.artist.name,
         averageRating: value,
@@ -158,6 +158,7 @@ export async function POST(req: NextRequest) {
       where: {
         interactionType: 'RATED',
         trackId: trackId,
+        albumId: String(track.album.id),
         eData: {
           sessionId: sessionId,
         },
