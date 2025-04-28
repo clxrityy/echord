@@ -25,7 +25,7 @@ export default async function Home() {
 
   const feedRes = await fetch(`${BASE_URL}/api/feed`, {
     next: {
-      revalidate: 60,
+      revalidate: 30,
     },
     headers: {
       'Content-Type': 'application/json',
@@ -41,7 +41,7 @@ export default async function Home() {
        */}
       <div className='w-full h-full flex flex-col xl:flex-row gap-2 items-start justify-start xl:justify-between xl:items-start xl:gap-0'>
         <Suspense fallback={<Loading />}>
-          <Hero userId={sessionId ?? sessionId!} />
+          <Hero userId={user?.userId} />
         </Suspense>
         <div className='relative flex justify-center items-center w-full'>
           <Suspense fallback={<Loading />}>
