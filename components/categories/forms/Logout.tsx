@@ -2,6 +2,7 @@
 import { Button } from '@/components/ui';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import toast from 'react-hot-toast';
 
 export function LogoutButton() {
   const [error, setError] = useState<string | null>(null);
@@ -9,6 +10,8 @@ export function LogoutButton() {
   const router = useRouter();
 
   const handleClick = async () => {
+    const toastId = toast.loading('Logging out...');
+
     try {
       const res = await fetch('/api/auth/logout', {
         method: 'POST',
@@ -18,7 +21,11 @@ export function LogoutButton() {
       });
 
       if (res.ok) {
-        router.push('/login');
+        toast.success('Logout successful!', { id: toastId });
+        setTimeout(() => {
+          router.push('/');
+          router.refresh();
+        }, 2000);
       }
 
       if (res.status === 500) {
@@ -27,6 +34,10 @@ export function LogoutButton() {
     } catch (e) {
       console.error('Error logging out', e);
       setError('An error occurred while logging out. Please try again.');
+    } finally {
+      setTimeout(() => {
+        toast.dismiss(toastId);
+      }, 5000);
     }
   };
 
