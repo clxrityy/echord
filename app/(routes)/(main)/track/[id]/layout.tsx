@@ -78,7 +78,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       statusBarStyle: "black-translucent",
       capable: true,
     },
-    themeColor: "#000000"
   };
 }
 
