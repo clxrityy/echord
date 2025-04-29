@@ -9,6 +9,10 @@ const nextConfig: NextConfig = {
         protocol: 'https',
         hostname: 'cdn-images.dzcdn.net',
       },
+      {
+        protocol: 'https',
+        hostname: 'echord.uk',
+      },
     ],
   },
   compiler: {
