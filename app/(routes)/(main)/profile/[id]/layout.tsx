@@ -1,5 +1,6 @@
 import { db } from "@/lib";
 import { Metadata } from "next";
+import { ReactNode } from "react";
 
 type Props = {
   params: Promise<{
@@ -55,7 +56,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function Layout({
   children,
 }: {
-  children: React.ReactNode;
+  children: ReactNode;
 }) {
 
   return (
