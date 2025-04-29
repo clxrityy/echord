@@ -5,6 +5,7 @@ import { MetadataRoute } from 'next';
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const albums = await db.eAlbum.findMany();
   const users = await db.eUser.findMany();
+  const tracks = await db.eTrack.findMany();
 
   const albumsMapped = albums.map((album) => ({
     url: `${BASE_URL}/album/${album.albumId}`,
@@ -18,6 +19,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     images: [user.avatar ? user.avatar : ''],
   }));
 
+  const tracksMapped = tracks.map((track) => ({
+    url: `${BASE_URL}/track/${track.trackId}`,
+    lastModified: new Date(track.updatedAt),
+    images: [track.imageUrl ? track.imageUrl : ''],
+  }));
+
   return [
     {
       url: BASE_URL,
@@ -27,5 +34,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
     ...albumsMapped,
     ...usersMapped,
+    ...tracksMapped,
   ];
 }
