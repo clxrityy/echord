@@ -70,6 +70,18 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       statusBarStyle: 'black-translucent',
       capable: true,
     },
+    alternates: {
+      canonical: `https://echord.uk/album/${id}`,
+    },
+    metadataBase: new URL('https://echord.uk'),
+    robots: {
+      index: true,
+      follow: true,
+      nocache: false,
+      noarchive: false,
+      noimageindex: false,
+      notranslate: false,
+    },
   };
 }
 
