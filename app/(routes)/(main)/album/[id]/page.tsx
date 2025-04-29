@@ -57,9 +57,9 @@ export default async function Page({ params }: Props) {
                 <h2 className='text-2xl font-bold'>{album.title}</h2>
               </div>
             </div>
+            </div>
           </div>
-        </div>
-      </Window>
-    </Suspense>
-  );
+          </Window>
+        </Suspense>
+        );
 }
