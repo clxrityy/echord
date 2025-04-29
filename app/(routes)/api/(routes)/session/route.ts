@@ -53,5 +53,5 @@ export async function GET(_req: NextRequest) {
     return NextResponse.json({ error: 'Session not found' }, { status: 404 });
   }
 
-  return NextResponse.json({ sessionId: session.sessionId }, { status: 200 });
+  return NextResponse.json({ session: session }, { status: 200 });
 }
