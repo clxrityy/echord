@@ -1,9 +1,10 @@
 'use client';
 
 import { useSession } from '@/contexts';
+import { ESession } from '@/prisma/app/generated/prisma/client';
 import { BASE_URL, ICONS } from '@/utils';
 import { useRouter } from 'next/navigation';
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 
 export const Login = ({
@@ -15,6 +16,7 @@ export const Login = ({
 }) => {
   const [username, setUsername] = useState<string>('');
   const [password, setPassword] = useState<string>('');
+  const [session, setSession] = useState<ESession | null>(null);
 
   const { setUserId } = useSession();
   const router = useRouter();
@@ -23,6 +25,34 @@ export const Login = ({
     setUserId(userId);
     router.push(`/profile/${userId}`);
   }
+
+  const fetchSession = useCallback(async () => {
+    try {
+      const res = await fetch(`/api/session`);
+      const { session } = (await res.json()) as { session: ESession | null };
+      setTimeout(() => {
+        if (session) {
+          setSession(session);
+        } else {
+          setSession(null);
+        }
+      }, 1000);
+    } catch (error) {
+      console.error('Error fetching session:', error);
+      setSession(null);
+    }
+  }, [sessionId]);
+
+  useEffect(() => {
+    if (sessionId) {
+      fetchSession();
+    }
+    if (session) {
+      setUserId(session.userId);
+      router.push(`/profile/${session.userId}`);
+    }
+
+  }, [sessionId, session, fetchSession]);
 
   const handleLogin = useCallback(async () => {
     const toastId = toast.loading('Logging in...');
