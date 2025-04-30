@@ -44,6 +44,7 @@ export function Navbar({ userId }: { userId?: string | undefined }) {
     if (userId && userId !== getUserId()) {
       setUserId(userId);
       updateUserLastSeen();
+      router.refresh();
     }
   }, [userId, getUserId()]);
 
