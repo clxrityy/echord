@@ -1,6 +1,6 @@
 'use client';
 import {
-  EData,
+  // EData,
   EInteraction,
   EInteractionData,
 } from '@/prisma/app/generated/prisma/client';
@@ -11,7 +11,7 @@ import { FeedListItemSkeleton } from './FeedList';
 
 interface FeedItemProps {
   interaction: EInteraction;
-  data: EData;
+  // data: EData;
   interactionData: EInteractionData;
   userId: string | null;
   username: string | null;
@@ -19,7 +19,7 @@ interface FeedItemProps {
 
 export function FeedItem({
   interaction,
-  data,
+  // data,
   interactionData,
   userId,
   username,
@@ -39,7 +39,6 @@ export function FeedItem({
     dataId,
     // rating, review
   } = interactionData;
-  const { dataType } = data;
 
   const isCurrentUser = userId == interactionUserId;
 
@@ -50,10 +49,10 @@ export function FeedItem({
           fallback={<Skeleton className='w-[5rem] h-full rounded-md' />}
         >
           <FeedItemContainer
+            trackId={interaction.trackId ?? ''}
             interactionId={interactionId}
             isCurrentUser={isCurrentUser}
             interactionType='FAVORITED'
-            dataType={dataType}
             createdAt={createdAt}
             userId={userId ? userId : undefined}
             imageUrl={
@@ -83,11 +82,11 @@ export function FeedItem({
           fallback={<Skeleton className='w-[5rem] h-full rounded-md' />}
         >
           <FeedItemContainer
+            trackId={interaction.trackId ?? ''}
             interactionId={interactionId}
             interactionUserId={interactionUserId}
             isCurrentUser={isCurrentUser}
             interactionType='SAVED'
-            dataType={dataType}
             createdAt={createdAt}
             userId={userId ? userId : undefined}
             imageUrl={
@@ -109,7 +108,40 @@ export function FeedItem({
           </span>
         </Suspense>
       );
-
+    case 'RATED':
+      return (
+        <Suspense
+          fallback={<Skeleton className='w-[5rem] h-full rounded-md' />}
+        >
+          <FeedItemContainer
+            trackId={interaction.trackId ?? ''}
+            interactionId={interactionId}
+            interactionUserId={interactionUserId}
+            isCurrentUser={isCurrentUser}
+            interactionType='RATED'
+            createdAt={createdAt}
+            userId={userId ? userId : undefined}
+            imageUrl={
+              imageUrl && imageUrl !== 'undefined' ? imageUrl : undefined
+            }
+            title={title && title !== 'undefined' ? title : undefined}
+            albumId={albumId && albumId !== 'undefined' ? albumId : undefined}
+            albumName={
+              albumName && albumName !== 'undefined' ? albumName : undefined
+            }
+            dataId={dataId}
+            rating={interactionData.rating ?? 0}
+          />
+          <span className='sr-only'>
+            {username ? username : 'Unknown User'} rated{' '}
+            {title && title !== 'undefined' ? title : 'Unknown Title'} by{' '}
+            {artistName && artistName !== 'undefined'
+              ? artistName
+              : 'Unknown Artist'}{' '}
+            {interactionData.rating} stars
+          </span>
+        </Suspense>
+      );
     default:
       return <FeedListItemSkeleton />;
   }
