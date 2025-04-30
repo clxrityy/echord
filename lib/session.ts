@@ -95,7 +95,7 @@ export async function updateUserSession(request: NextRequest) {
     name: ENV.COOKIE_NAME,
     value: await encryptJWT(parsed),
     expires,
-    httpOnly: true,
+    httpOnly: false,
     secure: process.env.NODE_ENV === 'production',
     maxAge: 60 * 60 * 24 * 7, // 7 days
   });
