@@ -1,5 +1,6 @@
 import { getUserBySessionId } from '@/app/_actions';
 import { db } from '@/lib';
+import { EData, EInteraction, EInteractionData, EUser } from '@/prisma/app/generated/prisma/client';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET(_req: NextRequest) {
@@ -16,19 +17,19 @@ export async function GET(_req: NextRequest) {
 
   const array = Array.from(rawFeed).map(async (item) => {
     const { ...interaction } = item;
-    const { ...data } = await db.eData.findUnique({
+    const data = await db.eData.findUnique({
       where: {
         id: item.dataId,
       },
     });
 
-    const { ...interactionData } = await db.eInteractionData.findFirst({
+    const interactionData = await db.eInteractionData.findFirst({
       where: {
         dataId: item.dataId,
       },
     });
 
-    const user = await getUserBySessionId(data.sessionId);
+    const user = await getUserBySessionId(data?.sessionId || '');
 
     return {
       interaction,
@@ -40,18 +41,19 @@ export async function GET(_req: NextRequest) {
 
   const feedItems = await Promise.all(array);
 
+  const mapped = feedItems.map((item) => {
+    const { interaction, data, interactionData, user } = item;
+    return {
+      interaction,
+      data,
+      interactionData,
+      user,
+    };
+  });
+
   return NextResponse.json(
     {
-      feedItems: feedItems.map((item) => {
-        const { interaction, data, interactionData, user } = item;
-
-        return {
-          interaction,
-          data,
-          interactionData,
-          user,
-        };
-      }),
+      feedItems: mapped,
     },
     {
       status: 200,
