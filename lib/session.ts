@@ -2,6 +2,8 @@ import { ENV } from '@/utils';
 import { decryptJWT, encryptJWT } from './jwt';
 import { cookies } from 'next/headers';
 import { NextRequest, NextResponse } from 'next/server';
+import { db } from './db';
+import { updateUser } from '@/app/_actions';
 
 export async function buildUserSession({
   sessionId,
@@ -83,6 +85,24 @@ export async function getUserSession() {
 export async function updateUserSession(request: NextRequest) {
   const userSession = request.cookies.get(ENV.COOKIE_NAME);
   if (!userSession) return;
+
+  // Update databse
+  const sessionId = await getUserSessionId();
+
+  if (sessionId) {
+    const userId = await db.eUser.findFirst({
+      where: {
+        session: {
+          sessionId: sessionId,
+        },
+      },
+    });
+
+    if (userId) {
+      await updateUser(userId.userId, sessionId);
+    }
+  }
+
 
   // Refresh the session
   const parsed = await decryptJWT(userSession.value);
