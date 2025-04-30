@@ -3,7 +3,7 @@ import { SavesGrid, Favorites, UserBox } from '@/components/categories/user';
 import { Window } from '@/components/layout';
 import Loading from '@/app/loading';
 import { db, getUserSessionId } from '@/lib';
-import { getUserBySessionId } from '@/app/_actions';
+// import { getUserBySessionId } from '@/app/_actions';
 import { Skeleton } from '@/components/ui';
 
 type Props = {
