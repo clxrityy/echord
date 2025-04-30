@@ -108,7 +108,7 @@ button {
 .loader:after {
   content: '';
   grid-area: 1/1;
-  height: 30px;
+  height: 50px;
   aspect-ratio: 6;
   --c: #0000 64%, var(--color-redline) 66% 98%, #0000 101%;
   background:
