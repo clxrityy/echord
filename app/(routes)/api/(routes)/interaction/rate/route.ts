@@ -5,8 +5,7 @@ import {
   handleInteraction,
 } from '@/app/_actions';
 import { db, getUserSessionId } from '@/lib';
-import { EInteraction, EInteractionData } from '@/prisma/app/generated/prisma/client';
-import { Interaction } from '@/types';
+import { EDataType, EInteractionType } from '@/prisma/app/generated/prisma/client';
 import { average } from '@/utils';
 import { NextRequest, NextResponse } from 'next/server';
 
@@ -82,9 +81,6 @@ export async function POST(req: NextRequest) {
       { status: 400 }
     );
 
-  const existingTrack = await checkTrackFromInteraction(trackId);
-
-  let interaction: Interaction | undefined = undefined;
   const track = await getTrack(trackId);
 
   if (!track) {
@@ -98,84 +94,138 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  if (!existingTrack) {
-    await db.eTrack.create({
-      data: {
-        trackId: track.id.toString(),
-        title: track.title,
-        albumId: String(track.album.id),
-        albumName: track.album.title,
-        artistName: track.artist.name,
-        imageUrl: track.album.cover_medium,
-      },
-    })
-  }
 
-  interaction = await handleInteraction({
-    dataType: 'TRACK',
-    interactionType: 'RATED',
-    userId,
-    sessionId,
-    interactionData: {
-      trackId,
-      imageUrl: track.album.cover_medium,
-      title: track.title,
-      artistName: track.artist.name,
-      albumName: track.album.title,
-      albumId: String(track.album.id),
-      rating: value,
-    },
-  });
+  const existingTrackData = await checkTrackFromInteraction(trackId);
 
-  if (!interaction) {
-    return NextResponse.json(
-      {
-        error: 'Unable to handle interaction data',
-      },
-      {
-        status: 500,
-      }
-    );
-  }
-
-  const ratingsData = await db.eInteractionData.findMany({
-    where: {
-      interactionType: 'RATED',
-      trackId: trackId,
-    },
-  });
-
-  const ratingsMapped = ratingsData.map((rating) => rating.rating!);
-
-  const averageRating = average(ratingsMapped);
-
-  try {
-    await db.eTrack.update({
+  if (existingTrackData) {
+    const existingData = await db.eData.findFirst({
       where: {
-        trackId: trackId,
+        trackId: existingTrackData.trackId,
+        interactionData: {
+          trackId: existingTrackData.trackId,
+          albumName: track.album.title,
+          artistName: track.artist.name,
+          title: track.title,
+          albumId: String(track.album.id),
+        },
       },
-      data: {
-        averageRating,
+      include: {
+        eTrack: true,
+        eAlbum: true,
       },
     });
 
-    return NextResponse.json(
-      {
-        interaction,
-      },
-      {
-        status: 200,
+    if (existingData) {
+      const interaction = await handleInteraction({
+        dataType: existingData.dataType,
+        interactionData: {
+          ...existingData,
+          imageUrl: track.album.cover_medium,
+        },
+        interactionType: EInteractionType.RATED,
+        userId,
+        sessionId: existingData.sessionId,
+      });
+
+      if (interaction) {
+        return NextResponse.json(
+          { message: 'Track rated successfully' },
+          { status: 200 }
+        );
+      } else {
+        return NextResponse.json(
+          { error: 'Failed to rate track' },
+          { status: 500 }
+        );
       }
-    );
-  } catch (e) {
-    return NextResponse.json(
-      {
-        message: 'Error rating album',
-        error: e,
-      },
-      {
-        status: 500,
+    } else {
+      const interaction = await handleInteraction({
+        dataType: EDataType.TRACK,
+        interactionType: EInteractionType.RATED,
+        userId,
+        sessionId,
+        interactionData: {
+          trackId: track.id.toString(),
+          albumName: track.album.title,
+          artistName: track.artist.name,
+          title: track.title,
+          imageUrl: track.album.cover_medium,
+          albumId: String(track.album.id),
+        },
+      });
+
+      if (interaction) {
+        return NextResponse.json(
+          {
+            interaction: interaction,
+          },
+          { status: 200 }
+        );
+      } else {
+        return NextResponse.json(
+          { error: 'Failed to handle interaction' },
+          { status: 500 }
+        );
       }
-    );
+    }
+  } else {
+    const interaction = await handleInteraction({
+      dataType: EDataType.TRACK,
+      interactionType: EInteractionType.RATED,
+      userId,
+      sessionId,
+      interactionData: {
+        trackId: track.id.toString(),
+        albumName: track.album.title,
+        artistName: track.artist.name,
+        title: track.title,
+        albumId: String(track.album.id),
+        imageUrl: track.album.cover_medium,
+      },
+    });
+
+    if (interaction) {
+      const ratingsData = await db.eInteractionData.findMany({
+        where: {
+          interactionType: 'RATED',
+          trackId: trackId,
+        },
+      });
+
+      const ratingsMapped = ratingsData.map((rating) => rating.rating!);
+
+      const averageRating = average(ratingsMapped);
+
+      try {
+        await db.eTrack.update({
+          where: {
+            trackId: trackId,
+          },
+          data: {
+            averageRating,
+          },
+        });
+
+        return NextResponse.json(
+          {
+            interaction,
+          },
+          {
+            status: 200,
+          }
+        );
+      } catch (e) {
+        console.error('Error updating track rating:', e);
+        return NextResponse.json(
+          { error: 'Failed to update track rating', interaction },
+          { status: 500 }
+        );
+      }
+    } else {
+      return NextResponse.json(
+        { error: 'Failed to rate track' },
+        { status: 500 }
+      );
+    }
   }
 }

@@ -82,17 +82,19 @@ export async function POST(req: NextRequest) {
         sessionId: existingData.sessionId,
       });
 
-      if (interaction) {
+      if (!interaction) {
         return NextResponse.json(
-          { message: 'Track saved successfully' },
-          { status: 200 }
-        );
-      } else {
-        return NextResponse.json(
-          { error: 'Failed to save track' },
+          { error: 'Failed to handle interaction' },
           { status: 500 }
         );
       }
+
+      return NextResponse.json(
+        {
+          interaction: interaction,
+        },
+        { status: 200 }
+      );
     } else {
       const interaction = await handleInteraction({
         dataType: EDataType.TRACK,
@@ -139,14 +141,18 @@ export async function POST(req: NextRequest) {
       },
     });
 
-    if (interaction) {
-      return NextResponse.json({ interaction: interaction }, { status: 200 });
-    } else {
+    if (!interaction) {
       return NextResponse.json(
-        { error: 'Failed to save track' },
+        { error: 'Failed to handle interaction' },
         { status: 500 }
       );
     }
+    return NextResponse.json(
+      {
+        interaction: interaction,
+      },
+      { status: 200 }
+    );
   }
 }
 

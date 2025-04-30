@@ -29,6 +29,12 @@ export async function POST(req: NextRequest) {
     );
   }
 
+  const track = await getTrack(trackId);
+
+  if (!track) {
+    return NextResponse.json({ error: 'Track not found' }, { status: 404 });
+  }
+
   const existingFavorite = await checkUserFavorites(userId, trackId);
 
   if (existingFavorite) {
@@ -36,12 +42,6 @@ export async function POST(req: NextRequest) {
       { error: 'User already favorited this track' },
       { status: 400 }
     );
-  }
-
-  const track = await getTrack(trackId);
-
-  if (!track) {
-    return NextResponse.json({ error: 'Track not found' }, { status: 404 });
   }
 
   const existingTrackData = await checkTrackFromInteraction(trackId);
