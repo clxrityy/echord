@@ -40,15 +40,13 @@ export default async function Page({ params }: Props) {
                   <ImageComponent
                     src={track.imageUrl}
                     alt={track.title}
-                    className="w-full h-full object-cover rounded-lg"
-                    width={500}
-                    height={500}
+                    className="rounded-lg"
+                    width={50}
+                    height={50}
                     loading="eager"
-                    style={{ maxWidth: "100%", height: "auto" }}
                     priority
                     placeholder="blur"
                     blurDataURL={track.imageUrl}
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     quality={100}
                   />
                 )}
