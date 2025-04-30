@@ -87,16 +87,7 @@ export async function updateUserSession(request: NextRequest) {
   // Refresh the session
   const parsed = await decryptJWT(userSession.value);
 
-  if (!parsed) {
-    try {
-      await logoutUserSession();
-      console.log('Session expired, logging out user session');
-    } catch (error) {
-      console.error('Error logging out user session (deleting cookie):', error);
-      throw new Error('Failed to log out user session');
-    }
-    return;
-  };
+  if (!parsed) return;
   const expires = new Date(Date.now() + 1000 * 60 * 60 * 24 * 7); // 7 days
 
   const res = NextResponse.next();
@@ -123,7 +114,16 @@ export async function logoutUserSession() {
 
 export async function getUserSessionId() {
   const session = await getUserSession();
-  if (!session) return null;
+  if (!session) {
+    try {
+      await logoutUserSession();
+      console.log('Session expired, logging out user session');
+    } catch (error) {
+      console.error('Error logging out user session (deleting cookie):', error);
+      throw new Error('Failed to log out user session');
+    }
+    return null;
+  }
 
   return (
     session.session as { sessionId: string; userId: string; username: string }
