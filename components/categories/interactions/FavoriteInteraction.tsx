@@ -15,13 +15,12 @@ export function FavoriteInteraction({
 }) {
   const [favorited, setFavorited] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(true);
-  const [nodeTimeout, setNodeTimeout] = useState<NodeJS.Timeout | null>(null);
 
   const { addInteraction, getInteractions } = useInteractions();
 
   const interactions = getInteractions();
 
-  const checkFavorited = useCallback(() => {
+  const checkFavorited = () => {
     if (interactions) {
       const interaction = interactions.find((interaction) => {
         return (
@@ -36,29 +35,21 @@ export function FavoriteInteraction({
       }
     }
 
-    setLoading(false);
-  }, [trackId, userId, interactions, favorited]);
+    return setLoading(false);
+  };
 
   useEffect(() => {
-    if (loading && !favorited && interactions) {
+    if (loading && !favorited) {
       console.log('Checking favorited status...');
       checkFavorited();
     }
-
-    return () => {
-      if (nodeTimeout) {
-        clearTimeout(nodeTimeout);
-      }
-      setNodeTimeout(null);
-    };
   }, [
     interactions,
     favorited,
     trackId,
     userId,
-    loading,
     checkFavorited,
-    nodeTimeout,
+    loading,
   ]);
 
   const handleFavorite = async () => {
@@ -94,14 +85,15 @@ export function FavoriteInteraction({
       }
 
       if (interaction) {
-        const timeout = setTimeout(() => {
-          addInteraction(interaction);
-          setFavorited(true);
+        setLoading(true);
+        setTimeout(() => {
           toast.success('Favorited successfully', {
             id: toastId,
           });
+          setFavorited(true);
+          addInteraction(interaction);
+          setLoading(false);
         }, 1000);
-        setNodeTimeout(timeout);
       }
     } catch (error) {
       console.error('Error favoriting:', error);

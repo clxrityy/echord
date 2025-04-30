@@ -16,7 +16,6 @@ export function SaveInteraction({
 }) {
   const [saved, setSaved] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(true);
-  const [nodeTimeout, setNodeTimeout] = useState<NodeJS.Timeout | null>(null);
 
   const { addInteraction, getInteractions } = useInteractions();
 
@@ -44,17 +43,10 @@ export function SaveInteraction({
   }, [interactions, trackId, userId]);
 
   useEffect(() => {
-    if (loading && !saved && interactions) {
+    if (loading && !saved) {
       checkSaved();
     }
-
-    return () => {
-      if (nodeTimeout) {
-        clearTimeout(nodeTimeout);
-      }
-      setNodeTimeout(null);
-    };
-  }, [loading, interactions, saved, trackId, userId, checkSaved, nodeTimeout]);
+  }, [loading, interactions, saved, trackId, userId, checkSaved]);
 
   const handleSave = async () => {
     const toastId = toast.loading('Saving...');
@@ -78,7 +70,7 @@ export function SaveInteraction({
           id: toastId,
         });
       }
-      const timeout = setTimeout(() => {
+      setTimeout(() => {
         if (interaction) {
           addInteraction(interaction as Interaction);
           setSaved(true);
@@ -91,23 +83,17 @@ export function SaveInteraction({
           });
         }
       }, 1000);
-      setNodeTimeout(timeout);
     } catch (error) {
       console.error('Error saving interaction:', error);
       toast.error('Error saving', {
         id: toastId,
       });
     } finally {
-      if (nodeTimeout) {
-        clearTimeout(nodeTimeout);
-      } else {
-        const timeout = setTimeout(() => {
+      setTimeout(() => {
           toast.dismiss(toastId);
         }, 1000);
-        setNodeTimeout(timeout);
       }
     }
-  };
 
   return (
     <Button

@@ -14,7 +14,6 @@ export function RatingInteraction({
   const [rating, setRating] = useState<number | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isHovered, setIsHovered] = useState<number | null>(null);
-  const [nodeTimeout, setNodeTimeout] = useState<NodeJS.Timeout | null>(null);
 
   const { addInteraction, getInteractions } = useInteractions();
   const interactions = getInteractions();
@@ -41,19 +40,12 @@ export function RatingInteraction({
   }, [interactions, trackId, userId]);
 
   useEffect(() => {
-    if (rating === null && interactions) {
+    if (rating === null) {
       checkRating();
     }
+  }, [interactions, isLoading, trackId, userId, isLoading]);
 
-    return () => {
-      if (nodeTimeout) {
-        clearTimeout(nodeTimeout);
-      }
-      setNodeTimeout(null);
-    };
-  }, [interactions, isLoading, trackId, userId, isLoading, nodeTimeout]);
-
-  const rate = useCallback(
+  const rate =
     async (value: number) => {
       const toastId = toast.loading('Rating...');
       try {
@@ -77,19 +69,16 @@ export function RatingInteraction({
         } else {
           toast.error('Failed to rate', { id: toastId });
         }
-      } catch (error) {
+      } catch (err) {
+        console.error('Error rating:', err);
         toast.error('Failed to rate', { id: toastId });
-        console.error('Error rating:', error);
       } finally {
-        const timeout = setTimeout(() => {
+        setTimeout(() => {
           setIsHovered(null);
           toast.dismiss(toastId);
         }, 1000);
-        setNodeTimeout(timeout);
       }
-    },
-    [trackId, userId, rating]
-  );
+    };
 
   const determineColor = useCallback(
     (value: number) => {
