@@ -56,21 +56,48 @@
 - [x] Navigation
 - [x] Add a loading spinner
 - [x] Add proper skeletons and suspense
-- [ ] Album/track routes
+- [x] Album/track routes
   - [ ] Review modal
   - [ ] Interaction feed
   - [ ] Sidebar with related albums/tracks `*`
 - [x] User profile route
+  - [x] User box
+    - [x] Review count
+    - [x] Rating count
+    - [x] Favorite count
+    - [x] Save count
+    - [x] Follower count
+    - [x] Following count
   - [ ] User reviews
   - [ ] User ratings
   - [ ] User favorites
-    - [x] Almost done but needs to be cleaned up
+    - [x] Begun
   - [x] User saves
+    - [ ] Link to list of saves
   - [ ] User followers
   - [ ] User following
   - [ ] User settings
   - [ ] Interaction feed
   - [ ] Sidebar with related users `*`
+
+#### Interactivity
+
+- [x] Save interaction
+  - [x] Displays on feed
+  - [x] Displays on profile
+  - [ ] Displays on album/track
+- [ ] Favorite interaction
+  - [x] Displays on feed
+  - [x] Displays on profile
+  - [ ] Displays on album/track
+- [ ] Review interaction
+  - [ ] Displays on feed
+  - [ ] Displays on profile
+  - [ ] Displays on album/track
+- [x] Rate interaction
+  - [x] Displays on feed
+  - [ ] Displays on profile
+  - [ ] Displays on album/track
 
 ##### Features
 
