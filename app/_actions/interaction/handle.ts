@@ -1,5 +1,4 @@
 import {
-  EDataType,
   EInteractionData,
   EInteractionType,
 } from '@/prisma/app/generated/prisma/client';
@@ -7,7 +6,6 @@ import { db } from '@/lib/db';
 import { Interaction } from '@/types';
 
 export interface InteractionProps {
-  dataType: EDataType;
   interactionData: Partial<EInteractionData> | EInteractionData;
   interactionType: EInteractionType;
   userId: string;
@@ -15,16 +13,25 @@ export interface InteractionProps {
 }
 
 export async function handleInteraction({
-  dataType,
   interactionData,
   interactionType,
   userId,
   sessionId,
 }: InteractionProps): Promise<Interaction | undefined> {
+
+  if (!interactionData.trackId || !interactionData.albumId) {
+    return undefined;
+  }
+
+  const existingTrack = await db.eTrack.findFirst({
+    where: {
+      trackId: interactionData.trackId,
+    },
+  });
+
   const existingInteraction = await db.eInteraction.findFirst({
     where: {
       userId,
-      dataType,
       interactionType,
       eData: {
         interactionData: {
@@ -44,11 +51,7 @@ export async function handleInteraction({
     },
   });
 
-  if (
-    existingInteraction &&
-    existingInteraction.eData &&
-    existingInteraction.eData.interactionData
-  ) {
+  if (existingInteraction && existingInteraction.eData && existingInteraction.eData.interactionData) {
     // If the interaction already exists, we can choose to update it or ignore it
     // For this example, we'll just return early
     return {
@@ -65,297 +68,141 @@ export async function handleInteraction({
   // check for existing data
   const existingData = await db.eData.findFirst({
     where: {
-      dataType,
+      sessionId,
       interactionData: {
         ...interactionData,
       },
     },
+    include: {
+      interactionData: true,
+    },
   });
+  // IF EXISTING DATA
+  const { albumId, trackId, title, artistName, albumName, imageUrl } = interactionData;
 
-  if (!existingData) {
+  if (existingData) {
+    const interaction = await db.eInteraction.create({
+      data: {
+        interactionType,
+        dataId: existingData.id,
+        userId,
+        trackId,
+        albumId,
+      },
+      include: {
+        eAlbum: true,
+        eData: {
+          include: {
+            interactionData: true,
+          },
+        },
+        eTrack: true,
+        user: true,
+      },
+    });
+
+    if (interaction && interaction.eData.interactionData) {
+      return {
+        ...interaction,
+        interactionData: {
+          ...interaction.eData.interactionData,
+          ...interactionData,
+        },
+      };
+    }
+  } else {
+
     // If the data doesn't exist, create it
     const newData = await db.eData.create({
       data: {
-        dataType,
+        sessionId,
         interactionData: {
           create: {
             interactionType,
             ...interactionData,
           },
         },
-        session: {
-          connectOrCreate: {
-            where: {
-              userId,
-              sessionId,
-            },
-            create: {
-              userId,
-              sessionId,
-            },
-          },
-        },
+      },
+      include: {
+        interactionData: true,
       },
     });
 
     // Create the interaction with the new data
-    const int = await db.eInteraction.create({
+    const interaction = await db.eInteraction.create({
       data: {
         interactionType,
-        dataId: newData.id,
         userId,
-        dataType,
+        dataId: newData.id,
       },
       include: {
+        eAlbum: true,
         eData: {
           include: {
             interactionData: true,
           },
         },
-        eAlbum: true,
         eTrack: true,
         user: true,
       },
     });
 
-    if (
-      dataType === EDataType.ALBUM &&
-      int.albumId &&
-      interactionData.imageUrl &&
-      interactionData.title &&
-      interactionData.artistName
-    ) {
-      try {
-        await db.eAlbum.create({
+
+
+    // Create the album and track if they don't exist
+    if (albumId && trackId && title && artistName && albumName && imageUrl) {
+      if (!existingTrack) {
+        await db.eTrack.create({
           data: {
-            albumId: int.albumId,
-            updatedAt: new Date(),
+            trackId,
+            title,
+            artistName,
+            albumName,
+            imageUrl,
+            album: {
+              connectOrCreate: {
+                where: {
+                  albumId,
+                },
+                create: {
+                  albumId,
+                  title: albumName,
+                  artistName,
+                  imageUrl,
+                }
+              }
+            },
             eData: {
               connectOrCreate: {
                 where: {
                   id: newData.id,
                 },
                 create: {
-                  dataType,
+                  sessionId,
                   interactionData: {
                     create: {
                       interactionType,
                       ...interactionData,
-                    },
-                  },
-                  session: {
-                    connectOrCreate: {
-                      where: {
-                        userId,
-                        sessionId,
-                      },
-                      create: {
-                        userId,
-                        sessionId,
-                      },
-                    },
-                  },
-                },
-              },
-            },
-            imageUrl: interactionData.imageUrl,
-            title: interactionData.title,
-            artistName: interactionData.artistName,
-          },
+                    }
+                  }
+                }
+              }
+            }
+          }
         });
-
-        if (int && int.eData.interactionData) {
-          return {
-            ...int,
-            interactionData: {
-              ...int.eData.interactionData,
-              ...interactionData,
-            },
-          };
-        } else {
-          return null;
-        }
-      } catch (e) {
-        console.error('Error creating album:', e);
-        throw new Error('Database error');
       }
     }
-  } else {
-    // If the data already exists, create the interaction with the existing data
-    const interaction = await db.eInteraction.create({
-      data: {
-        interactionType,
-        dataId: existingData.id,
-        userId,
-        dataType,
-      },
-      include: {
-        eData: {
-          include: {
-            interactionData: true,
-          },
+
+    if (interaction && interaction.eData.interactionData) {
+      return {
+        ...interaction,
+        interactionData: {
+          ...interaction.eData.interactionData,
+          ...newData.interactionData,
         },
-        eAlbum: true,
-        eTrack: true,
-        user: true,
-      },
-    });
-
-    try {
-      // Update the interaction count
-      await db.eInteraction.update({
-        where: {
-          id: interaction.id,
-        },
-        data: {
-          updatedAt: new Date(),
-          eData: {
-            connectOrCreate: {
-              where: {
-                id: existingData.id,
-              },
-              create: {
-                dataType,
-                interactionData: {
-                  create: {
-                    interactionType,
-                    ...interactionData,
-                  },
-                },
-                session: {
-                  connectOrCreate: {
-                    where: {
-                      userId,
-                      sessionId,
-                    },
-                    create: {
-                      userId,
-                      sessionId,
-                    },
-                  },
-                },
-              },
-            },
-          },
-        },
-      });
-
-      if (dataType === EDataType.ALBUM && interaction.albumId) {
-        const existingAlbum = await db.eAlbum.findFirst({
-          where: {
-            albumId: interaction.albumId,
-          },
-        });
-
-        if (existingAlbum) {
-          await db.eAlbum.update({
-            where: {
-              id: existingAlbum.id,
-            },
-            data: {
-              updatedAt: new Date(),
-              eData: {
-                connectOrCreate: {
-                  where: {
-                    id: existingData.id,
-                  },
-                  create: {
-                    dataType,
-                    interactionData: {
-                      create: {
-                        interactionType,
-                        ...interactionData,
-                      },
-                    },
-                    session: {
-                      connectOrCreate: {
-                        where: {
-                          userId,
-                          sessionId,
-                        },
-                        create: {
-                          userId,
-                          sessionId,
-                        },
-                      },
-                    },
-                  },
-                },
-              },
-            },
-          });
-
-          if (interaction && interaction.eData.interactionData) {
-            return {
-              ...interaction,
-              interactionData: {
-                ...interaction.eData.interactionData,
-                ...interactionData,
-              },
-            };
-          } else {
-            return null;
-          }
-        } else if (
-          interaction.albumId &&
-          interactionData.imageUrl &&
-          interactionData.title &&
-          interactionData.artistName
-        ) {
-          await db.eAlbum.create({
-            data: {
-              albumId: interaction.albumId,
-              updatedAt: new Date(),
-              eData: {
-                connectOrCreate: {
-                  where: {
-                    id: existingData.id,
-                  },
-                  create: {
-                    dataType,
-                    interactionData: {
-                      create: {
-                        interactionType,
-                        ...interactionData,
-                      },
-                    },
-                    session: {
-                      connectOrCreate: {
-                        where: {
-                          userId,
-                          sessionId,
-                        },
-                        create: {
-                          userId,
-                          sessionId,
-                        },
-                      },
-                    },
-                  },
-                },
-              },
-              imageUrl: interactionData.imageUrl,
-              title: interactionData.title,
-              artistName: interactionData.artistName,
-            },
-          });
-        }
-      }
-
-      if (interaction && interaction.eData.interactionData) {
-        return {
-          ...interaction,
-          interactionData: {
-            ...interaction.eData.interactionData,
-            ...interactionData,
-          },
-        };
-      }
-
+      };
+    } else {
       return null;
-    } catch (e) {
-      console.error('Error updating interaction:', e);
-      throw new Error('Database error');
     }
   }
-}
+};
