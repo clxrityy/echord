@@ -5,7 +5,7 @@ import {
   handleInteraction,
 } from '@/app/_actions';
 import { db, getUserSessionId } from '@/lib';
-import { EDataType, EInteractionType } from '@/prisma/app/generated/prisma/client';
+import { EInteractionType } from '@/prisma/app/generated/prisma/client';
 import { average } from '@/utils';
 import { NextRequest, NextResponse } from 'next/server';
 
@@ -117,10 +117,10 @@ export async function POST(req: NextRequest) {
 
     if (existingData) {
       const interaction = await handleInteraction({
-        dataType: existingData.dataType,
         interactionData: {
           ...existingData,
           imageUrl: track.album.cover_medium,
+          rating: value,
         },
         interactionType: EInteractionType.RATED,
         userId,
@@ -140,7 +140,6 @@ export async function POST(req: NextRequest) {
       }
     } else {
       const interaction = await handleInteraction({
-        dataType: EDataType.TRACK,
         interactionType: EInteractionType.RATED,
         userId,
         sessionId,
@@ -151,6 +150,7 @@ export async function POST(req: NextRequest) {
           title: track.title,
           imageUrl: track.album.cover_medium,
           albumId: String(track.album.id),
+          rating: value,
         },
       });
 
@@ -170,7 +170,6 @@ export async function POST(req: NextRequest) {
     }
   } else {
     const interaction = await handleInteraction({
-      dataType: EDataType.TRACK,
       interactionType: EInteractionType.RATED,
       userId,
       sessionId,
@@ -181,6 +180,7 @@ export async function POST(req: NextRequest) {
         title: track.title,
         albumId: String(track.album.id),
         imageUrl: track.album.cover_medium,
+        rating: value,
       },
     });
 
