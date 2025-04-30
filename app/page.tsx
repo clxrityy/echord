@@ -90,7 +90,7 @@ export default async function Home() {
                                   }
                                 />
                               ) : (
-                                <Skeleton className='w-full h-20 rounded-md animate-pulse' />
+                                null
                               )}
                             </FeedListItem>
                           </Suspense>
