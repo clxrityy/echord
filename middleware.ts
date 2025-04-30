@@ -5,7 +5,6 @@ export async function middleware(request: NextRequest) {
   if (await getUserSessionId()) {
     return await updateUserSession(request);
   }
-  
   return NextResponse.rewrite(request.url);
 }
 

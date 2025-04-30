@@ -87,7 +87,9 @@ export async function updateUserSession(request: NextRequest) {
   // Refresh the session
   const parsed = await decryptJWT(userSession.value);
 
-  if (!parsed) return;
+  if (!parsed) {
+    return await logoutUserSession();
+  }
   const expires = new Date(Date.now() + 1000 * 60 * 60 * 24 * 7); // 7 days
 
   const res = NextResponse.next();
@@ -95,7 +97,7 @@ export async function updateUserSession(request: NextRequest) {
     name: ENV.COOKIE_NAME,
     value: await encryptJWT(parsed),
     expires,
-    httpOnly: false,
+    httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
     maxAge: 60 * 60 * 24 * 7, // 7 days
   });
@@ -104,12 +106,17 @@ export async function updateUserSession(request: NextRequest) {
 }
 
 export async function logoutUserSession() {
-  try {
-    (await cookies()).delete(ENV.COOKIE_NAME);
-  } catch (error) {
-    console.error('Error logging out user session (deleting cookie):', error);
-    throw new Error('Failed to log out user session');
-  }
+  const res = NextResponse.next();
+  res.cookies.delete(ENV.COOKIE_NAME);
+  res.cookies.set({
+    name: ENV.COOKIE_NAME,
+    value: '',
+    expires: new Date(0),
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+    maxAge: 0,
+  });
+  return res;
 }
 
 export async function getUserSessionId() {
