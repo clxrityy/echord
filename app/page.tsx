@@ -80,7 +80,7 @@ export default async function Home() {
                               userData ? (
                                 <FeedItem
                                   interaction={interaction}
-                                  data={data}
+                                  // data={data}
                                   interactionData={interactionData}
                                   userId={user ? user.userId : ''}
                                   username={
