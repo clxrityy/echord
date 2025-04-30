@@ -7,6 +7,7 @@ import {
   RatingInteraction,
   FavoriteInteraction,
 } from '@/components/categories/interactions';
+import Link from 'next/link';
 
 type Props = {
   data: DEEZER_SEARCH_DATA;
@@ -28,7 +29,7 @@ export function Result({ data, userId }: Props) {
 
   return (
     <li className='flex flex-col gap-2 p-4 border-b border-white/20 last:border-b-0 hover:bg-zinc-900/5 rounded-md transition-all duration-200 relative'>
-      <div className='flex items-center gap-2'>
+      <div className='flex items-center gap-2 z-10'>
         <ImageComponent
           src={cover_medium}
           alt={albumTitle}
@@ -36,7 +37,7 @@ export function Result({ data, userId }: Props) {
           height={50}
           className='rounded-md'
         />
-        <h4>{title}</h4>
+        <Link href={`/track/${ID}`} className='focus:underline transition hover:text-blue-300/75'><h4>{title}</h4></Link>
       </div>
       <div className='flex flex-col gap-1'>
         <p className='text-sm text-gray-400'>
