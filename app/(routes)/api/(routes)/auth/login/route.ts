@@ -1,5 +1,5 @@
 import { checkUser, checkUserByPasswordAndUsername } from '@/app/_actions';
-import { buildUserSession } from '@/lib';
+import { buildUserSession, logoutUserSession } from '@/lib';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(req: NextRequest) {
@@ -43,10 +43,18 @@ export async function POST(req: NextRequest) {
       );
     } catch (e) {
       console.error('Error during login:', e);
-      return NextResponse.json(
-        { error: 'An error occurred during login' },
-        { status: 500 }
-      );
+      try {
+        await logoutUserSession();
+        return NextResponse.json(
+          { error: 'Session expired, logging out user session' },
+          { status: 401 }
+        );
+      } catch (e) {
+        return NextResponse.json(
+          { error: 'An error occurred during login' },
+          { status: 500 }
+        );
+      }
     }
   }
 

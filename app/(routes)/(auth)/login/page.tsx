@@ -6,7 +6,7 @@ import { Suspense } from 'react';
 import { redirect } from 'next/navigation';
 import { connection } from 'next/server';
 import Loading from '@/app/loading';
-import { getUserSessionId, logoutUserSession } from '@/lib';
+import { getUserSessionId } from '@/lib';
 import { getUserBySessionId } from '@/app/_actions';
 
 export const dynamic = 'force-dynamic';
@@ -19,15 +19,6 @@ export default async function Page() {
   if (user) {
     return redirect(`/profile/${user.userId}`);
   }
-
-  if (sessionId && !user) {
-    try {
-      await logoutUserSession();
-    } catch (error) {
-      console.error('Error logging out user:', error);
-      // Handle the error as needed, e.g., show a message to the user
-    }
-   }
 
   return (
     <Suspense fallback={<Loading />}>
