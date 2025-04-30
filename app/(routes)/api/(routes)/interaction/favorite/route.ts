@@ -66,7 +66,6 @@ export async function POST(req: NextRequest) {
 
     if (existingData) {
       const interaction = await handleInteraction({
-        dataType: existingData.dataType,
         interactionData: {
           ...existingData,
           ...existingTrackData,
@@ -87,7 +86,6 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ interaction }, { status: 200 });
     } else {
       const interaction = await handleInteraction({
-        dataType: 'TRACK',
         interactionData: {
           trackId: track.id.toString(),
           title: track.title,
@@ -112,31 +110,7 @@ export async function POST(req: NextRequest) {
   }
 
   try {
-    await db.eTrack.create({
-      data: {
-        trackId: track.id.toString(),
-        title: track.title,
-        artistName: track.artist.name,
-        albumName: track.album.title,
-        imageUrl: track.album.cover_medium,
-        album: {
-          connectOrCreate: {
-            where: {
-              albumId: track.album.id.toString(),
-            },
-            create: {
-              albumId: track.album.id.toString(),
-              title: track.album.title,
-              artistName: track.artist.name,
-              imageUrl: track.album.cover_medium,
-            },
-          },
-        },
-      },
-    });
-
     const interaction = await handleInteraction({
-      dataType: 'TRACK',
       interactionData: {
         trackId: track.id.toString(),
         title: track.title,
