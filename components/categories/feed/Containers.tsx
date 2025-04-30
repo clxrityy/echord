@@ -93,6 +93,21 @@ export function FeedItemContainer({
     }
   };
 
+  const interactionToolTipText = () => {
+    switch (interactionType) {
+      case 'FAVORITED':
+        return `Favorited`;
+      case 'SAVED':
+        return `Saved`;
+      case 'RATED':
+        return `Rated ${rating}/5`;
+      case 'REVIEWED':
+        return `Reviewed`;
+      default:
+        return `Interacted`;
+    }
+  }
+
   const router = useRouter();
 
   const Icon = interactionTypeIcon();
@@ -159,13 +174,13 @@ export function FeedItemContainer({
                     <Skeleton className='w-8 h-8 rounded-4xl animate-pulse bg-zinc-400/65' />
                   }
                 >
-                  <Tooltip text={`${interactionType.toLowerCase()}`}>
+                  <Tooltip text={interactionToolTipText()}>
                     <div className='flex items-center justify-center gap-2'>
                       <Icon
                         className='rounded-xl shadow text-gray-200/90 cursor-pointer'
                         aria-label={interactionType}
                       />
-                      {rating && <span className=''>{rating}</span>}
+                      {rating && <span className='text-xs md:text-sm 2xl:text-base font-extrabold'>{rating}</span>}
                     </div>
                   </Tooltip>
                 </Suspense>
