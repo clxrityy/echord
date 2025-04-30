@@ -219,7 +219,9 @@ export default async function RootLayout({
                   }}
                 />
                 <Backdrop />
-                <Navbar userId={user?.userId} />
+                <Suspense fallback={<Skeleton className='w-screen fixed top-0 z-50 shadow-md mx-0 right-0 left-0 h-20 rounded-b-sm animate-pulse' />}>
+                  <Navbar userId={user?.userId} />
+                </Suspense>
                 {children}
               </InteractionProvider>
             </WindowProvider>
