@@ -22,8 +22,28 @@ export function Navbar({ userId }: { userId?: string | undefined }) {
   const router = useRouter();
 
   useEffect(() => {
+
+    async function updateUserLastSeen() {
+      try {
+        const response = await fetch(`/api/user`, {
+          method: "PATCH",
+          body: JSON.stringify({
+            userId,
+          })
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to update user last seen');
+        }
+
+      } catch (error) {
+        console.error('Error updating user last seen:', error);
+      }
+    }
+
     if (userId && userId !== getUserId()) {
       setUserId(userId);
+      updateUserLastSeen();
     }
   }, [userId, getUserId()]);
 
