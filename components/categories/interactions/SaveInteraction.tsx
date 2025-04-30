@@ -36,17 +36,16 @@ export function SaveInteraction({
       } else {
         setSaved(false);
       }
-      setLoading(false);
-    } else {
+
       setLoading(false);
     }
+
+    setLoading(false);
   }, [interactions, trackId, userId]);
 
   useEffect(() => {
-    if (loading && !saved) {
-      checkSaved();
-    }
-  }, [loading, interactions, saved, trackId, userId, checkSaved]);
+    checkSaved();
+  }, [loading, interactions, saved, trackId, userId]);
 
   const handleSave = async () => {
     const toastId = toast.loading('Saving...');
@@ -70,7 +69,7 @@ export function SaveInteraction({
           id: toastId,
         });
       }
-      setTimeout(() => {
+      const timeout = setTimeout(() => {
         if (interaction) {
           addInteraction(interaction as Interaction);
           setSaved(true);
@@ -82,25 +81,33 @@ export function SaveInteraction({
             id: toastId,
           });
         }
-      }, 1000);
+      }, 2500);
+
+      return () => {
+        clearTimeout(timeout);
+      };
     } catch (error) {
       console.error('Error saving interaction:', error);
       toast.error('Error saving', {
         id: toastId,
       });
     } finally {
-      setTimeout(() => {
-          toast.dismiss(toastId);
-        }, 1000);
-      }
+      const timeout = setTimeout(() => {
+        toast.dismiss(toastId);
+      }, 5000);
+
+      return () => {
+        clearTimeout(timeout);
+      };
     }
+  }
 
   return (
     <Button
       title='Save'
       disabled={saved || loading}
       onClick={async () => await handleSave()}
-      className={`${loading ? 'cursor-none' : 'disabled:text-green-500/80 hover:text-gray-300 focus:text-blue-400 disabled:hover:text-green-500/80 disabled:cursor-not-allowed transition-all duration-200 ease-in-out'}`}
+      className={`${loading ? 'cursor-none' : 'disabled:text-green-500/80 hover:text-gray-300 focus:text-blue-400 disabled:hover:text-green-500/80 disabled:cursor-not-allowed transition-all duration-200 ease-in-out z-20'}`}
     >
       {loading ? <ICONS.loading className='animate-spin' /> : <ICONS.save />}
       <span className='sr-only'>{saved ? 'Saved' : 'Save to Library'}</span>
