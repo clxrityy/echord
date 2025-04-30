@@ -97,6 +97,7 @@ export async function DELETE(req: NextRequest) {
     );
   }
 
+  
   try {
     await db.eInteraction.delete({
       where: {
