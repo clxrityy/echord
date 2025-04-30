@@ -5,6 +5,7 @@ import {
   handleInteraction,
 } from '@/app/_actions';
 import { db, getUserSessionId } from '@/lib';
+import { EInteraction, EInteractionData } from '@/prisma/app/generated/prisma/client';
 import { Interaction } from '@/types';
 import { average } from '@/utils';
 import { NextRequest, NextResponse } from 'next/server';
@@ -100,111 +101,14 @@ export async function POST(req: NextRequest) {
   if (!existingTrack) {
     await db.eTrack.create({
       data: {
-        trackId: trackId,
-        updatedAt: new Date(),
-        albumName: track.album.title,
-        releaseDate: new Date(track.release_date),
-        eData: {
-          create: {
-            dataType: 'TRACK',
-            interactionData: {
-              create: {
-                interactionType: 'RATED',
-                imageUrl: track.album.cover_xl,
-                title: track.title,
-                artistName: track.artist.name,
-                rating: value,
-                albumName: track.album.title,
-                albumId: String(track.album.id),
-              },
-            },
-            interactions: {
-              create: {
-                interactionType: 'RATED',
-                userId,
-                trackId,
-                dataType: 'TRACK',
-              },
-            },
-            session: {
-              connect: {
-                userId,
-                sessionId,
-              },
-            },
-          },
-        },
-        album: {
-          connectOrCreate: {
-            where: {
-              albumId: String(track.album.id),
-            },
-            create: {
-              albumId: String(track.album.id),
-              title: track.album.title,
-              artistName: track.artist.name,
-              imageUrl: track.album.cover_medium,
-            },
-          },
-        },
-        imageUrl: track.album.cover_medium,
+        trackId: track.id.toString(),
         title: track.title,
-        artistName: track.artist.name,
-        averageRating: value,
-      },
-    });
-
-    const interactionData = await db.eInteractionData.findFirst({
-      where: {
-        interactionType: 'RATED',
-        trackId: trackId,
         albumId: String(track.album.id),
-        eData: {
-          sessionId: sessionId,
-        },
+        albumName: track.album.title,
+        artistName: track.artist.name,
+        imageUrl: track.album.cover_medium,
       },
-    });
-
-    const interactionResponse = await db.eInteraction.findFirst({
-      where: {
-        trackId: trackId,
-        interactionType: 'RATED',
-        userId: userId,
-      },
-      include: {
-        eData: true,
-        user: true,
-        eAlbum: true,
-        eTrack: true,
-      },
-    });
-
-    if (interactionData && interactionResponse) {
-      interaction = {
-        ...interactionResponse,
-        interactionData: {
-          ...interactionData,
-        },
-      };
-
-      return NextResponse.json(
-        {
-          interaction,
-        },
-        {
-          status: 200,
-        }
-      );
-    }
-
-    return NextResponse.json(
-      {
-        error: 'Unable to locate interaction data',
-      },
-      {
-        status: 500,
-      }
-    );
+    })
   }
 
   interaction = await handleInteraction({
@@ -226,7 +130,7 @@ export async function POST(req: NextRequest) {
   if (!interaction) {
     return NextResponse.json(
       {
-        error: 'Unable to locate interaction data',
+        error: 'Unable to handle interaction data',
       },
       {
         status: 500,
