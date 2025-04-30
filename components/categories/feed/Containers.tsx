@@ -3,7 +3,6 @@ import { Skeleton, Button, Tooltip } from '@/components/ui';
 import { StringOrUndefined } from '@/types';
 import { BASE_URL, ICONS } from '@/utils';
 import {
-  EDataType,
   EInteractionType,
 } from '@/prisma/app/generated/prisma/client';
 import Link from 'next/link';
@@ -30,11 +29,12 @@ export interface FeedItemContainerProps {
   albumId: StringOrUndefined;
   albumName: StringOrUndefined;
   dataId: string;
-  dataType: EDataType;
   interactionType: EInteractionType;
   isCurrentUser: boolean;
   interactionUserId: StringOrUndefined;
   interactionId: string;
+  rating?: number;
+  trackId: string;
 }
 
 export function FeedItemContainer({
@@ -43,6 +43,7 @@ export function FeedItemContainer({
   imageUrl,
   title,
   albumId,
+  trackId,
   albumName,
   dataId,
   // dataType,
@@ -50,6 +51,7 @@ export function FeedItemContainer({
   isCurrentUser,
   interactionUserId,
   interactionId,
+  rating,
 }: FeedItemContainerProps) {
   const isToday =
     new Date(createdAt).toLocaleDateString('en-US') ===
@@ -106,23 +108,28 @@ export function FeedItemContainer({
     }
 
     try {
-      const { status, message, error } = await fetch(
-        `${BASE_URL}/api/interaction`,
+      const { message, error } = await fetch(
+        `${BASE_URL}/api/interaction?userId=${userId}&interactionId=${dataId}`,
         {
           method: 'DELETE',
-          body: JSON.stringify({
-            data: {
-              userId,
-              interactionId: dataId,
-            },
-          }),
+          headers: {
+            'Content-Type': 'application/json',
+          },
         }
       ).then((res) => res.json());
 
-      if (status !== 200) {
-        console.error('Error deleting interaction:', message || error);
+      if (message) {
+        toast.success(message, {
+          id: toastId,
+        });
+        router.refresh();
         return;
+      } else if (error) {
+        toast.error(error, {
+          id: toastId,
+        });
       }
+
       // Handle successful deletion
       toast.success('Interaction deleted successfully', {
         icon: <ICONS.trash />,
@@ -135,7 +142,13 @@ export function FeedItemContainer({
         id: toastId,
       });
     } finally {
-      toast.dismiss(toastId);
+      const timeout = setTimeout(() => {
+        toast.dismiss(toastId);
+      }, 5000);
+
+      return () => {
+        clearTimeout(timeout);
+      };
     }
   }
 
@@ -144,7 +157,7 @@ export function FeedItemContainer({
       <div className='flex items-start justify-start lg:justify-center 2xl:justify-start gap-2 w-full sm:w-2/3 md:w-1/2 lg:w-[90%] xl:w-full relative pb-8 border-l-4 pl-6 border-white/25 rounded-l-sm bg-[var(--color-blue-pastelic-pale)]/[4.25%] px-10 py-4 shadow-2xl drop-shadow-sm drop-shadow-gray-600/30 mx-2'>
         <div className='flex flex-col items-start justify-center w-full gap-4'>
           <div className='flex flex-col items-center justify-start w-fit gap-5'>
-            <div className='flex items-start justify-start gap-4 w-full flex-col md:flex-row'>
+            <div className='flex items-start justify-start gap-4 w-full flex-col md:flex-row relative'>
               <FeedUserContainer>
                 <Suspense
                   fallback={
@@ -152,10 +165,19 @@ export function FeedItemContainer({
                   }
                 >
                   <Tooltip text={`${interactionType.toLowerCase()}`}>
-                    <Icon
-                      className='rounded-xl shadow text-gray-200/90 cursor-pointer'
-                      aria-label={interactionType}
-                    />
+                    <div className='flex items-center justify-center gap-2'>
+                      <Icon
+                        className='rounded-xl shadow text-gray-200/90 cursor-pointer'
+                        aria-label={interactionType}
+                      />
+                      {
+                        rating && (
+                          <span className=''>
+                            {rating}
+                          </span>
+                        )
+                      }
+                    </div>
                   </Tooltip>
                 </Suspense>
                 {interactionUserId && (
@@ -173,9 +195,9 @@ export function FeedItemContainer({
                   {isToday
                     ? 'Today'
                     : new Date(createdAt).toLocaleDateString('en-US', {
-                        month: 'short',
-                        day: '2-digit',
-                      })}
+                      month: 'short',
+                      day: '2-digit',
+                    })}
                   {isSameYear ? '' : ', ' + new Date(createdAt).getFullYear()}
                 </span>
                 <span className='text-xs 2xl:text-sm text-gray-400'>
@@ -188,7 +210,7 @@ export function FeedItemContainer({
             </div>
             <div className='flex flex-col gap-2 w-full'>
               <Link
-                href={`/album/${albumId}`}
+                href={`/track/${trackId}`}
                 className='flex items-center justify-start gap-2 w-full focus:text-blue-400 transition'
               >
                 {imageUrl && title ? (
