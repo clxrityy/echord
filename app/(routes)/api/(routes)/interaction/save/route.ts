@@ -1,4 +1,3 @@
-// import { EDataType } from "@/prisma/app/generated/prisma/client";
 import {
   checkTrackFromInteraction,
   checkUserSaves,
@@ -7,7 +6,6 @@ import {
 } from '@/app/_actions';
 import { db, getUserSessionId } from '@/lib';
 import {
-  EDataType,
   EInteractionType,
 } from '@/prisma/app/generated/prisma/client';
 import { NextRequest, NextResponse } from 'next/server';
@@ -72,7 +70,6 @@ export async function POST(req: NextRequest) {
 
     if (existingData) {
       const interaction = await handleInteraction({
-        dataType: existingData.dataType,
         interactionData: {
           ...existingData,
           imageUrl: track.album.cover_medium,
@@ -97,7 +94,6 @@ export async function POST(req: NextRequest) {
       );
     } else {
       const interaction = await handleInteraction({
-        dataType: EDataType.TRACK,
         interactionType: EInteractionType.SAVED,
         userId,
         sessionId,
@@ -127,7 +123,6 @@ export async function POST(req: NextRequest) {
     }
   } else {
     const interaction = await handleInteraction({
-      dataType: EDataType.TRACK,
       interactionType: EInteractionType.SAVED,
       userId,
       sessionId,
