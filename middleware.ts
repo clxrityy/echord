@@ -1,9 +1,17 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getUserSessionId, updateUserSession } from '@/lib';
+import { getUserSessionId, logoutUserSession, updateUserSession } from '@/lib';
 
 export async function middleware(request: NextRequest) {
   if (await getUserSessionId()) {
     return await updateUserSession(request);
+  } else {
+    try {
+      await logoutUserSession();
+      console.log('Session expired, logging out user session');
+      return NextResponse.redirect(new URL('/login', request.url));
+    } catch (e) {
+      console.error('Error logging out user session (deleting cookie):', e);
+    }
   }
 
   return NextResponse.rewrite(request.url);
