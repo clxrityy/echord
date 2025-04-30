@@ -48,7 +48,6 @@ model EUser {
 model EData {
   id              String            @id @default(cuid())
   sessionId       String
-  dataType        EDataType
   createdAt       DateTime          @default(now())
   updatedAt       DateTime          @default(now())
   albumId         String?
@@ -64,7 +63,6 @@ model EInteraction {
   id              String           @id @default(cuid())
   userId          String
   interactionType EInteractionType
-  dataType        EDataType
   dataId          String
   createdAt       DateTime         @default(now())
   updatedAt       DateTime         @default(now())
@@ -114,7 +112,7 @@ model ETrack {
   averageRating Int?
   createdAt     DateTime       @default(now())
   updatedAt     DateTime       @default(now())
-  albumId       String         @unique
+  albumId       String
   eData         EData[]
   interactions  EInteraction[]
   album         EAlbum         @relation(fields: [albumId], references: [id], onDelete: Cascade)
@@ -131,14 +129,7 @@ model EAlbum {
   updatedAt     DateTime       @default(now())
   eData         EData[]
   interactions  EInteraction[]
-  tracks        ETrack?
-}
-
-enum EDataType {
-  ARTIST
-  ALBUM
-  TRACK
-  USER
+  tracks        ETrack[]
 }
 
 enum EInteractionType {
