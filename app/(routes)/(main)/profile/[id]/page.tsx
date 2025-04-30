@@ -35,6 +35,9 @@ export default async function Page({ params }: Props) {
     const allFavorites = await db.eInteractionData.findMany({
       where: {
         interactionType: 'FAVORITED',
+      },
+      include: {
+        eData: true,
       }
     })
 
@@ -43,10 +46,13 @@ export default async function Page({ params }: Props) {
         userId: profileUser.userId,
         interactionType: 'FAVORITED',
       },
+      include: {
+        eData: true,
+      }
     });
 
     const favorites = allFavorites.filter((favorite) => {
-      return userFavorites.some((userFavorite) => userFavorite.dataId === favorite.dataId);
+      return userFavorites.some((userFavorite) => userFavorite.eData.id === favorite.dataId);
     })
 
     return favorites;
@@ -57,6 +63,9 @@ export default async function Page({ params }: Props) {
     const allSaves = await db.eInteractionData.findMany({
       where: {
         interactionType: 'SAVED',
+      },
+      include: {
+        eData: true,
       }
     })
 
@@ -65,10 +74,13 @@ export default async function Page({ params }: Props) {
         userId: profileUser.userId,
         interactionType: 'SAVED',
       },
+      include: {
+        eData: true,
+      }
     });
 
     const saves = allSaves.filter((save) => {
-      return userSaves.some((userSave) => userSave.dataId === save.dataId);
+      return userSaves.some((userSave) => userSave.eData.id === save.dataId);
     })
 
     return saves;
@@ -79,6 +91,9 @@ export default async function Page({ params }: Props) {
     const allReviews = await db.eInteractionData.findMany({
       where: {
         interactionType: 'REVIEWED',
+      },
+      include: {
+        eData: true,
       }
     })
 
@@ -87,10 +102,13 @@ export default async function Page({ params }: Props) {
         userId: profileUser.userId,
         interactionType: 'REVIEWED',
       },
+      include: {
+        eData: true,
+      }
     });
 
     const reviews = allReviews.filter((review) => {
-      return userReviews.some((userReview) => userReview.dataId === review.dataId);
+      return userReviews.some((userReview) => userReview.eData.id === review.dataId);
     })
 
     return reviews;
