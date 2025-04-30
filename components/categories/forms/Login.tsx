@@ -110,6 +110,7 @@ export const Login = ({
           required
           type='password'
           id='password'
+          autoComplete='current-password'
           value={password}
           onChange={(e) => {
             e.preventDefault();
