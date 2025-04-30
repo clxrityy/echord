@@ -51,7 +51,6 @@ export const Login = ({
       setUserId(session.userId);
       router.push(`/profile/${session.userId}`);
     }
-
   }, [sessionId, session, fetchSession]);
 
   const handleLogin = useCallback(async () => {

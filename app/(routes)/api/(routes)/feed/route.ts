@@ -1,6 +1,5 @@
 import { getUserBySessionId } from '@/app/_actions';
 import { db } from '@/lib';
-import { EData, EInteraction, EInteractionData, EUser } from '@/prisma/app/generated/prisma/client';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET(_req: NextRequest) {

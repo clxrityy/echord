@@ -37,7 +37,12 @@ export function Result({ data, userId }: Props) {
           height={50}
           className='rounded-md'
         />
-        <Link href={`/track/${ID}`} className='focus:underline transition hover:text-blue-300/75'><h4>{title}</h4></Link>
+        <Link
+          href={`/track/${ID}`}
+          className='focus:underline transition hover:text-blue-300/75'
+        >
+          <h4>{title}</h4>
+        </Link>
       </div>
       <div className='flex flex-col gap-1'>
         <p className='text-sm text-gray-400'>

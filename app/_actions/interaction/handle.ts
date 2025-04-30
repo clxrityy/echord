@@ -18,7 +18,6 @@ export async function handleInteraction({
   userId,
   sessionId,
 }: InteractionProps): Promise<Interaction | undefined> {
-
   if (!interactionData.trackId || !interactionData.albumId) {
     return undefined;
   }
@@ -51,7 +50,11 @@ export async function handleInteraction({
     },
   });
 
-  if (existingInteraction && existingInteraction.eData && existingInteraction.eData.interactionData) {
+  if (
+    existingInteraction &&
+    existingInteraction.eData &&
+    existingInteraction.eData.interactionData
+  ) {
     // If the interaction already exists, we can choose to update it or ignore it
     // For this example, we'll just return early
     return {
@@ -78,7 +81,8 @@ export async function handleInteraction({
     },
   });
   // IF EXISTING DATA
-  const { albumId, trackId, title, artistName, albumName, imageUrl } = interactionData;
+  const { albumId, trackId, title, artistName, albumName, imageUrl } =
+    interactionData;
 
   if (existingData) {
     const interaction = await db.eInteraction.create({
@@ -111,7 +115,6 @@ export async function handleInteraction({
       };
     }
   } else {
-
     // If the data doesn't exist, create it
     const newData = await db.eData.create({
       data: {
@@ -147,8 +150,6 @@ export async function handleInteraction({
       },
     });
 
-
-
     // Create the album and track if they don't exist
     if (albumId && trackId && title && artistName && albumName && imageUrl) {
       if (!existingTrack) {
@@ -169,8 +170,8 @@ export async function handleInteraction({
                   title: albumName,
                   artistName,
                   imageUrl,
-                }
-              }
+                },
+              },
             },
             eData: {
               connectOrCreate: {
@@ -183,12 +184,12 @@ export async function handleInteraction({
                     create: {
                       interactionType,
                       ...interactionData,
-                    }
-                  }
-                }
-              }
-            }
-          }
+                    },
+                  },
+                },
+              },
+            },
+          },
         });
       }
     }
@@ -205,4 +206,4 @@ export async function handleInteraction({
       return null;
     }
   }
-};
+}

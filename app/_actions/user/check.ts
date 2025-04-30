@@ -1,5 +1,9 @@
 import { db, getUserSession } from '@/lib';
-import { EInteractionType, ESession, EUser } from '@/prisma/app/generated/prisma/client';
+import {
+  EInteractionType,
+  ESession,
+  EUser,
+} from '@/prisma/app/generated/prisma/client';
 import { Interaction } from '@/types';
 import { getUserBySessionId } from '.';
 import { decrypt } from '@/utils';

@@ -36,30 +36,28 @@ export default async function Page({ params }: Props) {
             <h2>Album</h2>
             <div className='flex flex-col w-full h-full mx-auto gap-6 items-center justify-center'>
               <div className='flex flex-row w-full h-full mx-auto gap-6 items-center justify-center'>
-                {
-                  album.imageUrl && (
-                    <ImageComponent
-                      src={album.imageUrl}
-                      alt={album.title}
-                      className='w-full h-full object-cover rounded-lg'
-                      width={500}
-                      height={500}
-                      priority
-                      loading='eager'
-                      placeholder='blur'
-                      blurDataURL={album.imageUrl}
-                      sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
-                      quality={100}
-                      style={{ maxWidth: '100%', height: 'auto' }}
-                    />
-                  )
-                }
+                {album.imageUrl && (
+                  <ImageComponent
+                    src={album.imageUrl}
+                    alt={album.title}
+                    className='w-full h-full object-cover rounded-lg'
+                    width={500}
+                    height={500}
+                    priority
+                    loading='eager'
+                    placeholder='blur'
+                    blurDataURL={album.imageUrl}
+                    sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
+                    quality={100}
+                    style={{ maxWidth: '100%', height: 'auto' }}
+                  />
+                )}
                 <h2 className='text-2xl font-bold'>{album.title}</h2>
               </div>
             </div>
-            </div>
           </div>
-          </Window>
-        </Suspense>
-        );
+        </div>
+      </Window>
+    </Suspense>
+  );
 }

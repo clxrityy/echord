@@ -1,12 +1,12 @@
-import { db } from "@/lib";
-import { Metadata } from "next";
-import { ReactNode } from "react";
+import { db } from '@/lib';
+import { Metadata } from 'next';
+import { ReactNode } from 'react';
 
 type Props = {
   params: Promise<{
     id: string;
   }>;
-}
+};
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const id = (await params).id;
@@ -19,7 +19,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   if (!profileUser) {
     return {
-      title: "User not found",
+      title: 'User not found',
     };
   }
 
@@ -32,7 +32,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       url: `https://echord.com/profile/${profileUser.userId}`,
       images: [
         {
-          url: profileUser.avatar || "https://echord.com/img/default-avatar.png",
+          url:
+            profileUser.avatar || 'https://echord.com/img/default-avatar.png',
           width: 250,
           height: 250,
         },
@@ -43,25 +44,17 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       description: `Profile page of ${profileUser.username}`,
       images: [
         {
-          url: profileUser.avatar || "https://echord.com/img/default-avatar.png",
+          url:
+            profileUser.avatar || 'https://echord.com/img/default-avatar.png',
           width: 250,
           height: 250,
         },
       ],
-      card: "summary_large_image",
+      card: 'summary_large_image',
     },
   };
 }
 
-export default async function Layout({
-  children,
-}: {
-  children: ReactNode;
-}) {
-
-  return (
-    <div className="w-full h-full relative">
-      {children}
-    </div>
-  );
+export default async function Layout({ children }: { children: ReactNode }) {
+  return <div className='w-full h-full relative'>{children}</div>;
 }

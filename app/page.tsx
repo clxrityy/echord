@@ -87,9 +87,7 @@ export default async function Home() {
                                     userData.username ? userData.username : null
                                   }
                                 />
-                              ) : (
-                                null
-                              )}
+                              ) : null}
                             </FeedListItem>
                           </Suspense>
                         );

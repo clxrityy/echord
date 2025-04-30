@@ -1,13 +1,13 @@
-import { db } from "@/lib";
+import { db } from '@/lib';
 
 export async function updateUser(userId: string, sessionId: string) {
   const user = await db.eUser.findFirst({
     where: {
       userId,
       session: {
-        sessionId
-      }
-    }
+        sessionId,
+      },
+    },
   });
 
   if (!user) {
@@ -16,11 +16,11 @@ export async function updateUser(userId: string, sessionId: string) {
 
   const updatedUser = await db.eUser.update({
     where: {
-      userId
+      userId,
     },
     data: {
-      updatedAt: new Date()
-    }
+      updatedAt: new Date(),
+    },
   });
 
   return updatedUser;

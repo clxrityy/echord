@@ -3,7 +3,7 @@
 import { Button } from '@/components/ui';
 import { useInteractions } from '@/contexts';
 import { ICONS } from '@/utils';
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 
 export function FavoriteInteraction({
@@ -43,14 +43,7 @@ export function FavoriteInteraction({
       console.log('Checking favorited status...');
       checkFavorited();
     }
-  }, [
-    interactions,
-    favorited,
-    trackId,
-    userId,
-    checkFavorited,
-    loading,
-  ]);
+  }, [interactions, favorited, trackId, userId, checkFavorited, loading]);
 
   const handleFavorite = async () => {
     const toastId = toast.loading('Favoriting...');

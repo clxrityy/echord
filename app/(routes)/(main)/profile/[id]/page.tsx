@@ -4,7 +4,6 @@ import { Window } from '@/components/layout';
 import Loading from '@/app/loading';
 import { db, getUserSessionId } from '@/lib';
 import { getUserBySessionId } from '@/app/_actions';
-import { SettingsModal } from '@/components/categories/modals';
 import { Skeleton } from '@/components/ui';
 
 type Props = {
@@ -23,23 +22,22 @@ export default async function Page({ params }: Props) {
   });
 
   const sessionId = await getUserSessionId();
-  const user = await getUserBySessionId(sessionId || '');
-  const isCurrentUser = user?.userId === profileUser?.userId;
+  // const user = await getUserBySessionId(sessionId || '');
+  // const isCurrentUser = user?.userId === profileUser?.userId;
 
   if (!profileUser) {
     return <h1 className='mt-30'>User not found</h1>;
   }
 
   const getFavorites = async () => {
-
     const allFavorites = await db.eInteractionData.findMany({
       where: {
         interactionType: 'FAVORITED',
       },
       include: {
         eData: true,
-      }
-    })
+      },
+    });
 
     const userFavorites = await db.eInteraction.findMany({
       where: {
@@ -48,26 +46,27 @@ export default async function Page({ params }: Props) {
       },
       include: {
         eData: true,
-      }
+      },
     });
 
     const favorites = allFavorites.filter((favorite) => {
-      return userFavorites.some((userFavorite) => userFavorite.eData.id === favorite.dataId);
-    })
+      return userFavorites.some(
+        (userFavorite) => userFavorite.eData.id === favorite.dataId
+      );
+    });
 
     return favorites;
   };
 
   const getSaves = async () => {
-
     const allSaves = await db.eInteractionData.findMany({
       where: {
         interactionType: 'SAVED',
       },
       include: {
         eData: true,
-      }
-    })
+      },
+    });
 
     const userSaves = await db.eInteraction.findMany({
       where: {
@@ -76,26 +75,25 @@ export default async function Page({ params }: Props) {
       },
       include: {
         eData: true,
-      }
+      },
     });
 
     const saves = allSaves.filter((save) => {
       return userSaves.some((userSave) => userSave.eData.id === save.dataId);
-    })
+    });
 
     return saves;
   };
 
   const getReviews = async () => {
-
     const allReviews = await db.eInteractionData.findMany({
       where: {
         interactionType: 'REVIEWED',
       },
       include: {
         eData: true,
-      }
-    })
+      },
+    });
 
     const userReviews = await db.eInteraction.findMany({
       where: {
@@ -104,16 +102,17 @@ export default async function Page({ params }: Props) {
       },
       include: {
         eData: true,
-      }
+      },
     });
 
     const reviews = allReviews.filter((review) => {
-      return userReviews.some((userReview) => userReview.eData.id === review.dataId);
-    })
+      return userReviews.some(
+        (userReview) => userReview.eData.id === review.dataId
+      );
+    });
 
     return reviews;
-  }
-
+  };
 
   const counts = {
     saves: (await getSaves()).length,
@@ -121,13 +120,17 @@ export default async function Page({ params }: Props) {
     reviews: (await getReviews()).length,
     followers: 0,
     following: 0,
-  }
+  };
 
   return (
     <Suspense fallback={<Loading />}>
       <Window sessionId={sessionId || ''}>
         <div className='w-full h-full relative'>
-          <Suspense fallback={<Skeleton className='w-[200px] h-[400px] animate-pulse drop-shadow-2xl shadow-2xl bg-gray-600/40 rounded-lg' />}>
+          <Suspense
+            fallback={
+              <Skeleton className='w-[200px] h-[400px] animate-pulse drop-shadow-2xl shadow-2xl bg-gray-600/40 rounded-lg' />
+            }
+          >
             <UserBox user={profileUser} counts={counts} />
           </Suspense>
           <div className='flex items-center justify-center gap-2 w-fit'>

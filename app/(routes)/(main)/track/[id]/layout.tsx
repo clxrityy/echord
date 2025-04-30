@@ -1,13 +1,13 @@
-import { checkTrackFromInteraction } from "@/app/_actions";
-import { Metadata } from "next";
-import { connection } from "next/server";
-import { ReactNode } from "react";
+import { checkTrackFromInteraction } from '@/app/_actions';
+import { Metadata } from 'next';
+import { connection } from 'next/server';
+import { ReactNode } from 'react';
 
 type Props = {
   params: Promise<{
     id: string;
   }>;
-}
+};
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const id = (await params).id;
@@ -16,18 +16,18 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   if (!track) {
     return {
-      title: "Track not found",
-      description: "Track not found",
+      title: 'Track not found',
+      description: 'Track not found',
     };
   }
 
   return {
     title: `${track.title} by ${track.artistName}`,
     keywords: [
-      "Echord",
-      "Track",
-      "Music",
-      "Music Track",
+      'Echord',
+      'Track',
+      'Music',
+      'Music Track',
       `${track.title}`,
       `${track.artistName}`,
       `${track.title} by ${track.artistName}`,
@@ -46,7 +46,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     twitter: {
       title: track.title,
       description: `${track.title} by ${track.artistName}`,
-      card: "summary",
+      card: 'summary',
       images: [
         {
           url: track.imageUrl!,
@@ -64,7 +64,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     alternates: {
       canonical: `https://echord.uk/track/${id}`,
     },
-    metadataBase: new URL("https://echord.uk"),
+    metadataBase: new URL('https://echord.uk'),
     robots: {
       index: true,
       follow: true,
@@ -75,7 +75,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     },
     appleWebApp: {
       title: `Echord | ${track.title}`,
-      statusBarStyle: "black-translucent",
+      statusBarStyle: 'black-translucent',
       capable: true,
     },
   };
@@ -88,9 +88,5 @@ export default async function TrackLayout({
 }) {
   await connection();
 
-  return (
-    <div className="w-full h-full mt-30 relative">
-      {children}
-    </div>
-  );
+  return <div className='w-full h-full mt-30 relative'>{children}</div>;
 }

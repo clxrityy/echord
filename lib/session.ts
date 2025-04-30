@@ -84,7 +84,6 @@ export async function updateUserSession(request: NextRequest) {
   const userSession = request.cookies.get(ENV.COOKIE_NAME);
   if (!userSession) return;
 
-
   // Refresh the session
   const parsed = await decryptJWT(userSession.value);
 

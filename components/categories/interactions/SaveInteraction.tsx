@@ -83,9 +83,7 @@ export function SaveInteraction({
         }
       }, 2500);
 
-      return () => {
-        clearTimeout(timeout);
-      };
+      clearTimeout(timeout);
     } catch (error) {
       console.error('Error saving interaction:', error);
       toast.error('Error saving', {
@@ -96,11 +94,10 @@ export function SaveInteraction({
         toast.dismiss(toastId);
       }, 5000);
 
-      return () => {
-        clearTimeout(timeout);
-      };
+      clearTimeout(timeout);
+      setLoading(false);
     }
-  }
+  };
 
   return (
     <Button

@@ -77,33 +77,33 @@ export const metadata: Metadata = {
     ],
   },
   icons: {
-    icon: "/favicon.ico",
-    shortcut: "/favicon-16x16.png",
-    apple: "/apple-touch-icon.png",
+    icon: '/favicon.ico',
+    shortcut: '/favicon-16x16.png',
+    apple: '/apple-touch-icon.png',
     other: [
       {
-        rel: "apple-touch-icon",
-        url: "/apple-touch-icon.png",
+        rel: 'apple-touch-icon',
+        url: '/apple-touch-icon.png',
       },
       {
-        rel: "icon",
-        sizes: "32x32",
-        url: "/favicon-32x32.png",
+        rel: 'icon',
+        sizes: '32x32',
+        url: '/favicon-32x32.png',
       },
       {
-        rel: "icon",
-        sizes: "16x16",
-        url: "/favicon-16x16.png",
+        rel: 'icon',
+        sizes: '16x16',
+        url: '/favicon-16x16.png',
       },
       {
-        rel: "icon",
-        sizes: "192x192",
-        url: "/android-chrome-192x192.png",
+        rel: 'icon',
+        sizes: '192x192',
+        url: '/android-chrome-192x192.png',
       },
       {
-        rel: "icon",
-        sizes: "512x512",
-        url: "/android-chrome-512x512.png",
+        rel: 'icon',
+        sizes: '512x512',
+        url: '/android-chrome-512x512.png',
       },
     ],
     origin: BASE_URL,
@@ -219,7 +219,11 @@ export default async function RootLayout({
                   }}
                 />
                 <Backdrop />
-                <Suspense fallback={<Skeleton className='w-screen fixed top-0 z-50 shadow-md mx-0 right-0 left-0 h-20 rounded-b-sm animate-pulse' />}>
+                <Suspense
+                  fallback={
+                    <Skeleton className='w-screen fixed top-0 z-50 shadow-md mx-0 right-0 left-0 h-20 rounded-b-sm animate-pulse' />
+                  }
+                >
                   <Navbar userId={user?.userId} />
                 </Suspense>
                 {children}

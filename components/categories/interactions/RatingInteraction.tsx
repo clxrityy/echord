@@ -45,40 +45,39 @@ export function RatingInteraction({
     }
   }, [interactions, isLoading, trackId, userId, isLoading]);
 
-  const rate =
-    async (value: number) => {
-      const toastId = toast.loading('Rating...');
-      try {
-        const response = await fetch(`/api/interaction/rate`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            trackId,
-            userId,
-            value,
-          }),
-        });
-        const { interaction } = await response.json();
+  const rate = async (value: number) => {
+    const toastId = toast.loading('Rating...');
+    try {
+      const response = await fetch(`/api/interaction/rate`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          trackId,
+          userId,
+          value,
+        }),
+      });
+      const { interaction } = await response.json();
 
-        if (interaction) {
-          addInteraction(interaction);
-          setRating(value);
-          toast.success('Rated successfully', { id: toastId });
-        } else {
-          toast.error('Failed to rate', { id: toastId });
-        }
-      } catch (err) {
-        console.error('Error rating:', err);
+      if (interaction) {
+        addInteraction(interaction);
+        setRating(value);
+        toast.success('Rated successfully', { id: toastId });
+      } else {
         toast.error('Failed to rate', { id: toastId });
-      } finally {
-        setTimeout(() => {
-          setIsHovered(null);
-          toast.dismiss(toastId);
-        }, 1000);
       }
-    };
+    } catch (err) {
+      console.error('Error rating:', err);
+      toast.error('Failed to rate', { id: toastId });
+    } finally {
+      setTimeout(() => {
+        setIsHovered(null);
+        toast.dismiss(toastId);
+      }, 1000);
+    }
+  };
 
   const determineColor = useCallback(
     (value: number) => {

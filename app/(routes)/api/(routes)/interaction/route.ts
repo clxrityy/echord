@@ -58,6 +58,15 @@ export async function GET(req: NextRequest) {
 export async function DELETE(req: NextRequest) {
   const sessionId = await getUserSessionId();
 
+  if (!sessionId) {
+    return NextResponse.json(
+      {
+        error: 'Unauthorized',
+      },
+      { status: 401 }
+    );
+  }
+
   const { searchParams } = new URL(req.url);
 
   const interactionId = searchParams.get('interactionId');
@@ -98,8 +107,8 @@ export async function DELETE(req: NextRequest) {
     await db.eInteractionData.delete({
       where: {
         dataId: existing.dataId,
-      }
-    })
+      },
+    });
   } catch (e) {
     console.error('Error deleting interaction:', e);
     return NextResponse.json(

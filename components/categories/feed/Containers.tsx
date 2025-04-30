@@ -2,9 +2,7 @@
 import { Skeleton, Button, Tooltip } from '@/components/ui';
 import { StringOrUndefined } from '@/types';
 import { BASE_URL, ICONS } from '@/utils';
-import {
-  EInteractionType,
-} from '@/prisma/app/generated/prisma/client';
+import { EInteractionType } from '@/prisma/app/generated/prisma/client';
 import Link from 'next/link';
 import ImageComponent from 'next/image';
 import { useRouter } from 'next/navigation';
@@ -42,7 +40,7 @@ export function FeedItemContainer({
   userId,
   imageUrl,
   title,
-  albumId,
+  // albumId,
   trackId,
   albumName,
   dataId,
@@ -145,10 +143,7 @@ export function FeedItemContainer({
       const timeout = setTimeout(() => {
         toast.dismiss(toastId);
       }, 5000);
-
-      return () => {
-        clearTimeout(timeout);
-      };
+      clearTimeout(timeout);
     }
   }
 
@@ -170,13 +165,7 @@ export function FeedItemContainer({
                         className='rounded-xl shadow text-gray-200/90 cursor-pointer'
                         aria-label={interactionType}
                       />
-                      {
-                        rating && (
-                          <span className=''>
-                            {rating}
-                          </span>
-                        )
-                      }
+                      {rating && <span className=''>{rating}</span>}
                     </div>
                   </Tooltip>
                 </Suspense>
@@ -195,9 +184,9 @@ export function FeedItemContainer({
                   {isToday
                     ? 'Today'
                     : new Date(createdAt).toLocaleDateString('en-US', {
-                      month: 'short',
-                      day: '2-digit',
-                    })}
+                        month: 'short',
+                        day: '2-digit',
+                      })}
                   {isSameYear ? '' : ', ' + new Date(createdAt).getFullYear()}
                 </span>
                 <span className='text-xs 2xl:text-sm text-gray-400'>

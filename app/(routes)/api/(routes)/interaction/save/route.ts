@@ -5,9 +5,7 @@ import {
   handleInteraction,
 } from '@/app/_actions';
 import { db, getUserSessionId } from '@/lib';
-import {
-  EInteractionType,
-} from '@/prisma/app/generated/prisma/client';
+import { EInteractionType } from '@/prisma/app/generated/prisma/client';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(req: NextRequest) {

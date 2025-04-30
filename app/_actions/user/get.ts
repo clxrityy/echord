@@ -1,5 +1,5 @@
-import { db } from "@/lib";
-import { EUser } from "@/prisma/app/generated/prisma/client";
+import { db } from '@/lib';
+import { EUser } from '@/prisma/app/generated/prisma/client';
 
 export async function getUserBySessionId(
   sessionId: string
