@@ -26,21 +26,6 @@ export default async function Page({ params }: Props) {
   const user = await getUserBySessionId(sessionId || '');
   const isCurrentUser = user?.userId === profileUser?.userId;
 
-  if (isCurrentUser) {
-    try {
-      await db.eUser.update({
-        where: {
-          userId: user?.userId,
-        },
-        data: {
-          updatedAt: new Date(),
-        }
-      })
-    } catch (e) {
-      console.error('Error updating user last seen:', e);
-    }
-  }
-
   if (!profileUser) {
     return <h1 className='mt-30'>User not found</h1>;
   }
