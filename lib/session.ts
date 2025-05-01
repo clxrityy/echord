@@ -29,6 +29,7 @@ export async function buildUserSession({
     (await cookies()).set(ENV.COOKIE_NAME, userSession, {
       expires,
       httpOnly: true,
+      sameSite: "strict",
       secure: process.env.NODE_ENV === 'production',
     });
 
@@ -98,6 +99,7 @@ export async function updateUserSession(request: NextRequest) {
     value: await encryptJWT(parsed),
     expires,
     httpOnly: true,
+    sameSite: 'strict',
     secure: process.env.NODE_ENV === 'production',
     maxAge: 60 * 60 * 24 * 7, // 7 days
   });
