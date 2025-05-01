@@ -24,7 +24,7 @@ export default async function Page() {
     <Suspense fallback={<Loading />}>
       <Window sessionId={sessionId || ''}>
         <div className='w-full h-full mx-auto flex items-center justify-start'>
-          <div className='flex flex-col w-full h-full mx-auto gap-6 items-center justify-center'>
+          <div className='flex flex-col w-full h-full mx-auto gap-6 items-center justify-start mt-10 sm:mt-20'>
             <h2>Login</h2>
             <Suspense fallback={<Skeleton />}>
               <Login sessionId={sessionId ?? sessionId!} />
