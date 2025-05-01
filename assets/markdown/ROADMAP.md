@@ -99,6 +99,13 @@
   - [ ] Displays on profile
   - [ ] Displays on album/track
 
+#### Screen accessibility
+
+- [x] Large screen
+  - [x] Desktop
+  - [x] Tablet
+- [ ] Small screen
+
 ##### Features
 
 - [x] Add a search bar to the home page
