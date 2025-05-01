@@ -123,3 +123,24 @@
 
 - [ ] Make it so the average rating is shown by color gradient ranking system for albums and/or tracks
 - [ ] Ability to customize/move album images from your saves on your profile (react draggable)
+
+- [ ] Allow interactive listening sessions/parties integrated with Spotify/Apple Music
+
+  - [ ] Host a listening party
+    - [ ] Title
+    - [ ] Description
+    - [ ] Image (?)
+    - [ ] Tracklist / playlist / album
+    - [ ] Invite friends
+  - [ ] Join a listening party
+    - [ ] Chat
+    - [ ] Reactions
+    - [ ] Live updates
+  - [ ] Leave a listening party
+
+- [ ] Add a "Discover" page
+  - [ ] Show new releases
+  - [ ] Show popular albums/tracks
+  - [ ] Show trending albums/tracks
+  - [ ] Show new users
+  - [ ] Show popular users
