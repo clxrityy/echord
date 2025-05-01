@@ -37,6 +37,7 @@ export function FeedItem({
     artistName,
     albumName,
     dataId,
+    trackId,
     // rating, review
   } = interactionData;
 
@@ -49,7 +50,7 @@ export function FeedItem({
           fallback={<Skeleton className='w-[5rem] h-full rounded-md' />}
         >
           <FeedItemContainer
-            trackId={interaction.trackId ?? ''}
+            trackId={trackId ?? ''}
             interactionId={interactionId}
             isCurrentUser={isCurrentUser}
             interactionType='FAVORITED'
@@ -82,7 +83,7 @@ export function FeedItem({
           fallback={<Skeleton className='w-[5rem] h-full rounded-md' />}
         >
           <FeedItemContainer
-            trackId={interaction.trackId ?? ''}
+            trackId={trackId ?? ''}
             interactionId={interactionId}
             interactionUserId={interactionUserId}
             isCurrentUser={isCurrentUser}
@@ -114,7 +115,7 @@ export function FeedItem({
           fallback={<Skeleton className='w-[5rem] h-full rounded-md' />}
         >
           <FeedItemContainer
-            trackId={interaction.trackId ?? ''}
+            trackId={trackId ?? ''}
             interactionId={interactionId}
             interactionUserId={interactionUserId}
             isCurrentUser={isCurrentUser}
