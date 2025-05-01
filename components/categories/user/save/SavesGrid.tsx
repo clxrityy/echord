@@ -58,7 +58,7 @@ export function SavesGrid({ saves }: SavesGridProps) {
                 alt={save.dataId}
                 width={determineSize(length)}
                 height={determineSize(length)}
-                className='rounded-lg'
+                className='rounded-md'
               />
             )}
           </UserSave>
