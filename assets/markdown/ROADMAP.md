@@ -24,7 +24,7 @@
     - [ ] Album reviews
     - [ ] Album ratings
     - [ ] Album favorites
-  - [ ] `/track/[id]` - Track
+  - [x] `/track/[id]` - Track
     - [ ] Track details
     - [ ] Track reviews
     - [ ] Track ratings
@@ -86,7 +86,7 @@
   - [x] Displays on feed
   - [x] Displays on profile
   - [ ] Displays on album/track
-- [ ] Favorite interaction
+- [x] Favorite interaction
   - [x] Displays on feed
   - [x] Displays on profile
   - [ ] Displays on album/track
