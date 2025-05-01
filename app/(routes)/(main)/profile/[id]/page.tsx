@@ -163,7 +163,7 @@ export default async function Page({ params }: Props) {
   return (
     <Suspense fallback={<Loading />}>
       <Window sessionId={sessionId || ''}>
-        <div className='w-full h-auto md:h-full relative flex items-center justify-start flex-col md:gap-6 mt-20 md:mt-0 gap-7 overflow-y-auto overflow-clip scroll-smooth z-30'>
+        <div className='w-full h-auto md:h-full relative flex items-center justify-start flex-col md:gap-6 mt-20 md:mt-0 gap-7 overflow-y-auto overflow-clip scroll-smooth max-h-[calc(100vh)]'>
           <Suspense
             fallback={
               <Skeleton className='w-[200px] h-[400px] animate-pulse drop-shadow-2xl shadow-2xl bg-gray-600/40 rounded-lg' />
