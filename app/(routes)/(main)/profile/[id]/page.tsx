@@ -114,18 +114,56 @@ export default async function Page({ params }: Props) {
     return reviews;
   };
 
+  const getRatings = async () => {
+    const allRatings = await db.eInteractionData.findMany({
+      where: {
+        interactionType: 'RATED',
+      },
+      include: {
+        eData: true,
+      },
+    });
+
+    const userRatings = await db.eInteraction.findMany({
+      where: {
+        userId: profileUser.userId,
+        interactionType: 'RATED',
+      },
+      include: {
+        eData: true,
+      },
+    });
+
+    const ratings = allRatings.filter((rating) => {
+      return userRatings.some(
+        (userRating) => userRating.eData.id === rating.dataId
+      );
+    });
+
+    let sum = 0;
+
+    ratings.map(({ rating }) => {
+      for (let i = 0; i < ratings.length; i++) {
+        sum += rating ?? 0;
+      }
+    });
+
+    return sum;
+  }
+
   const counts = {
     saves: (await getSaves()).length,
     favorites: (await getFavorites()).length,
     reviews: (await getReviews()).length,
     followers: 0,
     following: 0,
+    starsGiven: await getRatings(),
   };
 
   return (
     <Suspense fallback={<Loading />}>
       <Window sessionId={sessionId || ''}>
-        <div className='w-full h-full relative'>
+        <div className='w-full h-auto md:h-full relative flex items-center justify-start flex-col md:gap-6 mt-20 md:mt-0 gap-7'>
           <Suspense
             fallback={
               <Skeleton className='w-[200px] h-[400px] animate-pulse drop-shadow-2xl shadow-2xl bg-gray-600/40 rounded-lg' />
@@ -133,24 +171,13 @@ export default async function Page({ params }: Props) {
           >
             <UserBox user={profileUser} counts={counts} />
           </Suspense>
-          <div className='flex items-center justify-center gap-2 w-fit'>
-            {/* <h1 className='text-2xl font-bold'>{profileUser.username}</h1>
-            {isCurrentUser && (
-              <Suspense>
-                <SettingsModal userId={profileUser.userId} />
-              </Suspense>
-            )} */}
-            {/**
-             * - Profile data (bio, etc.)
-             */}
-          </div>
           {/**
            * - Profile info
            * - Favorites
            * - Interactions
            * - ...
            */}
-          <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4'>
+          <div className='md:absolute fixed top-75 md:top-25 right-[40%] md:right-5'>
             <Favorites interactionData={await getFavorites()} />
           </div>
         </div>
