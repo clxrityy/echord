@@ -9,15 +9,16 @@ type Props = {
     reviews: number;
     favorites: number;
     saves: number;
+    starsGiven: number;
   };
 };
 
 export function UserBox({ user, counts }: Props) {
-  const { followers, following, reviews, favorites, saves } = counts;
+  const { followers, following, reviews, favorites, saves, starsGiven } = counts;
 
   return (
-    <div className='absolute top-2 left-2 px-4 py-2 h-[100px]'>
-      <div className='flex flex-col items-center justify-start gap-4 w-[200px] h-[200px] rounded-lg shadow-md'>
+    <div className='md:absolute top-2 right-[32.5%] md:right-2 px-6 py-4 md:h-[100px] w-full sm:w-auto h-auto'>
+      <div className='flex flex-col items-center justify-start w-full md:w-[200px] h-[230px] md:h-[250px] rounded-t-lg px-4 py-2 bg-gray-400/5 drop-shadow-2xl shadow-xl gap-[7.5]'>
         <div className='flex items-center justify-center gap-4 w-full'>
           <ImageComponent
             src={user.avatar || '/img/default-avatar.png'}
@@ -26,7 +27,7 @@ export function UserBox({ user, counts }: Props) {
             height={50}
             className='rounded-3xl w-12 h-12 object-cover'
           />
-          <div className='flex flex-col items-start justify-start'>
+          <div className='flex flex-col items-start justify-start gap-1'>
             <h4 className='text-lg xl:text-xl text-gray-200 font-semibold'>
               {user.username}
             </h4>
@@ -44,27 +45,33 @@ export function UserBox({ user, counts }: Props) {
             </p>
           </div>
         </div>
-        <ul className='flex flex-col items-start justify-start gap-2 w-full h-full'>
-          <li className='flex items-center justify-between w-full'>
+        <ul className='flex flex-col items-center justify-center md:items-start md:justify-start gap-[7.5] w-full h-full'>
+          <li className='flex items-center justify-between w-1/3 md:w-full'>
             <span className='text-sm xl:text-base text-gray-300'>Reviews</span>
             <span className='text-sm text-gray-400'>{reviews}</span>
           </li>
-          <li className='flex items-center justify-between w-full'>
+          <li className='flex items-center justify-between w-1/3 md:w-full'>
             <span className='text-sm xl:text-base text-gray-300'>
               Favorites
             </span>
             <span className='text-sm text-gray-400'>{favorites}</span>
           </li>
-          <li className='flex items-center justify-between w-full'>
+          <li className='flex items-center justify-between gap-5 w-1/3 md:w-full'>
             <span className='text-sm xl:text-base text-gray-300'>Saves</span>
             <span className='text-sm xl:text-base text-gray-400'>{saves}</span>
           </li>
+          <li className='flex items-center justify-between gap-5 w-1/3 md:w-full'>
+            <span className='text-sm xl:text-base text-gray-300'>Stars given</span>
+            <span className='text-sm xl:text-base text-gray-400'>
+              {starsGiven}
+            </span>
+          </li>
         </ul>
       </div>
-      <div className='relative w-full h-[100%]'>
-        <div className='absolute bottom-0 left-0 w-full bg-gray-700/25 rounded-b-lg drop-shadow-2xl shadow-md'>
-          <div className='flex flex-col items-start justify-end gap-2 w-full'>
-            <div className='flex items-center justify-between px-4 py-2 gap-2'>
+      <div className='relative w-full h-full flex items-start justify-center'>
+        <div className='absolute left-0 md:-bottom-7 w-full h-[6rem] bg-gray-700/15 rounded-b-lg drop-shadow-2xl shadow-md flex items-center justify-center'>
+          <div className='flex flex-col items-start justify-end gap-[5] w-2/3 md:w-full'>
+            <div className='flex items-center justify-between px-4 py-2 w-full'>
               <span className='text-sm xl:text-base text-gray-300'>
                 Followers
               </span>
@@ -72,7 +79,7 @@ export function UserBox({ user, counts }: Props) {
                 {followers}
               </span>
             </div>
-            <div className='flex items-center justify-between gap-2 px-4 py-2'>
+            <div className='flex items-center justify-between gap-2 px-4 py-2 w-full'>
               <span className='text-sm xl:text-base text-gray-300'>
                 Following
               </span>
