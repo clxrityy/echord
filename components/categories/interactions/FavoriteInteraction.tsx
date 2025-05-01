@@ -3,7 +3,7 @@
 import { Button } from '@/components/ui';
 import { useInteractions } from '@/contexts';
 import { ICONS } from '@/utils';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 
 export function FavoriteInteraction({
@@ -20,7 +20,7 @@ export function FavoriteInteraction({
 
   const interactions = getInteractions();
 
-  const checkFavorited = () => {
+  const checkFavorited = useCallback(() => {
     if (interactions) {
       const interaction = interactions.find((interaction) => {
         return (
@@ -35,15 +35,12 @@ export function FavoriteInteraction({
       }
     }
 
-    return setLoading(false);
-  };
+    setLoading(false);
+  },[interactions, trackId, userId]);
 
   useEffect(() => {
-    if (loading && !favorited) {
-      console.log('Checking favorited status...');
-      checkFavorited();
-    }
-  }, [interactions, favorited, trackId, userId, checkFavorited, loading]);
+    checkFavorited();
+  }, [interactions, favorited, trackId, userId, loading]);
 
   const handleFavorite = async () => {
     const toastId = toast.loading('Favoriting...');
@@ -98,7 +95,7 @@ export function FavoriteInteraction({
 
   return (
     <Button
-      className={`${loading ? 'cursor-none' : 'disabled:text-red-500/80 hover:text-gray-300 focus:text-blue-400 disabled:hover:text-red-500/80 disabled:cursor-not-allowed transition-all duration-200 ease-in-out'}`}
+      className={`${loading ? 'cursor-none' : 'disabled:text-red-500/80 hover:text-gray-300 focus:text-blue-400 disabled:hover:text-red-500/80 disabled:cursor-not-allowed transition-all duration-200 ease-in-out cursor-pointer z-20'}`}
       title='Favorite'
       disabled={favorited || loading}
       onClick={async () => await handleFavorite()}
