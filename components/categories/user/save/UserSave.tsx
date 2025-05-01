@@ -30,7 +30,7 @@ export function UserSave({
       />
       <Button
         onClick={() => setIsOpen((prev) => !prev)}
-        className='hover:border-2 border-gray-300/75 transition-colors duration-50 ease-in z-20 rounded-lg focus:border-[3] focus:border-gray-300/70'
+        className='hover:border-2 border-gray-300/75 transition-colors duration-50 ease-in z-20 rounded-lg focus:border-[3] focus:border-gray-300/70 *:opacity-50 *:hover:opacity-100'
       >
         {children}
       </Button>
