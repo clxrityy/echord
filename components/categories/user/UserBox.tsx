@@ -69,7 +69,7 @@ export function UserBox({ user, counts }: Props) {
         </ul>
       </div>
       <div className='relative w-full h-full flex items-start justify-center'>
-        <div className='absolute left-0 md:-bottom-7 w-full h-[6rem] bg-gray-700/15 rounded-b-lg drop-shadow-2xl shadow-md flex items-center justify-center'>
+        <div className='md:absolute left-0 md:-bottom-7 w-full h-[6rem] bg-gray-700/15 rounded-b-lg drop-shadow-2xl shadow-md flex items-center justify-center'>
           <div className='flex flex-col items-start justify-end gap-[5] w-2/3 md:w-full'>
             <div className='flex items-center justify-between px-4 py-2 w-full'>
               <span className='text-sm xl:text-base text-gray-300'>
