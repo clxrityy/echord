@@ -1,4 +1,4 @@
-import { ImageComponent } from '@/components/ui';
+import { ImageComponent, Tooltip } from '@/components/ui';
 import { ICONS } from '@/utils';
 import { EInteractionData } from '@/prisma/app/generated/prisma/client';
 
@@ -12,17 +12,20 @@ export const Favorites = ({ interactionData }: FavoritesProps) => {
   }
 
   return (
-    <div className='flex flex-col items-center justify-center w-full gap-2'>
-      <h1 className='text-2xl font-bold mb-4 flex flex-row gap-2 items-center'>
-        <ICONS.favorite />
+    <div className='flex flex-col items-center justify-center w-full gap-2 mt-75'>
+      <h1 className='text-2xl font-bold mb-2 flex flex-row gap-2 items-center'>
+        <Tooltip text='Favorites'>
+          <ICONS.favorite />
+          <span className='sr-only'>Favorites</span>
+        </Tooltip>
       </h1>
-      <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 border border-white/10 rounded-lg p-4'>
-        {interactionData.map((data) => (
+      <div className={`grid grid-cols-1 ${interactionData.length > 1 && "sm:grid-cols-2"} gap-4 border border-white/10 rounded-lg p-4`}>
+        {interactionData.map((data, idx) => (
           <div
             key={data.id}
             className='shadow-md rounded-lg p-4 flex flex-col items-center'
           >
-            {data.imageUrl && data.albumName && (
+            {data.imageUrl && data.albumName && (idx < 4) && (
               <ImageComponent
                 src={data.imageUrl}
                 alt={data.albumName}
