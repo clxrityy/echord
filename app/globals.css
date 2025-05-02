@@ -86,6 +86,10 @@ h3 {
   @apply text-base md:text-lg lg:text-xl xl:text-2xl;
 }
 
+.font-rubica {
+  font-family: var(--font-rubica), sans-serif;
+}
+
 .navbar {
   margin-top: 0;
   background-color: transparent;
