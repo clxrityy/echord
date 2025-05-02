@@ -63,7 +63,7 @@
 }
 
 .blockquote-md {
-  @apply border-l-4 border-gray-300 pl-4 italic text-gray-700;
+  @apply border-l-4 border-gray-700 pl-4 text-gray-300 bg-gray-500/10 py-1 px-2;
   margin-left: 0;
   margin-right: 0;
   margin-bottom: 1rem;
