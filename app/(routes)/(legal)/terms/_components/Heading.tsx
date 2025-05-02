@@ -10,6 +10,6 @@ export function Heading({
 }) {
   return <div className="flex flex-row gap-2 items-center">
     <Copy value={`${BASE_URL}/terms#${id}`} />
-    <h2 id="use-of-the-service" className='h2-md'>{title}</h2>
+    <h2 id={id} className='h2-md'>{title}</h2>
   </div>
 }
