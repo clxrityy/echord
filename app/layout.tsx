@@ -6,7 +6,7 @@ import { Navbar, Backdrop } from '@/components/layout';
 import { Toaster } from 'react-hot-toast';
 import { BASE_URL } from '@/utils';
 import { connection } from 'next/server';
-import { AR, TMR } from '@/styles/fonts';
+import { AR, TMR, Rubica } from '@/styles/fonts';
 import { getUserSessionId } from '@/lib';
 import { getUserBySessionId } from '@/app/_actions';
 import { SessionProvider } from '@/contexts/session';
@@ -170,7 +170,7 @@ export default async function RootLayout({
           content={`${BASE_URL}/android-chrome-512x512.png`}
         />
       </head>
-      <body className={`${AR.variable} ${TMR.variable} antialiased`}>
+      <body className={`${AR.variable} ${TMR.variable} ${Rubica.variable} antialiased`}>
         <Suspense fallback={<Skeleton className='w-full h-full' />}>
           <SessionProvider>
             <WindowProvider>
