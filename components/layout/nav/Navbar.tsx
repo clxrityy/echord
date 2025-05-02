@@ -8,6 +8,7 @@ import { useSession } from '@/contexts';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/Button';
 import { InteractionHandler } from '../screen';
+import { Header } from './Header';
 
 export function NavbarContainer({ children }: { children: ReactNode }) {
   return (
@@ -61,27 +62,12 @@ export function Navbar({ userId }: { userId?: string | undefined }) {
          * RIGHT
          * - Logo & Title
          */}
-        <div className='flex items-center justify-center px-4 py-2'>
-          <Link
-            href='/'
-            aria-label='Home'
-            className='flex items-center focus:contrast-200 transition-all duration-100 justify-center gap-2 text-center'
-          >
-            <ImageComponent
-              src={'/apple-touch-icon.png'}
-              alt='Echord'
-              width={35}
-              height={35}
-              className='grayscale-75 brightness-150'
-            />
-            <h1 className='tracking-wide font-rubica font-bold'>
-              <span className='font-extrabold pr-[1.25px]'>E</span>
-              <span className='pt-[1px]'>cho</span>
-              <span>rd</span>
-              <span className='sr-only'>Echord</span>
-            </h1>
-          </Link>
-        </div>
+        <Suspense fallback={<div className='animate-pulse'>
+          <ICONS.loading className='animate-spin' />
+          <span className='sr-only'>Loading...</span>
+        </div>}>
+          <Header />
+        </Suspense>
         {/**
          * LEFT
          * - Search
@@ -93,6 +79,7 @@ export function Navbar({ userId }: { userId?: string | undefined }) {
             <Button
               aria-label='Profile'
               title='profile'
+              className='hover:contrast-200 transition-all duration-100 hover:scale-105 focus:text-blue-400/75'
               onClick={handleProfileClick}
             >
               <ICONS.user />
