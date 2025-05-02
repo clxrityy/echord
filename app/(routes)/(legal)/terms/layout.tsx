@@ -3,9 +3,10 @@ import { Metadata } from 'next';
 import Loading from '@/app/loading';
 import { Window } from '@/components/layout';
 import { getUserSessionId } from '@/lib';
+import UseHashScroll from '@/hooks/useHashScroll';
 
 export const metadata: Metadata = {
-  title: 'Terms of Service',
+  title: 'Terms of Service | Echord',
   description: 'Terms of Service for Echord',
 };
 
@@ -35,6 +36,9 @@ export default async function TermsLayout({
             {children}
             {privacy}
           </div>
+          <Suspense>
+            <UseHashScroll />
+          </Suspense>
         </Window>
       </Suspense>
     </div>
