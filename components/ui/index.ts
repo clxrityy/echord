@@ -5,3 +5,4 @@ export * from './Image';
 export * from './Pagination';
 export * from './OutsideClick';
 export * from './Skeleton';
+export * from './Copy';
