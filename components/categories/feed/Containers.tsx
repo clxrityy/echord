@@ -106,7 +106,7 @@ export function FeedItemContainer({
       default:
         return `Interacted`;
     }
-  }
+  };
 
   const router = useRouter();
 
@@ -180,7 +180,11 @@ export function FeedItemContainer({
                         className='rounded-xl shadow text-gray-200/90 cursor-pointer'
                         aria-label={interactionType}
                       />
-                      {rating && <span className='text-xs md:text-sm 2xl:text-base font-extrabold'>{rating}</span>}
+                      {rating && (
+                        <span className='text-xs md:text-sm 2xl:text-base font-extrabold'>
+                          {rating}
+                        </span>
+                      )}
                     </div>
                   </Tooltip>
                 </Suspense>

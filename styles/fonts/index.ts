@@ -19,4 +19,4 @@ export const Rubica = localFont({
   variable: '--font-rubica',
   display: 'swap',
   style: 'normal',
-})
+});

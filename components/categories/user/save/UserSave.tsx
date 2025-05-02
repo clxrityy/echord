@@ -29,7 +29,6 @@ export function UserSave({
         albumName={save.albumName}
         imageUrl={save.imageUrl}
         artistName={save.artistName}
-
       />
       <Button
         onClick={() => setIsOpen((prev) => !prev)}

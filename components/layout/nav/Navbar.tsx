@@ -22,20 +22,18 @@ export function Navbar({ userId }: { userId?: string | undefined }) {
   const router = useRouter();
 
   useEffect(() => {
-
     async function updateUserLastSeen() {
       try {
         const response = await fetch(`/api/user`, {
-          method: "PATCH",
+          method: 'PATCH',
           body: JSON.stringify({
             userId,
-          })
+          }),
         });
 
         if (!response.ok) {
           throw new Error('Failed to update user last seen');
         }
-
       } catch (error) {
         console.error('Error updating user last seen:', error);
       }
@@ -79,9 +77,7 @@ export function Navbar({ userId }: { userId?: string | undefined }) {
             <h1 className='tracking-wide font-rubica font-bold'>
               <span className='font-extrabold pr-[1.25px]'>E</span>
               <span className='pt-[1px]'>cho</span>
-              <span>
-                rd
-              </span>
+              <span>rd</span>
               <span className='sr-only'>Echord</span>
             </h1>
           </Link>

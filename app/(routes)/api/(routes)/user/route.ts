@@ -44,7 +44,7 @@ export async function PATCH(req: NextRequest) {
   if (!sessionId) {
     return NextResponse.json(
       {
-        error: "Unauthorized",
+        error: 'Unauthorized',
       },
       { status: 401 }
     );
@@ -55,14 +55,14 @@ export async function PATCH(req: NextRequest) {
       userId: userId,
       session: {
         sessionId: sessionId,
-      }
+      },
     },
   });
 
   if (!user) {
     return NextResponse.json(
       {
-        error: "User not found",
+        error: 'User not found',
       },
       { status: 404 }
     );
@@ -73,12 +73,12 @@ export async function PATCH(req: NextRequest) {
       userId: userId,
       session: {
         sessionId: sessionId,
-      }
+      },
     },
     data: {
       ...user,
       updatedAt: new Date(),
-    }
+    },
   });
 
   return NextResponse.json(

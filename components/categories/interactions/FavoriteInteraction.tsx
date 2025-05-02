@@ -36,7 +36,7 @@ export function FavoriteInteraction({
     }
 
     setLoading(false);
-  },[interactions, trackId, userId]);
+  }, [interactions, trackId, userId]);
 
   useEffect(() => {
     checkFavorited();

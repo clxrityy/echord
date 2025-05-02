@@ -82,13 +82,13 @@ const nextConfig: NextConfig = {
   compress: true,
   turbopack: {
     resolveAlias: {
-      '@': './'
-    }
-  }
+      '@': './',
+    },
+  },
 };
 
 const withMdx = createMdx({
   extension: /\.(md|mdx)$/,
-})
+});
 
 export default withMdx(nextConfig);

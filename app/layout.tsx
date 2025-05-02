@@ -170,7 +170,9 @@ export default async function RootLayout({
           content={`${BASE_URL}/android-chrome-512x512.png`}
         />
       </head>
-      <body className={`${AR.variable} ${TMR.variable} ${Rubica.variable} antialiased`}>
+      <body
+        className={`${AR.variable} ${TMR.variable} ${Rubica.variable} antialiased`}
+      >
         <Suspense fallback={<Skeleton className='w-full h-full' />}>
           <SessionProvider>
             <WindowProvider>

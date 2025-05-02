@@ -1,5 +1,5 @@
 'use client';
-import Outline from "./outline.mdx";
+import Outline from './outline.mdx';
 
 export default function Page() {
   return (

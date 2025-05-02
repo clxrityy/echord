@@ -14,7 +14,8 @@ type Props = {
 };
 
 export function UserBox({ user, counts }: Props) {
-  const { followers, following, reviews, favorites, saves, starsGiven } = counts;
+  const { followers, following, reviews, favorites, saves, starsGiven } =
+    counts;
 
   return (
     <div className='md:absolute top-2 right-[32.5%] md:right-2 px-6 py-4 md:h-[100px] w-full sm:w-auto h-auto'>
@@ -61,7 +62,9 @@ export function UserBox({ user, counts }: Props) {
             <span className='text-sm xl:text-base text-gray-400'>{saves}</span>
           </li>
           <li className='flex items-center justify-between gap-5 w-1/3 md:w-full'>
-            <span className='text-sm xl:text-base text-gray-300'>Stars given</span>
+            <span className='text-sm xl:text-base text-gray-300'>
+              Stars given
+            </span>
             <span className='text-sm xl:text-base text-gray-400'>
               {starsGiven}
             </span>

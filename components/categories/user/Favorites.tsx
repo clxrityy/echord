@@ -19,13 +19,15 @@ export const Favorites = ({ interactionData }: FavoritesProps) => {
           <span className='sr-only'>Favorites</span>
         </Tooltip>
       </h1>
-      <div className={`grid grid-cols-1 ${interactionData.length > 1 && "sm:grid-cols-2"} gap-4 border border-white/10 rounded-lg p-4 w-3/4 sm:w-auto`}>
+      <div
+        className={`grid grid-cols-1 ${interactionData.length > 1 && 'sm:grid-cols-2'} gap-4 border border-white/10 rounded-lg p-4 w-3/4 sm:w-auto`}
+      >
         {interactionData.map((data, idx) => (
           <div
             key={data.id}
             className='shadow-md rounded-lg p-4 flex flex-col items-center'
           >
-            {data.imageUrl && data.albumName && (idx < 4) && (
+            {data.imageUrl && data.albumName && idx < 4 && (
               <ImageComponent
                 src={data.imageUrl}
                 alt={data.albumName}

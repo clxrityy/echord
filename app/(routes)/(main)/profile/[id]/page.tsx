@@ -149,7 +149,7 @@ export default async function Page({ params }: Props) {
     });
 
     return sum;
-  }
+  };
 
   const counts = {
     saves: (await getSaves()).length,

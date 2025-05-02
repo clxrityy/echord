@@ -13,7 +13,7 @@ export async function POST(_req: NextRequest) {
       sameSite: 'lax',
       secure: process.env.NODE_ENV === 'production',
       maxAge: 0,
-    })
+    });
 
     return NextResponse.json(
       { message: 'Logged out successfully.' },

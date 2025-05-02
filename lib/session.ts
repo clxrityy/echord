@@ -29,7 +29,7 @@ export async function buildUserSession({
     (await cookies()).set(ENV.COOKIE_NAME, userSession, {
       expires,
       httpOnly: true,
-      sameSite: "lax",
+      sameSite: 'lax',
       secure: process.env.NODE_ENV === 'production',
     });
 
