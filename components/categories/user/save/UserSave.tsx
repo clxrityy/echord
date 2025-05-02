@@ -3,16 +3,14 @@
 import { Button } from '@/components/ui';
 import { ReactNode, useCallback, useState } from 'react';
 import { AlbumModal } from '@/components/categories/modals';
+import { EInteractionData } from '@/prisma/app/generated/prisma/client';
 
 export function UserSave({
   children,
   save,
 }: {
   children: ReactNode;
-  save: {
-    albumId: string | null;
-    albumName: string | null;
-  };
+  save: EInteractionData;
 }) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
@@ -23,10 +21,15 @@ export function UserSave({
   return (
     <>
       <AlbumModal
-        albumId={save.albumId || ''}
+        albumId={save.albumId}
         onClose={handleClose}
         open={isOpen}
-        title={save.albumName || ''}
+        title={save.title || ''}
+        trackId={save.trackId}
+        albumName={save.albumName}
+        imageUrl={save.imageUrl}
+        artistName={save.artistName}
+
       />
       <Button
         onClick={() => setIsOpen((prev) => !prev)}
