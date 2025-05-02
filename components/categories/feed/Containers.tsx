@@ -248,7 +248,8 @@ export function FeedItemContainer({
               onClick={() => setIsOpen((prev) => !prev)}
               className='h-4 w-4 md:h-5 md:w-5 2xl:h-6 2xl:w-6 text-gray-300/90 hover:text-purple-300/90 focus:text-purple-400/80 focus:scale-105 duration-100 transition-all ease-in-out'
             >
-              <ICONS.link className='' />
+              <ICONS.more className='' />
+              <span className='sr-only'>More</span>
             </Button>
           </div>
           <div className='asbolute top-0 right-2 ml-4 px-2'>
