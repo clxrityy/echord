@@ -1,7 +1,7 @@
 'use client';
 import { useRouter } from 'next/navigation';
 import { useCallback, useState } from 'react';
-import { BASE_URL, DEFAULT_VALUES } from '@/utils';
+import { BASE_URL, DEFAULT_VALUES, parseUsername } from '@/utils';
 import toast from 'react-hot-toast';
 import { useWindow, useSession } from '@/contexts';
 
@@ -36,8 +36,8 @@ export const Signup = ({
 
   const handleSignup = useCallback(async () => {
     if (
-      username.length < MIN_USERNAME_LENGTH ||
-      username.length > MAX_USERNAME_LENGTH
+      parseUsername(username).length < MIN_USERNAME_LENGTH ||
+      parseUsername(username).length > MAX_USERNAME_LENGTH
     ) {
       setError(
         `Username must be between ${MIN_USERNAME_LENGTH} and ${MAX_USERNAME_LENGTH} characters.`
@@ -64,7 +64,7 @@ export const Signup = ({
       const { id } = await fetch(`${BASE_URL}/api/auth/signup`, {
         method: 'POST',
         body: JSON.stringify({
-          username,
+          username: parseUsername(username),
           password,
           sessionId,
           userAgent,

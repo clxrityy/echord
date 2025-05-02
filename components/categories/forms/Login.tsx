@@ -2,7 +2,7 @@
 
 import { useSession } from '@/contexts';
 import { ESession } from '@/prisma/app/generated/prisma/client';
-import { BASE_URL, ICONS } from '@/utils';
+import { BASE_URL, ICONS, parseUsername } from '@/utils';
 import { useRouter } from 'next/navigation';
 import { useCallback, useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
@@ -59,7 +59,7 @@ export const Login = ({
       const res = await fetch(`${BASE_URL}/api/auth/login`, {
         method: 'POST',
         body: JSON.stringify({
-          username,
+          username: parseUsername(username),
           password,
           sessionId,
         }),
