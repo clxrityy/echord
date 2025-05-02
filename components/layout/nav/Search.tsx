@@ -67,7 +67,7 @@ export function Search() {
             title='Search'
             aria-label='Search'
             onClick={handleClick}
-            className={`${clicked ? 'ring-2 ring-blue-500' : ''} p-2 transition duration-200 focus:outline-none rounded-md`}
+            className={`${clicked ? 'ring-2 ring-blue-500' : ''} p-2 transition duration-200 focus:outline-none rounded-md hover:contrast-200 focus:text-blue-400/80 hover:scale-105 active:scale-95`}
           >
             <ICONS.search />
           </Button>
