@@ -1,0 +1,95 @@
+@import 'tailwindcss';
+
+.h1-md {
+  font-size: 2.5rem;
+  font-weight: 700;
+  @apply text-xl md:text-2xl lg:text-3xl xl:text-4xl 2xl:text-5xl;
+}
+
+.h2-md {
+  font-size: 2rem;
+  font-weight: 600;
+  @apply text-lg md:text-xl lg:text-2xl xl:text-3xl;
+}
+
+.h3-md {
+  font-size: 1.5rem;
+  font-weight: 500;
+  @apply text-base md:text-lg lg:text-xl xl:text-2xl;
+}
+
+.h4-md {
+  font-size: 1.25rem;
+  font-weight: 400;
+  @apply text-sm md:text-base lg:text-lg xl:text-xl;
+}
+
+.h5-md {
+  font-size: 1rem;
+  font-weight: 300;
+  @apply text-xs md:text-sm lg:text-base xl:text-lg;
+}
+
+.h6-md {
+  font-size: 0.875rem;
+  font-weight: 200;
+  @apply text-xs md:text-sm lg:text-base;
+}
+
+.p-md {
+  font-size: 1rem;
+  font-weight: 400;
+  @apply text-sm md:text-base;
+}
+
+.li-md {
+  font-size: 1rem;
+  font-weight: 400;
+  @apply text-sm md:text-base;
+}
+
+.ul-md {
+  @apply list-disc list-inside;
+  margin-left: 1.5rem;
+  margin-bottom: 1rem;
+  margin-top: 0.25rem;
+}
+
+.ol-md {
+  @apply list-decimal list-inside;
+  margin-left: 1.5rem;
+  margin-bottom: 1rem;
+  margin-top: 0.25rem;
+}
+
+.blockquote-md {
+  @apply border-l-4 border-gray-300 pl-4 italic text-gray-700;
+  margin-left: 0;
+  margin-right: 0;
+  margin-bottom: 1rem;
+  margin-top: 1rem;
+}
+
+.code-md {
+  @apply bg-gray-100 text-gray-800 p-2 rounded-md;
+  font-size: 0.875rem;
+  font-weight: 400;
+}
+
+.pre-md {
+  @apply bg-gray-100 text-gray-800 p-4 rounded-md;
+  font-size: 0.875rem;
+  font-weight: 400;
+}
+
+.img-md {
+  @apply max-w-full h-auto;
+  margin-bottom: 1rem;
+  margin-top: 1rem;
+}
+
+.a-md {
+  @apply text-blue-500 hover:text-blue-800;
+  font-size: 1rem;
+  font-weight: 400;
+}
