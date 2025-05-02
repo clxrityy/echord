@@ -1,7 +1,22 @@
 import type { NextConfig } from 'next';
+import createMdx from '@next/mdx';
 
 const nextConfig: NextConfig = {
   /* config options here */
+  // rewrites: async () => {
+  //   return [
+  //     {
+  //       source: '/tos',
+  //       destination: '/terms',
+  //     },
+  //     {
+  //       source: '/user/:path',
+  //       destination: '/profile/:path',
+  //     },
+
+  //   ]
+  // },
+  pageExtensions: ['js', 'jsx', 'ts', 'tsx', 'md', 'mdx'],
   reactStrictMode: true,
   images: {
     remotePatterns: [
@@ -64,6 +79,16 @@ const nextConfig: NextConfig = {
       },
     ];
   },
+  compress: true,
+  turbopack: {
+    resolveAlias: {
+      '@': './'
+    }
+  }
 };
 
-export default nextConfig;
+const withMdx = createMdx({
+  extension: /\.(md|mdx)$/,
+})
+
+export default withMdx(nextConfig);
