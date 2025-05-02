@@ -15,6 +15,8 @@ import {
   House,
   Star,
   LoaderCircle,
+  Link,
+  CopyCheck
 } from 'lucide-react';
 
 export const DEEZER_API_URL = 'https://api.deezer.com';
@@ -34,7 +36,7 @@ export const ICONS = {
   login: LogIn,
   settings: Settings,
   favorite: Heart,
-  link: Ellipsis,
+  more: Ellipsis,
   interaction: Pointer,
   grip: GripVertical,
   trash: Trash2,
@@ -44,6 +46,8 @@ export const ICONS = {
   home: House,
   star: Star,
   loading: LoaderCircle,
+  link: Link,
+  copied: CopyCheck,
 };
 
 export const ENV = {
