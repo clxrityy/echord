@@ -120,6 +120,13 @@
 - [x] Click on a liked song (on someone's profile) to open a modal with the track
   - [ ] Modal should show the album cover, track name, artist name, etc.
 
+#### Utility
+
+- [ ] Terms of Service
+- [ ] Privacy Policy
+- [ ] Contact Us
+- [ ] About Us
+
 ### FUTURE / IDEAS
 
 - [ ] Add the ability to feature user playlists on profiles, interact with them, and add them to the feed.
@@ -145,9 +152,4 @@
     - [ ] Live updates
   - [ ] Leave a listening party
 
-- [ ] Add a "Discover" page
-  - [ ] Show new releases
-  - [ ] Show popular albums/tracks
-  - [ ] Show trending albums/tracks
-  - [ ] Show new users
-  - [ ] Show popular users
+- [ ] Extend the API to allow for searching for music in places like SoundCloud, etc.
