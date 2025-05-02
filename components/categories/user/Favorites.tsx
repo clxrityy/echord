@@ -12,14 +12,14 @@ export const Favorites = ({ interactionData }: FavoritesProps) => {
   }
 
   return (
-    <div className='flex flex-col items-center justify-center w-full gap-2 mt-75'>
+    <div className='flex flex-col items-center justify-center w-full gap-2 relative md:mt-100 md:absolute md:left-0 md:top-0 md:translate-x-[35%] lg:translate-x-[40%] md:translate-y-0'>
       <h1 className='text-2xl font-bold mb-2 flex flex-row gap-2 items-center'>
         <Tooltip text='Favorites'>
           <ICONS.favorite />
           <span className='sr-only'>Favorites</span>
         </Tooltip>
       </h1>
-      <div className={`grid grid-cols-1 ${interactionData.length > 1 && "sm:grid-cols-2"} gap-4 border border-white/10 rounded-lg p-4`}>
+      <div className={`grid grid-cols-1 ${interactionData.length > 1 && "sm:grid-cols-2"} gap-4 border border-white/10 rounded-lg p-4 w-3/4 sm:w-auto`}>
         {interactionData.map((data, idx) => (
           <div
             key={data.id}

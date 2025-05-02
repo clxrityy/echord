@@ -163,7 +163,7 @@ export default async function Page({ params }: Props) {
   return (
     <Suspense fallback={<Loading />}>
       <Window sessionId={sessionId || ''}>
-        <div className='w-full h-auto md:h-full relative flex items-center justify-start flex-col md:gap-6 mt-20 md:mt-0 gap-7 overflow-y-auto overflow-clip scroll-smooth max-h-[calc(100vh)]'>
+        <div className='w-full md:h-full relative flex items-center justify-between md:justify-start flex-col md:gap-6 mt-20 md:mt-0 gap-5 overflow-y-auto overflow-clip scroll-smooth max-h-[calc(100vh)]'>
           <Suspense
             fallback={
               <Skeleton className='w-[200px] h-[400px] animate-pulse drop-shadow-2xl shadow-2xl bg-gray-600/40 rounded-lg' />
@@ -177,7 +177,7 @@ export default async function Page({ params }: Props) {
            * - Interactions
            * - ...
            */}
-          <div className='md:absolute fixed mt-15 sm:mt-0 sm:top-75 md:top-25 right-[40%] md:right-5'>
+          <div className='md:absolute w-full flex flex-col items-center justify-center gap-2'>
             <Favorites interactionData={await getFavorites()} />
           </div>
         </div>
