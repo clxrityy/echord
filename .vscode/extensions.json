@@ -3,6 +3,7 @@
     "bradlc.vscode-tailwindcss",
     "dbaeumer.vscode-eslint",
     "dsznajder.es7-react-js-snippets",
-    "editorconfig.editorconfig"
+    "editorconfig.editorconfig",
+    "haydenbleasel.vercel-vscode"
   ]
 }
