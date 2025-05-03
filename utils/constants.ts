@@ -55,6 +55,7 @@ export const ENV = {
   JWT_SECRET: process.env.JWT_SECRET!,
   CRON_SECRET: process.env.CRON_SECRET!,
   ENCRYPTION_SECRET: process.env.ENCRYPTION_KEY!,
+  DEPLOYMENT: process.env.DEPLOYMENT_ENVIRONMENT!,
 };
 
 export const DEFAULT_VALUES = {
