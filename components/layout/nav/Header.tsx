@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import Link from "next/link";
-import { ImageComponent } from "@/components/ui";
-import { useScreenSize } from "@/hooks/useScreenSize";
-import { useEffect, useState } from "react";
+import Link from 'next/link';
+import { ImageComponent } from '@/components/ui';
+import { useScreenSize } from '@/hooks/useScreenSize';
+import { useEffect, useState } from 'react';
 
 export function Header() {
   const [imageSize, setImageSize] = useState<number>(35);
@@ -25,7 +25,10 @@ export function Header() {
   }, [width]);
 
   return (
-    <header role="button" className="flex items-center justify-center px-4 py-2">
+    <header
+      role='button'
+      className='flex items-center justify-center px-4 py-2'
+    >
       <Link
         href='/'
         aria-label='Home'
@@ -34,8 +37,8 @@ export function Header() {
         <ImageComponent
           src={'/apple-touch-icon.png'}
           alt='Echord'
-          width={35}
-          height={35}
+          width={imageSize}
+          height={imageSize}
           className='grayscale-75 brightness-150'
         />
         <h1 className='tracking-wide font-rubica font-bold'>
@@ -46,5 +49,5 @@ export function Header() {
         </h1>
       </Link>
     </header>
-  )
+  );
 }

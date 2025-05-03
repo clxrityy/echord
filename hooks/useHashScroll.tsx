@@ -4,7 +4,6 @@ import { useCallback, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 
 export default function useHashScroll() {
-
   if (typeof window === 'undefined') {
     return;
   }
@@ -34,7 +33,6 @@ export default function useHashScroll() {
   }, []);
 
   useEffect(() => {
-
     window.addEventListener('hashchange', handleHashChange);
 
     return () => {
@@ -42,6 +40,5 @@ export default function useHashScroll() {
     };
   }, [pathname]);
 
-  return <>
-  </>;
+  return <></>;
 }

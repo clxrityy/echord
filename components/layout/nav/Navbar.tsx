@@ -1,6 +1,4 @@
 'use client';
-import { ImageComponent } from '@/components/ui/Image';
-import Link from 'next/link';
 import { Search } from './Search';
 import { ReactNode, Suspense, useEffect } from 'react';
 import { ICONS } from '@/utils/constants';
@@ -62,10 +60,14 @@ export function Navbar({ userId }: { userId?: string | undefined }) {
          * RIGHT
          * - Logo & Title
          */}
-        <Suspense fallback={<div className='animate-pulse'>
-          <ICONS.loading className='animate-spin' />
-          <span className='sr-only'>Loading...</span>
-        </div>}>
+        <Suspense
+          fallback={
+            <div className='animate-pulse'>
+              <ICONS.loading className='animate-spin' />
+              <span className='sr-only'>Loading...</span>
+            </div>
+          }
+        >
           <Header />
         </Suspense>
         {/**

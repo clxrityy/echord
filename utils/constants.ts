@@ -16,7 +16,7 @@ import {
   Star,
   LoaderCircle,
   Link,
-  CopyCheck
+  CopyCheck,
 } from 'lucide-react';
 
 export const DEEZER_API_URL = 'https://api.deezer.com';
