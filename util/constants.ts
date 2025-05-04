@@ -17,6 +17,7 @@ import {
   LoaderCircle,
   Link,
   CopyCheck,
+  ShieldAlert,
 } from 'lucide-react';
 
 export const DEEZER_API_URL = 'https://api.deezer.com';
@@ -48,6 +49,7 @@ export const ICONS = {
   loading: LoaderCircle,
   link: Link,
   copied: CopyCheck,
+  privacy: ShieldAlert,
 };
 
 export const ENV = {
