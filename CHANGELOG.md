@@ -6,6 +6,7 @@ For a rough roadmap of the project, see the [ROADMAP](./assets/markdown/ROADMAP.
 
 - [Authentication Refactor](#authentication-refactor) (21-04-2025)
 - [Interaction API Refactor](#interaction-api-refactor) (24-04-2025)
+- [Context Refactor](#context-refactor) (04-05-2025)
 
 ## Authentication Refactor
 
@@ -76,3 +77,92 @@ For a rough roadmap of the project, see the [ROADMAP](./assets/markdown/ROADMAP.
   ```
 
 - Added [metadata](https://nextjs.org/docs/app/building-your-application/optimizing/metadata) to the `/search` route.
+
+## Context Refactor
+
+> - [fc2722e](https://github.com/clxrityy/echord/commit/fc2722e0c0a4d14575fcc825f5b290259e2e57ea) > `May 4, 2025`
+
+**Previously**, the context factory was created as a hook like so:
+
+```tsx
+// hooks/useContextFactory.tsx
+'use client';
+import { createContext, FC, ReactNode, useContext } from 'react';
+
+export type ContextFactory = <T>(
+  _initialContextState: T,
+  _useContextState: () => T
+) => {
+  Provider: FC<{ children: ReactNode }>;
+  useContext: () => T;
+};
+
+export const useContextFactory: ContextFactory = (
+  initialContextState,
+  useContextState
+) => {
+  const Context = createContext(initialContextState);
+
+  return {
+    Provider: ({ children }) => {
+      const contextValue = useContextState();
+      return (
+        <Context.Provider value={contextValue}>{children}</Context.Provider>
+      );
+    },
+    useContext: () => useContext(Context),
+  };
+};
+```
+
+> - ❌ Calls hooks at the module top level.
+>   - Hooks can only be called at the top level of a React function component or a custom hook.
+> - ✅ This is a violation of the [Rules of Hooks](https://react.dev/reference/rules/rules-of-hooks).
+
+**Now**, the context factory is created as a function like so:
+
+```tsx
+// hooks/createContextFactory.tsx
+
+'use client';
+import { createContext, FC, ReactNode, useContext } from 'react';
+
+export type ContextFactory = <T>(
+  _initialContextState: T, // Initial context state
+  _useContextState: () => T // Function to get the context state
+) => // Returns a context provider and a hook to use the context
+{
+  Provider: FC<{ children: ReactNode }>;
+  useContext: () => T;
+};
+
+export const createContextFactory: ContextFactory = (
+  initialContextState,
+  useContextState
+) => {
+  /**
+   * - Create a context with the initial state
+   * - This context will be used to provide the state to the components
+   * - The context will be created using the createContext function from React
+   */
+  const Context = createContext(initialContextState);
+
+  return {
+    Provider: ({ children }) => {
+      /*
+        - Create the context value using the function passed as a parameter
+        - This function will be called to get the context state
+        - This allows to create the context value at the time of rendering
+            - and not at the time of creating the context
+            - This is important because the context value can change
+      */
+      const contextValue = useContextState();
+
+      return (
+        <Context.Provider value={contextValue}>{children}</Context.Provider>
+      );
+    },
+    useContext: () => useContext(Context),
+  };
+};
+```
