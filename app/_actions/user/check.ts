@@ -6,7 +6,7 @@ import {
 } from '@/prisma/app/generated/prisma/client';
 import { Interaction } from '@/types';
 import { getUserBySessionId } from '.';
-import { decrypt } from '@/utils';
+import { decrypt } from '@/util';
 
 export async function checkUserSaves(
   userId: string,

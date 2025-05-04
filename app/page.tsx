@@ -8,7 +8,7 @@ import { Hero } from '@/components/categories/elements';
 import { Window } from '@/components/layout';
 import { Skeleton } from '@/components/ui';
 import { Suspense } from 'react';
-import { BASE_URL, FEED_ITEMS_PER_PAGE } from '@/utils';
+import { BASE_URL, FEED_ITEMS_PER_PAGE } from '@/util';
 import Loading from './loading';
 import {
   EData,

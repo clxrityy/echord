@@ -1,6 +1,6 @@
 import { db } from '@/lib/db';
 import { v4 as uuidv4 } from 'uuid';
-import { encrypt, fetchIp } from '@/utils';
+import { encrypt, fetchIp } from '@/util';
 import { EUser } from '@/prisma/app/generated/prisma/client';
 import { getUserSession, logoutUserSession } from '@/lib';
 

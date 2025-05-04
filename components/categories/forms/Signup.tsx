@@ -1,7 +1,7 @@
 'use client';
 import { useRouter } from 'next/navigation';
 import { useCallback, useState } from 'react';
-import { BASE_URL, DEFAULT_VALUES, parseUsername } from '@/utils';
+import { BASE_URL, DEFAULT_VALUES, parseUsername } from '@/util';
 import toast from 'react-hot-toast';
 import { useWindow, useSession } from '@/contexts';
 

@@ -1,5 +1,5 @@
 import { ImageComponent, Tooltip } from '@/components/ui';
-import { ICONS } from '@/utils';
+import { ICONS } from '@/util';
 import { EInteractionData } from '@/prisma/app/generated/prisma/client';
 
 interface FavoritesProps {

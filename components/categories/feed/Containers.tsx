@@ -1,7 +1,7 @@
 'use client';
 import { Skeleton, Button, Tooltip } from '@/components/ui';
 import { StringOrUndefined } from '@/types';
-import { BASE_URL, ICONS } from '@/utils';
+import { BASE_URL, ICONS } from '@/util';
 import { EInteractionType } from '@/prisma/app/generated/prisma/client';
 import Link from 'next/link';
 import ImageComponent from 'next/image';

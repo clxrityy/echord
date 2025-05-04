@@ -4,7 +4,7 @@ import { ReactNode, Suspense } from 'react';
 import { Skeleton } from '@/components/ui';
 import { Navbar, Backdrop } from '@/components/layout';
 import { Toaster } from 'react-hot-toast';
-import { BASE_URL } from '@/utils';
+import { BASE_URL } from '@/util';
 import { connection } from 'next/server';
 import { AR, TMR, Rubica } from '@/styles/fonts';
 import { getUserSessionId } from '@/lib';

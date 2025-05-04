@@ -1,5 +1,5 @@
 import { DEEZER_TRACK_DATA } from '@/types';
-import { DEEZER_API_URL } from '@/utils';
+import { DEEZER_API_URL } from '@/util';
 
 export async function getTrack(id: string) {
   const response = await fetch(`${DEEZER_API_URL}/track/${id}`, {

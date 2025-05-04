@@ -6,7 +6,7 @@ import {
 } from '@/app/_actions';
 import { db, getUserSessionId } from '@/lib';
 import { EInteractionType } from '@/prisma/app/generated/prisma/client';
-import { average } from '@/utils';
+import { average } from '@/util';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET(req: NextRequest) {

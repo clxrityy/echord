@@ -2,7 +2,7 @@
 
 import { useSession } from '@/contexts';
 import { ESession } from '@/prisma/app/generated/prisma/client';
-import { BASE_URL, ICONS, parseUsername } from '@/utils';
+import { BASE_URL, ICONS, parseUsername } from '@/util';
 import { useRouter } from 'next/navigation';
 import { useCallback, useEffect, useState } from 'react';
 import toast from 'react-hot-toast';

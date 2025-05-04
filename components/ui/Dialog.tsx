@@ -1,7 +1,7 @@
 'use client';
 import { useRef, useEffect, ReactNode, ComponentProps } from 'react';
 import { Button } from './Button';
-import { ICONS } from '@/utils';
+import { ICONS } from '@/util';
 
 export interface DialogProps extends ComponentProps<'dialog'> {
   title?: string;

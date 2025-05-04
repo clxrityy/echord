@@ -1,7 +1,7 @@
 'use client';
 import { ChangeEvent, useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
-import { BASE_URL, ICONS } from '@/utils';
+import { BASE_URL, ICONS } from '@/util';
 import { useSession } from '@/contexts';
 import { Button, OutsideClick } from '@/components/ui';
 

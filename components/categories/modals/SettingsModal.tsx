@@ -1,7 +1,7 @@
 'use client';
 import { type DialogProps, Button, Dialog, Skeleton } from '@/components/ui';
 import { User } from '@/types';
-import { ICONS } from '@/utils';
+import { ICONS } from '@/util';
 import { Suspense, useCallback, useEffect, useState } from 'react';
 
 interface SettingsModalProps extends Partial<DialogProps> {

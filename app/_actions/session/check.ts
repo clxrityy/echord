@@ -1,5 +1,5 @@
 import { db } from '@/lib/db';
-import { fetchIp } from '@/utils';
+import { fetchIp } from '@/util';
 
 export async function checkForExistingSession(sessionId?: string) {
   const ip = await fetchIp();

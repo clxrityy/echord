@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { Button } from '@/components/ui/Button';
-import { ICONS } from '@/utils';
+import { ICONS } from '@/util';
 
 interface PaginationProps {
   totalItems: number;

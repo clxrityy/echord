@@ -1,7 +1,7 @@
 'use client';
 import { Search } from './Search';
 import { ReactNode, Suspense, useEffect } from 'react';
-import { ICONS } from '@/utils/constants';
+import { ICONS } from '@/util';
 import { useSession } from '@/contexts';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/Button';

@@ -1,6 +1,6 @@
 'use client';
 
-import { capitalizeFirstLetter } from '@/utils';
+import { capitalizeFirstLetter } from '@/util';
 import { ReactNode, useState } from 'react';
 
 export function Tooltip({

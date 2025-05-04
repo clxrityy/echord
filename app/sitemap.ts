@@ -1,5 +1,5 @@
 import { db } from '@/lib/db';
-import { BASE_URL } from '@/utils';
+import { BASE_URL } from '@/util';
 import { MetadataRoute } from 'next';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {

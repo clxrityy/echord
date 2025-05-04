@@ -1,7 +1,7 @@
 'use client';
 import { useCallback, useState } from 'react';
 import { Button } from './Button';
-import { ICONS } from '@/utils';
+import { ICONS } from '@/util';
 import { Tooltip } from './Tooltip';
 
 export function Copy({ value }: { value: string }) {

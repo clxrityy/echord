@@ -3,7 +3,7 @@ import { Skeleton, ImageComponent } from '@/components/ui';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { EUser } from '@/prisma/app/generated/prisma/client';
-import { BASE_URL } from '@/utils';
+import { BASE_URL } from '@/util';
 
 export function FeedUser({ userId }: { userId: string }) {
   const [user, setUser] = useState<EUser | null>(null);

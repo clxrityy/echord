@@ -1,4 +1,4 @@
-import { ENV } from '@/utils';
+import { ENV } from '@/util';
 import { decryptJWT, encryptJWT } from './jwt';
 import { cookies } from 'next/headers';
 import { NextRequest, NextResponse } from 'next/server';

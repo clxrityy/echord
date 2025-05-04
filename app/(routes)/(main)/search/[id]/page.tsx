@@ -1,5 +1,5 @@
 import { Skeleton } from '@/components/ui';
-import { BASE_URL, DEEZER_API_URL } from '@/utils';
+import { BASE_URL, DEEZER_API_URL } from '@/util';
 import { DEEZER_SEARCH_RESPONSE } from '@/types';
 import { Suspense } from 'react';
 import './index.css';

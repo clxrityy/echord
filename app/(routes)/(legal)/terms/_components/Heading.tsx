@@ -1,5 +1,5 @@
 import { Copy } from '@/components/ui';
-import { BASE_URL } from '@/utils';
+import { BASE_URL } from '@/util';
 
 export function Heading({ id, title }: { id: string; title: string }) {
   return (

@@ -1,6 +1,6 @@
 'use client';
 import { useInteractions } from '@/contexts';
-import { ICONS } from '@/utils';
+import { ICONS } from '@/util';
 import { useCallback, useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 
