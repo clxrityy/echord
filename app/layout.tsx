@@ -9,9 +9,7 @@ import { connection } from 'next/server';
 import { AR, TMR, Rubica } from '@/styles/fonts';
 import { getUserSessionId } from '@/lib';
 import { getUserBySessionId } from '@/app/_actions';
-import { SessionProvider } from '@/contexts/session';
-import { WindowProvider } from '@/contexts/window';
-import { InteractionProvider } from '@/contexts/interaction';
+import { WindowProvider, InteractionProvider, SessionProvider } from '@/contexts';
 import { Analytics } from '@vercel/analytics/react';
 
 export const metadata: Metadata = {
