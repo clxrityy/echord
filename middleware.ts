@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getUserSessionId, logoutUserSession, updateUserSession } from '@/lib';
+import { getUserSessionId, updateUserSession } from '@/lib';
 
 export async function middleware(request: NextRequest) {
   if (await getUserSessionId()) {
