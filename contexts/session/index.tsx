@@ -1,5 +1,5 @@
 'use client';
-import { useContextFactory } from '@/hooks/useContextFactory';
+import { createContextFactory } from '@/hooks/createContextFactory';
 import { useSessionStore } from './useSession';
 
 export type SessionContextState = {
@@ -17,7 +17,7 @@ export type SessionContextState = {
   getUserId: () => string;
 };
 
-const initialSessionContextState: SessionContextState = {
+export const initialSessionContextState: SessionContextState = {
   sessionId: '',
   userId: '',
   setSessionId: () => {},
@@ -33,8 +33,9 @@ const initialSessionContextState: SessionContextState = {
 };
 
 export const { Provider: SessionProvider, useContext: useSession } =
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  useContextFactory<SessionContextState>(
+  createContextFactory<SessionContextState>(
     initialSessionContextState,
     useSessionStore
   );
+
+export default SessionProvider;

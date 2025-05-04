@@ -1,5 +1,5 @@
 'use client';
-import { useContextFactory } from '@/hooks/useContextFactory';
+import { createContextFactory } from '@/hooks/createContextFactory';
 import { useInteractionsStore } from './useInteractions';
 import { Interaction } from '@/types';
 
@@ -11,7 +11,7 @@ export type InteractionContextState = {
   clearInteraction: () => void;
 };
 
-const initialInteractionContextState: InteractionContextState = {
+export const initialInteractionContextState: InteractionContextState = {
   interactions: undefined,
   setInteractions: () => {},
   addInteraction: () => {},
@@ -20,8 +20,9 @@ const initialInteractionContextState: InteractionContextState = {
 };
 
 export const { Provider: InteractionProvider, useContext: useInteractions } =
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  useContextFactory<InteractionContextState>(
+  createContextFactory<InteractionContextState>(
     initialInteractionContextState,
     useInteractionsStore
   );
+
+export default InteractionProvider;

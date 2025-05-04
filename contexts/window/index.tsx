@@ -1,5 +1,5 @@
 'use client';
-import { useContextFactory } from '@/hooks/useContextFactory';
+import { createContextFactory } from '@/hooks/createContextFactory';
 import { useWindowStore } from './useWindow';
 import { EUserAgent } from '@/prisma/app/generated/prisma/client';
 
@@ -24,8 +24,9 @@ export const initialWindowContextState: WindowContextState = {
 };
 
 export const { Provider: WindowProvider, useContext: useWindow } =
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  useContextFactory<WindowContextState>(
+  createContextFactory<WindowContextState>(
     initialWindowContextState,
     useWindowStore
   );
+
+export default WindowProvider;
