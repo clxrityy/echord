@@ -1,0 +1,21 @@
+version: '3.8'
+services:
+  app:
+    environment:
+      - DEPLOYMENT_ENVIRONMENT=docker
+    env_file:
+      - path: ./.env
+        required: true
+      - path: ./.env.local
+        required: false
+    image: clxrity/echord.uk
+    build:
+      context: ./
+      target: dev
+      dockerfile: Dockerfile
+    volumes:
+      - .:/app
+      - /app/node_modules
+      - /app/.next
+    ports:
+      - 3000
