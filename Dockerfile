@@ -1,10 +1,13 @@
 FROM node:23-slim AS base
-WORKDIR /app
-COPY package*.json ./
+
+# Create app directory
+RUN mkdir -p /usr/src/app
+WORKDIR /usr/src/app
+
+COPY package*.json /usr/src/app/
 EXPOSE 3000
 
 FROM base AS builder
-WORKDIR /app
 COPY . .
 RUN npm run build
 
@@ -13,6 +16,7 @@ FROM base AS production
 WORKDIR /app
 
 ENV NODE_ENV=production
+ENV DEVELOPMENT_ENVIRONMENT=docker
 RUN npm ci
 
 RUN addgroup -g 1001 -S nodejs
@@ -25,10 +29,8 @@ COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/package.json ./package.json
 COPY --from=builder /app/public ./public
 
-RUN ["npm", "install"]
-
 FROM base AS dev
 ENV NODE_ENV=development
-RUN npm install
+RUN npm install -g pnpm && pnpm i
 COPY . .
-CMD ["npm", "run", "dev"]
+CMD ["pnpm", "dev"]
