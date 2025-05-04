@@ -9,10 +9,10 @@ import toast from 'react-hot-toast';
 export function FavoriteInteraction({
   userId,
   trackId,
-}: {
+}: Readonly<{
   userId: string;
   trackId: string;
-}) {
+}>) {
   const [favorited, setFavorited] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(true);
 

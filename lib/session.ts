@@ -44,7 +44,6 @@ export async function getUserSession() {
   const session = (await cookies()).get(ENV.COOKIE_NAME);
   if (!session) return null;
 
-  // return await decryptJWT(session.value);
   try {
     const parsed = await decryptJWT(session.value);
 

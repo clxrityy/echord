@@ -2,11 +2,11 @@
 import { createContext, FC, ReactNode, useContext } from 'react';
 
 export type ContextFactory = <T>(
-  initialContextState: T,
-  useContextState: () => T
+  _initialContextState: T,
+  _useContextState: () => T
 ) => {
   Provider: FC<{ children: ReactNode }>;
-  useContext: () => T;
+  useContext:  () => T;
 };
 
 export const useContextFactory: ContextFactory = (

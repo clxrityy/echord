@@ -10,7 +10,7 @@ interface SavesGridProps {
   saves: EInteractionData[];
 }
 
-export function SavesGrid({ saves }: SavesGridProps) {
+export function SavesGrid({ saves }: Readonly<SavesGridProps>) {
   const length = saves.length;
 
   const screenSize = useScreenSize();
@@ -41,9 +41,9 @@ export function SavesGrid({ saves }: SavesGridProps) {
 
   return (
     <div className='flex flex-col gap-0 h-screen mt-22 justify-end items-start fixed bottom-0 left-0'>
-      {saves.map((save, idx) => (
+      {saves.map((save) => (
         <Suspense
-          key={idx}
+          key={save.id}
           fallback={
             <Skeleton
               className='animate-pulse rounded-lg bg-zinc-200/50'
@@ -54,7 +54,7 @@ export function SavesGrid({ saves }: SavesGridProps) {
             />
           }
         >
-          <UserSave key={idx} save={save}>
+          <UserSave key={save.id} save={save}>
             {save.albumId && save.imageUrl && save.artistName && (
               <ImageComponent
                 src={save.imageUrl}

@@ -16,99 +16,73 @@ export async function POST(req: NextRequest) {
   const sessionId = await getUserSessionId();
 
   if (!sessionId) {
-    return NextResponse.json(
-      { error: 'Session expired. Please log in again.' },
-      { status: 401 }
-    );
+    return respondWithError('Session expired. Please log in again.', 401);
   }
 
   if (!userId || !trackId) {
-    return NextResponse.json(
-      { error: 'Missing required fields' },
-      { status: 400 }
-    );
+    return respondWithError('Missing required fields', 400);
   }
 
   const track = await getTrack(trackId);
 
   if (!track) {
-    return NextResponse.json({ error: 'Track not found' }, { status: 404 });
+    return respondWithError('Track not found', 404);
   }
 
-  const existingFavorite = await checkUserFavorites(userId, trackId);
-
-  if (existingFavorite) {
-    return NextResponse.json(
-      { error: 'User already favorited this track' },
-      { status: 400 }
-    );
+  if (await checkUserFavorites(userId, trackId)) {
+    return respondWithError('User already favorited this track', 400);
   }
 
   const existingTrackData = await checkTrackFromInteraction(trackId);
 
   if (existingTrackData) {
-    const existingData = await db.eData.findFirst({
-      where: {
-        trackId: existingTrackData.trackId,
-        interactionData: {
-          trackId: existingTrackData.trackId || track.id.toString(),
-          albumId: existingTrackData.albumId || track.album.id.toString(),
-          title: track.title,
-          artistName: track.artist.name,
-          albumName: track.album.title,
-        },
-      },
-      include: {
-        eTrack: true,
-        eAlbum: true,
-      },
-    });
-
-    if (existingData) {
-      const interaction = await handleInteraction({
-        interactionData: {
-          ...existingData,
-          ...existingTrackData,
-          imageUrl: track.album.cover_medium,
-        },
-        interactionType: 'FAVORITED',
-        userId,
-        sessionId: existingData.sessionId,
-      });
-
-      if (!interaction) {
-        return NextResponse.json(
-          { error: 'Failed to create or update interaction' },
-          { status: 500 }
-        );
-      }
-
-      return NextResponse.json({ interaction }, { status: 200 });
-    } else {
-      const interaction = await handleInteraction({
-        interactionData: {
-          trackId: track.id.toString(),
-          title: track.title,
-          artistName: track.artist.name,
-          albumName: track.album.title,
-          imageUrl: track.album.cover_medium,
-        },
-        interactionType: 'FAVORITED',
-        userId,
-        sessionId,
-      });
-
-      if (!interaction) {
-        return NextResponse.json(
-          { error: 'Failed to create interaction' },
-          { status: 500 }
-        );
-      }
-
-      return NextResponse.json({ interaction }, { status: 200 });
-    }
+    return handleExistingTrackData(existingTrackData, track, userId, sessionId);
   }
 
+  return await createInteraction(track, userId, sessionId);
+}
+
+function respondWithError(message: string, status: number) {
+  return NextResponse.json({ error: message }, { status });
+}
+
+async function handleExistingTrackData(
+  existingTrackData: any,
+  track: any,
+  userId: string,
+  sessionId: string
+) {
+  const existingData = await db.eData.findFirst({
+    where: {
+      trackId: existingTrackData.trackId,
+      interactionData: {
+        trackId: existingTrackData.trackId || track.id.toString(),
+        albumId: existingTrackData.albumId || track.album.id.toString(),
+        title: track.title,
+        artistName: track.artist.name,
+        albumName: track.album.title,
+      },
+    },
+    include: {
+      eTrack: true,
+      eAlbum: true,
+    },
+  });
+
+  const interactionData = existingData
+    ? { ...existingData, ...existingTrackData, imageUrl: track.album.cover_medium }
+    : {
+        trackId: track.id.toString(),
+        title: track.title,
+        artistName: track.artist.name,
+        albumName: track.album.title,
+        imageUrl: track.album.cover_medium,
+      };
+
+  return await createOrUpdateInteraction(interactionData, userId, sessionId);
+}
+
+async function createInteraction(track: any, userId: string, sessionId: string) {
   try {
     const interaction = await handleInteraction({
       interactionData: {
@@ -125,17 +99,33 @@ export async function POST(req: NextRequest) {
     });
 
     if (!interaction) {
-      return NextResponse.json(
-        { error: 'Failed to create interaction' },
-        { status: 500 }
-      );
+      return respondWithError('Failed to create interaction', 500);
     }
 
     return NextResponse.json({ interaction }, { status: 200 });
   } catch (e) {
     console.error('Error creating track:', e);
-    return NextResponse.json({ error: 'Database error' }, { status: 500 });
+    return respondWithError('Database error', 500);
   }
+}
+
+async function createOrUpdateInteraction(
+  interactionData: any,
+  userId: string,
+  sessionId: string
+) {
+  const interaction = await handleInteraction({
+    interactionData,
+    interactionType: 'FAVORITED',
+    userId,
+    sessionId,
+  });
+
+  if (!interaction) {
+    return respondWithError('Failed to create or update interaction', 500);
+  }
+
+  return NextResponse.json({ interaction }, { status: 200 });
 }
 
 export async function GET(req: NextRequest) {

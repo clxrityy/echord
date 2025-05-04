@@ -63,7 +63,7 @@ export function Search() {
       <OutsideClick onOutsideClick={() => setClicked(false)}>
         <div className='flex flex-col items-center relative gap-5'>
           <Button
-            role='button'
+            role='search'
             title='Search'
             aria-label='Search'
             onClick={handleClick}

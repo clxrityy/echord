@@ -6,10 +6,10 @@ import { ReactNode, useState } from 'react';
 export function Tooltip({
   text,
   children,
-}: {
+}: Readonly<{
   text: string;
   children: ReactNode;
-}) {
+}>) {
   const [isVisible, setIsVisible] = useState(false);
 
   return (
@@ -23,6 +23,7 @@ export function Tooltip({
         e.stopPropagation();
         setIsVisible(false);
       }}
+      role='tooltip'
     >
       {children}
       {isVisible && (

@@ -14,7 +14,7 @@ type Props = {
   userId: string | undefined;
 };
 
-export function Result({ data, userId }: Props) {
+export function Result({ data, userId }: Readonly<Props>) {
   const {
     title,
     artist,

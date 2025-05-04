@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import { EUser } from '@/prisma/app/generated/prisma/client';
 import { BASE_URL } from '@/util';
 
-export function FeedUser({ userId }: { userId: string }) {
+export function FeedUser({ userId }: Readonly<{ userId: string }>) {
   const [user, setUser] = useState<EUser | null>(null);
 
   async function fetchUser() {

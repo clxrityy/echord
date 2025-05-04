@@ -3,10 +3,10 @@ import { useInteractions } from '@/contexts';
 import { useEffect, useState } from 'react';
 
 type Props = {
-  userId?: string | undefined;
+  userId: string | undefined;
 };
 
-export function InteractionHandler({ userId }: Props) {
+export function InteractionHandler({ userId }: Readonly<Props>) {
   const [loading, setLoading] = useState<boolean>(true);
   const { getInteractions, setInteractions } = useInteractions();
 

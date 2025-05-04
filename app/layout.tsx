@@ -14,7 +14,6 @@ import { WindowProvider } from '@/contexts/window';
 import { InteractionProvider } from '@/contexts/interaction';
 import { Analytics } from '@vercel/analytics/react';
 
-// export const dynamic = 'force-dynamic'; // Force dynamic rendering
 
 export const metadata: Metadata = {
   keywords: [
@@ -147,7 +146,7 @@ export default async function RootLayout({
   await connection();
 
   const sessionId = await getUserSessionId();
-  const user = await getUserBySessionId(sessionId || '');
+  const user = await getUserBySessionId(sessionId ?? '');
 
   return (
     <html lang='en'>

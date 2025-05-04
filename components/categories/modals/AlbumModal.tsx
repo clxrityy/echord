@@ -21,7 +21,7 @@ export function AlbumModal({
   imageUrl,
   artistName,
   // trackId,
-}: AlbumModalProps) {
+}: Readonly<AlbumModalProps>) {
   return (
     <Suspense>
       <Dialog
@@ -34,7 +34,7 @@ export function AlbumModal({
           {imageUrl && (
             <ImageComponent
               src={imageUrl}
-              alt={albumName || 'Album Image'}
+              alt={albumName ?? 'Album Image'}
               className='rounded-lg mb-2'
               width={200}
               height={200}

@@ -11,10 +11,10 @@ const globalForPrisma = global as unknown as {
 if (typeof window === 'undefined') {
   if (process.env.NODE_ENV === 'production') {
     globalForPrisma.prisma = makePrisma();
+  } else if (!globalForPrisma.prisma) {
+    globalForPrisma.prisma = makePrisma();
   } else {
-    if (!globalForPrisma.prisma) {
-      globalForPrisma.prisma = makePrisma();
-    }
+    console.log('Using existing Prisma instance');
   }
 }
 

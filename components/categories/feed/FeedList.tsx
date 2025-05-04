@@ -5,10 +5,10 @@ import { Pagination, Skeleton } from '@/components/ui';
 export function FeedList({
   children,
   itemsPerPage,
-}: {
+}: Readonly<{
   children: ReactNode;
   itemsPerPage: number;
-}) {
+}>) {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const totalItems = Children.count(children);
   const startIndex = (currentPage - 1) * itemsPerPage;
@@ -39,7 +39,7 @@ export function FeedList({
   );
 }
 
-export function FeedListItem({ children }: { children: ReactNode }) {
+export function FeedListItem({ children }: Readonly<{ children: ReactNode }>) {
   return (
     <li className='w-full h-full flex items-start justify-center py-2 px-4'>
       {children}

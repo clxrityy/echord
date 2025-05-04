@@ -59,7 +59,6 @@ export default async function Home() {
                           interactionData: EInteractionData;
                           user: EUser;
                         },
-                        idx: number
                       ) => {
                         const {
                           interaction,
@@ -70,10 +69,10 @@ export default async function Home() {
 
                         return (
                           <Suspense
-                            key={idx}
-                            fallback={<FeedListItemSkeleton key={idx} />}
+                            key={item.user.id}
+                            fallback={<FeedListItemSkeleton key={item.user.id} />}
                           >
-                            <FeedListItem key={idx}>
+                            <FeedListItem key={item.user.id}>
                               {interaction &&
                               data &&
                               interactionData &&

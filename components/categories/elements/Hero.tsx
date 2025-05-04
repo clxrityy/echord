@@ -3,7 +3,7 @@ import '@/styles/css/hero.css';
 import Link from 'next/link';
 import { Button, ImageComponent } from '@/components/ui';
 
-export function Hero({ userId }: { userId: StringOrUndefined }) {
+export function Hero({ userId }: Readonly<{ userId: StringOrUndefined }>) {
   return (
     <div className='w-full h-full flex flex-col items-center justify-center gap-10 py-10 px-10'>
       {!userId ? (

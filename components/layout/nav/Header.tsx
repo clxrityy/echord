@@ -25,8 +25,9 @@ export function Header() {
   }, [width]);
 
   return (
-    <header
-      role='button'
+    <input
+      title='Echord'
+      type='button'
       className='flex items-center justify-center px-4 py-2'
     >
       <Link
@@ -48,6 +49,6 @@ export function Header() {
           <span className='sr-only'>Echord</span>
         </h1>
       </Link>
-    </header>
+    </input>
   );
 }

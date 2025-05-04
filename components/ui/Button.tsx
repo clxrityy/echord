@@ -8,8 +8,9 @@ export function Button({
 }: { children: ReactNode } & ButtonProps) {
   return (
     <button
-      role='button'
-      type='button'
+      role={props.role}
+      type={props.type ?? 'button'}
+      aria-label={props['aria-label']}
       {...props}
       className={`cursor-pointer ${props.className}`}
     >

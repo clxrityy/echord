@@ -8,7 +8,7 @@ interface SettingsModalProps extends Partial<DialogProps> {
   userId: string;
 }
 
-export function SettingsModal({ userId, ...props }: SettingsModalProps) {
+export function SettingsModal({ userId, ...props }: Readonly<SettingsModalProps>) {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -69,10 +69,8 @@ export function SettingsModal({ userId, ...props }: SettingsModalProps) {
           <p className='text-gray-400'>
             Manage your settings and preferences here.
           </p>
-          {loading ? (
+          {loading && !error ? (
             <Skeleton className='w-full h-full bg-gray-400/30 animate-pulse rounded-full shadow-2xl' />
-          ) : error ? (
-            <p className='text-red-500'>{error}</p>
           ) : (
             <div className='flex flex-col items-start justify-start w-full gap-2'>
               <h3 className='text-md font-semibold'>User Information</h3>

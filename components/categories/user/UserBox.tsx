@@ -13,7 +13,7 @@ type Props = {
   };
 };
 
-export function UserBox({ user, counts }: Props) {
+export function UserBox({ user, counts }: Readonly<Props>) {
   const { followers, following, reviews, favorites, saves, starsGiven } =
     counts;
 

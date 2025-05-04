@@ -5,12 +5,12 @@ import { useSessionStore } from './useSession';
 export type SessionContextState = {
   sessionId: string;
   userId: string;
-  setSessionId: (sessionId: string) => void;
-  setUserId: (userId: string) => void;
+  setSessionId: (_sessionId: string) => void;
+  setUserId: (_userId: string) => void;
   searches: string[];
-  addSearch: (search: string) => void;
-  setSearches: (searches: string[]) => void;
-  removeSearch: (search: string) => void;
+  addSearch: (_search: string) => void;
+  setSearches: (_searches: string[]) => void;
+  removeSearch: (_search: string) => void;
   clearSearches: () => void;
   getSessionId: () => string;
   getSearches: () => string[];
@@ -33,6 +33,7 @@ const initialSessionContextState: SessionContextState = {
 };
 
 export const { Provider: SessionProvider, useContext: useSession } =
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   useContextFactory<SessionContextState>(
     initialSessionContextState,
     useSessionStore

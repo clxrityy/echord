@@ -13,7 +13,7 @@ export function InteractionModal({
   interactionId,
   children,
   ...props
-}: InteractionModalProps) {
+}: Readonly<InteractionModalProps>) {
   const [interaction, setInteraction] = useState<Interaction | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -61,7 +61,7 @@ export function InteractionModal({
               <p className='text-gray-600'>
                 {interaction?.eAlbum
                   ? interaction.eAlbum.title
-                  : interaction?.eTrack && interaction.eTrack.title}
+                  : interaction?.eTrack?.title}
               </p>
             </div>
             <div className='flex flex-col items-start justify-start w-full gap-4 mt-4'>

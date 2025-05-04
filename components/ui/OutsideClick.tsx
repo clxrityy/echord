@@ -6,7 +6,7 @@ interface OutsideClickProps {
   onOutsideClick: () => void;
 }
 
-export function OutsideClick({ children, onOutsideClick }: OutsideClickProps) {
+export function OutsideClick({ children, onOutsideClick }: Readonly<OutsideClickProps>) {
   const wrapperRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {

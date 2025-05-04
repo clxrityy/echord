@@ -23,7 +23,7 @@ export function FeedItem({
   interactionData,
   userId,
   username,
-}: FeedItemProps) {
+}: Readonly<FeedItemProps>) {
   const {
     createdAt,
     interactionType,
@@ -55,7 +55,7 @@ export function FeedItem({
             isCurrentUser={isCurrentUser}
             interactionType='FAVORITED'
             createdAt={createdAt}
-            userId={userId ? userId : undefined}
+            userId={userId ?? undefined}
             imageUrl={
               imageUrl && imageUrl !== 'undefined' ? imageUrl : undefined
             }
@@ -68,7 +68,7 @@ export function FeedItem({
             interactionUserId={interactionUserId}
           />
           <span className='sr-only'>
-            {username ? username : 'Unknown User'} favorited{' '}
+            {username ?? 'Unknown User'} favorited{' '}
             {title && title !== 'undefined' ? title : 'Unknown Title'} by{' '}
             {artistName && artistName !== 'undefined'
               ? artistName
@@ -89,7 +89,7 @@ export function FeedItem({
             isCurrentUser={isCurrentUser}
             interactionType='SAVED'
             createdAt={createdAt}
-            userId={userId ? userId : undefined}
+            userId={userId ?? undefined}
             imageUrl={
               imageUrl && imageUrl !== 'undefined' ? imageUrl : undefined
             }
@@ -101,7 +101,7 @@ export function FeedItem({
             dataId={dataId}
           />
           <span className='sr-only'>
-            {username ? username : 'Unknown User'} saved{' '}
+            {username ?? 'Unknown User'} saved{' '}
             {title && title !== 'undefined' ? title : 'Unknown Title'} by{' '}
             {artistName && artistName !== 'undefined'
               ? artistName
@@ -121,7 +121,7 @@ export function FeedItem({
             isCurrentUser={isCurrentUser}
             interactionType='RATED'
             createdAt={createdAt}
-            userId={userId ? userId : undefined}
+            userId={userId ?? undefined}
             imageUrl={
               imageUrl && imageUrl !== 'undefined' ? imageUrl : undefined
             }
@@ -134,7 +134,7 @@ export function FeedItem({
             rating={interactionData.rating ?? 0}
           />
           <span className='sr-only'>
-            {username ? username : 'Unknown User'} rated{' '}
+            {username ?? 'Unknown User'} rated{' '}
             {title && title !== 'undefined' ? title : 'Unknown Title'} by{' '}
             {artistName && artistName !== 'undefined'
               ? artistName

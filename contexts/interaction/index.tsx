@@ -5,8 +5,8 @@ import { Interaction } from '@/types';
 
 export type InteractionContextState = {
   interactions: Interaction[] | undefined;
-  setInteractions: (interactions: Interaction[]) => void;
-  addInteraction: (interaction: Interaction) => void;
+  setInteractions: (_interactions: Interaction[]) => void;
+  addInteraction: (_interaction: Interaction) => void;
   getInteractions: () => Interaction[] | undefined;
   clearInteraction: () => void;
 };
@@ -20,6 +20,7 @@ const initialInteractionContextState: InteractionContextState = {
 };
 
 export const { Provider: InteractionProvider, useContext: useInteractions } =
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   useContextFactory<InteractionContextState>(
     initialInteractionContextState,
     useInteractionsStore

@@ -7,10 +7,10 @@ import toast from 'react-hot-toast';
 export function RatingInteraction({
   trackId,
   userId,
-}: {
+}: Readonly<{
   trackId: string;
   userId: string;
-}) {
+}>) {
   const [rating, setRating] = useState<number | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isHovered, setIsHovered] = useState<number | null>(null);

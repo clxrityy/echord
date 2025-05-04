@@ -16,7 +16,7 @@ export function Pagination({
   itemsPerPage,
   currentPage = 1,
   onPageChange,
-}: PaginationProps) {
+}: Readonly<PaginationProps>) {
   const [page, setPage] = useState<number>(currentPage);
   const totalPages = Math.ceil(totalItems / itemsPerPage);
 

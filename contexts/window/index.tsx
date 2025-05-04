@@ -6,14 +6,14 @@ import { EUserAgent } from '@/prisma/app/generated/prisma/client';
 export type WindowContextState = {
   width: number;
   height: number;
-  setWindowSize: (width: number, height: number) => void;
+  setWindowSize: (_width: number, _height: number) => void;
   getWindowSize: () => { width: number; height: number };
   userAgent: Partial<EUserAgent> | null;
-  setUserAgent: (userAgent: Partial<EUserAgent>) => void;
+  setUserAgent: (_userAgent: Partial<EUserAgent>) => void;
   getUserAgent: () => Partial<EUserAgent> | null;
 };
 
-const initialWindowContextState: WindowContextState = {
+export const initialWindowContextState: WindowContextState = {
   width: 0,
   height: 0,
   setWindowSize: () => {},
@@ -24,6 +24,7 @@ const initialWindowContextState: WindowContextState = {
 };
 
 export const { Provider: WindowProvider, useContext: useWindow } =
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   useContextFactory<WindowContextState>(
     initialWindowContextState,
     useWindowStore

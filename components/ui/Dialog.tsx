@@ -26,7 +26,7 @@ export function Dialog({
     if (open) {
       dialogRef.current?.showModal();
     } else {
-      dialogRef.current?.close();
+      closeDialog();
     }
   }, [open]);
 
@@ -34,6 +34,8 @@ export function Dialog({
     dialogRef.current?.close();
     onClose();
   };
+
+  const { close: IconClose } = ICONS;
 
   return (
     <dialog
@@ -45,7 +47,7 @@ export function Dialog({
         <div className='flex items-center justify-between p-4 border-b border-gray-200/20 rounded-sm'>
           <h2 className='text-lg font-semibold'>{title}</h2>
           <Button onClick={closeDialog}>
-            <ICONS.close className='h-4 w-4' />
+            <IconClose className='h-4 w-4' />
           </Button>
         </div>
         <div>

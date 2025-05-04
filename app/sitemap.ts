@@ -10,19 +10,19 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const albumsMapped = albums.map((album) => ({
     url: `${BASE_URL}/album/${album.albumId}`,
     lastModified: new Date(album.updatedAt),
-    images: [album.imageUrl ? album.imageUrl : ''],
+    images: [album.imageUrl ?? ''],
   }));
 
   const usersMapped = users.map((user) => ({
     url: `${BASE_URL}/profile/${user.userId}`,
     lastModified: new Date(user.updatedAt),
-    images: [user.avatar ? user.avatar : ''],
+    images: [user.avatar ?? ''],
   }));
 
   const tracksMapped = tracks.map((track) => ({
     url: `${BASE_URL}/track/${track.trackId}`,
     lastModified: new Date(track.updatedAt),
-    images: [track.imageUrl ? track.imageUrl : ''],
+    images: [track.imageUrl ?? ''],
   }));
 
   return [

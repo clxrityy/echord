@@ -8,10 +8,10 @@ import { EInteractionData } from '@/prisma/app/generated/prisma/client';
 export function UserSave({
   children,
   save,
-}: {
+}: Readonly<{
   children: ReactNode;
   save: EInteractionData;
-}) {
+}>) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const handleClose = useCallback(() => {
@@ -24,7 +24,7 @@ export function UserSave({
         albumId={save.albumId}
         onClose={handleClose}
         open={isOpen}
-        title={save.title || ''}
+        title={save.title ?? ''}
         trackId={save.trackId}
         albumName={save.albumName}
         imageUrl={save.imageUrl}

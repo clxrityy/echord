@@ -10,10 +10,10 @@ import toast from 'react-hot-toast';
 export function SaveInteraction({
   userId,
   trackId,
-}: {
+}: Readonly<{
   userId: string;
   trackId: string;
-}) {
+}>) {
   const [saved, setSaved] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(true);
 

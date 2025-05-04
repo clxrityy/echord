@@ -4,7 +4,7 @@ import { Button } from './Button';
 import { ICONS } from '@/util';
 import { Tooltip } from './Tooltip';
 
-export function Copy({ value }: { value: string }) {
+export function Copy({ value }: Readonly<{ value: string }>) {
   const [copied, setCopied] = useState<boolean>(false);
 
   const handleCopy = useCallback(async () => {
@@ -19,6 +19,8 @@ export function Copy({ value }: { value: string }) {
     }
   }, [value]);
 
+  const {copied: IconCopied, link: IconLink } = ICONS;
+
   return (
     <Button
       title='copy'
@@ -27,10 +29,10 @@ export function Copy({ value }: { value: string }) {
     >
       {copied ? (
         <Tooltip text='Copied!'>
-          <ICONS.copied />
+          <IconCopied />
         </Tooltip>
       ) : (
-        <ICONS.link />
+        <IconLink />
       )}
     </Button>
   );
