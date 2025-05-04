@@ -49,3 +49,12 @@ next-env.d.ts
 
 # bug
 .eslintcache
+
+
+
+.nx/cache
+.nx/workspace-data
+
+# Next.js
+.next
+out
