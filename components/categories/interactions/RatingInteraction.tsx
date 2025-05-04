@@ -98,13 +98,20 @@ export function RatingInteraction({
     [rating, isHovered]
   );
 
+  const { loading: IconLoading, star: IconStar } = ICONS;
+
+  const ariaLabel = (value: number) => {
+    const starText = `star${value > 1 ? 's' : ''}`;
+    return !rating ? `Rate ${value} ${starText}` : `Rated ${value} ${starText}`;
+  };
+
   return (
     <div className='flex items-center gap-1 justify-end w-full'>
-      {[1, 2, 3, 4, 5].map((value, idx) => {
+      {[1, 2, 3, 4, 5].map((value) => {
         return isLoading ? (
-          <ICONS.loading key={idx} className='animate-spin' />
+          <IconLoading key={value} className='animate-spin' />
         ) : (
-          <ICONS.star
+          <IconStar
             onMouseOver={(e) => {
               e.preventDefault();
               setIsHovered(value);
@@ -113,18 +120,14 @@ export function RatingInteraction({
               e.preventDefault();
               setIsHovered(null);
             }}
-            key={idx}
-            color={determineColor(rating ? rating : value)}
+            key={value}
+            color={determineColor(rating ?? value)}
             className='cursor-pointer transition-all duration-200'
             onClick={() => {
               setRating(value);
               rate(value);
             }}
-            aria-label={
-              !rating
-                ? `Rate ${value} star${value > 1 ? 's' : ''}`
-                : `Rated ${value} star${value > 1 ? 's' : ''}`
-            }
+            aria-label={ariaLabel(value)}
           />
         );
       })}
