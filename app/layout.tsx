@@ -14,7 +14,6 @@ import { WindowProvider } from '@/contexts/window';
 import { InteractionProvider } from '@/contexts/interaction';
 import { Analytics } from '@vercel/analytics/react';
 
-
 export const metadata: Metadata = {
   keywords: [
     'Echord',

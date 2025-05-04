@@ -70,7 +70,11 @@ async function handleExistingTrackData(
   });
 
   const interactionData = existingData
-    ? { ...existingData, ...existingTrackData, imageUrl: track.album.cover_medium }
+    ? {
+        ...existingData,
+        ...existingTrackData,
+        imageUrl: track.album.cover_medium,
+      }
     : {
         trackId: track.id.toString(),
         title: track.title,
@@ -82,7 +86,11 @@ async function handleExistingTrackData(
   return await createOrUpdateInteraction(interactionData, userId, sessionId);
 }
 
-async function createInteraction(track: any, userId: string, sessionId: string) {
+async function createInteraction(
+  track: any,
+  userId: string,
+  sessionId: string
+) {
   try {
     const interaction = await handleInteraction({
       interactionData: {

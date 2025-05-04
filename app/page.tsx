@@ -21,7 +21,7 @@ import { getUserBySessionId } from '@/app/_actions';
 
 export default async function Home() {
   const sessionId = await getUserSessionId();
-  const user = await getUserBySessionId(sessionId || '');
+  const user = await getUserBySessionId(sessionId ?? '');
 
   const feedRes = await fetch(`${BASE_URL}/api/feed`, {
     cache: 'no-store',
@@ -43,7 +43,7 @@ export default async function Home() {
         </Suspense>
         <div className='relative flex justify-center items-center w-full'>
           <Suspense fallback={<Loading />}>
-            <Window sessionId={sessionId ?? sessionId!}>
+            <Window sessionId={sessionId ?? ''}>
               <div className='w-full h-fit flex items-center justify-center relative sm:pb-20 pb-40 z-0'>
                 <Suspense
                   fallback={
@@ -52,14 +52,12 @@ export default async function Home() {
                 >
                   <FeedList itemsPerPage={FEED_ITEMS_PER_PAGE}>
                     {feedItems.map(
-                      (
-                        item: {
-                          interaction: EInteraction;
-                          data: EData;
-                          interactionData: EInteractionData;
-                          user: EUser;
-                        },
-                      ) => {
+                      (item: {
+                        interaction: EInteraction;
+                        data: EData;
+                        interactionData: EInteractionData;
+                        user: EUser;
+                      }) => {
                         const {
                           interaction,
                           data,
@@ -70,7 +68,9 @@ export default async function Home() {
                         return (
                           <Suspense
                             key={item.user.id}
-                            fallback={<FeedListItemSkeleton key={item.user.id} />}
+                            fallback={
+                              <FeedListItemSkeleton key={item.user.id} />
+                            }
                           >
                             <FeedListItem key={item.user.id}>
                               {interaction &&

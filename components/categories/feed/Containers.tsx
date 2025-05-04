@@ -11,7 +11,9 @@ import { FeedUser } from './User';
 import { ReactNode, Suspense, useCallback, useState } from 'react';
 import { InteractionModal } from '../modals';
 
-export function FeedUserContainer({ children }: Readonly<{ children: ReactNode }>) {
+export function FeedUserContainer({
+  children,
+}: Readonly<{ children: ReactNode }>) {
   return (
     <div className='flex items-center justify-center bg-gray-950/30 px-4 py-2 rounded-xl gap-2 border border-gray-300/20 shadow'>
       {children}

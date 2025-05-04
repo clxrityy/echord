@@ -19,7 +19,7 @@ export function Copy({ value }: Readonly<{ value: string }>) {
     }
   }, [value]);
 
-  const {copied: IconCopied, link: IconLink } = ICONS;
+  const { copied: IconCopied, link: IconLink } = ICONS;
 
   return (
     <Button

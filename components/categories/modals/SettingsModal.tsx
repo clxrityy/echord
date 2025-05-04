@@ -8,7 +8,10 @@ interface SettingsModalProps extends Partial<DialogProps> {
   userId: string;
 }
 
-export function SettingsModal({ userId, ...props }: Readonly<SettingsModalProps>) {
+export function SettingsModal({
+  userId,
+  ...props
+}: Readonly<SettingsModalProps>) {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);

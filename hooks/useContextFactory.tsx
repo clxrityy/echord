@@ -6,7 +6,7 @@ export type ContextFactory = <T>(
   _useContextState: () => T
 ) => {
   Provider: FC<{ children: ReactNode }>;
-  useContext:  () => T;
+  useContext: () => T;
 };
 
 export const useContextFactory: ContextFactory = (
