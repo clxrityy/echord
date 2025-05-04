@@ -46,3 +46,6 @@ next-env.d.ts
 
 # prisma
 /prisma/app/generated/prisma/client/*
+
+# bug
+.eslintcache
