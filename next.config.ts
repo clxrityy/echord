@@ -16,6 +16,8 @@ const nextConfig: NextConfig = {
 
   //   ]
   // },
+  output:
+    process.env.DEPLOYMENT_ENVIRONMENT === 'docker' ? 'standalone' : undefined,
   pageExtensions: ['js', 'jsx', 'ts', 'tsx', 'md', 'mdx'],
   reactStrictMode: true,
   images: {
