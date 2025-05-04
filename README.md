@@ -1,6 +1,19 @@
 # 乇chord <img src="./public/apple-touch-icon.png" width="32px" />
 
-[<img src="https://img.shields.io/badge/license-read?style=for-the-badge&logoSize=auto&label=%20MIT&labelColor=%23eeeeee&color=%23373a3fbb&link=https%3A%2F%2Fgithub.com%2Fclxrityy%2Fechord%2Fblob%2Fmain%2FLICENSE" alt="LICENSE" />](./LICENSE)
+[![Static Badge](https://img.shields.io/badge/website-echord?style=for-the-badge&logo=appveyor&logoColor=%238fc0c9&logoSize=auto&label=echord.uk&labelColor=%233f5067&color=%23294380&link=https%3A%2F%2Fechord.uk)](https://echord.uk)
+
+---
+
+| [![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)](https://hub.docker.com/r/clxrity/echord.uk) | [![GitHub](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)](https://github.com/clxrityy/echord) |
+| :--------------------------------------------------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------------------------------------: |
+
+```bash
+docker pull clxrity/echord.uk
+```
+
+```bash
+git clone https://github.com/clxrityy/echord.git
+```
 
 While the goal is to be a music cataloging, rating, reviewing, and recommendation web app; Echord also has a fully functional music data interaction API, and no external authentication processes.
 
@@ -45,9 +58,9 @@ There are many aspects of the application that are not yet implemented, and are 
 
 ---
 
-## License
+## [<img src="https://img.shields.io/badge/license-read?style=for-the-badge&logoSize=auto&label=%20MIT&labelColor=%23eeeeee&color=%23373a3fbb&link=https%3A%2F%2Fgithub.com%2Fclxrityy%2Fechord%2Fblob%2Fmain%2FLICENSE" alt="LICENSE" />](./LICENSE)
 
-This project is licensed under the MIT License - see the [LICENSE](./LICENSE) file for details.
+This project is licensed under the **MIT** License - see the [LICENSE](./LICENSE) file for details.
 
 > This project is not affiliated with or endorsed by Deezer. The Deezer API is used for music data interaction, and all data is sourced from the Deezer API. All rights to the music data are owned by their respective owners.
 
