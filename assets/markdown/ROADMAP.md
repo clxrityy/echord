@@ -1,5 +1,13 @@
 # Roadmap
 
+- [TODO](#to-do)
+- [Seamless routing experience](#seamless-routing-experience)
+- [Interactivity](#interactivity)
+- [Screen accessibility](#screen-accessibility)
+- [Features](#features)
+- [Utility](#utility)
+- [Future / Ideas](#future--ideas)
+
 ## TO-DO
 
 - [x] Ratings
@@ -122,7 +130,7 @@
 
 #### Utility
 
-- [ ] Terms of Service
+- [x] Terms of Service
 - [ ] Privacy Policy
 - [ ] Contact Us
 - [ ] About Us
