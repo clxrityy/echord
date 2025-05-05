@@ -58,7 +58,7 @@ export function Search() {
     setClicked(!clicked);
   }, [clicked]);
 
-  const {search: IconSearch } = ICONS;
+  const { search: IconSearch } = ICONS;
 
   return (
     <div role='search' className=''>

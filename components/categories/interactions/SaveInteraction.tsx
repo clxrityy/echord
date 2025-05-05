@@ -99,7 +99,7 @@ export function SaveInteraction({
     }
   };
 
-  const {loading: IconLoading, save: IconSave} = ICONS;
+  const { loading: IconLoading, save: IconSave } = ICONS;
 
   return (
     <Button

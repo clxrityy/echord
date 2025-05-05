@@ -52,7 +52,7 @@ export function SettingsModal({
     }
   }, [userId, user]);
 
-  const {settings: IconSettings } = ICONS;
+  const { settings: IconSettings } = ICONS;
 
   return (
     <Suspense>
