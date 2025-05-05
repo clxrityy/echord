@@ -1,4 +1,5 @@
 import {
+  EData,
   EInteractionData,
   EInteractionType,
 } from '@/prisma/app/generated/prisma/client';
@@ -30,7 +31,12 @@ export async function handleInteraction({
   );
 
   if (existingInteraction) {
-    return mergeInteractionData(existingInteraction, interactionData);
+    return await createInteractionWithExistingData(
+      existingInteraction.eData,
+      interactionType,
+      userId,
+      interactionData
+    );
   }
 
   const existingData = await findExistingData(sessionId, interactionData);
@@ -81,19 +87,6 @@ async function findExistingInteraction(
   });
 }
 
-function mergeInteractionData(
-  existingInteraction: any,
-  interactionData: Partial<EInteractionData>
-): Interaction {
-  return {
-    ...existingInteraction,
-    interactionData: {
-      ...existingInteraction.eData.interactionData,
-      ...interactionData,
-    },
-  };
-}
-
 async function findExistingData(
   sessionId: string,
   interactionData: Partial<EInteractionData>
@@ -108,15 +101,28 @@ async function findExistingData(
 }
 
 async function createInteractionWithExistingData(
-  existingData: any,
+  existingData: EData,
   interactionType: EInteractionType,
   userId: string,
   interactionData: Partial<EInteractionData>
 ) {
+  const newData = await db.eData.create({
+    data: {
+      sessionId: existingData.sessionId,
+      interactionData: {
+        create: {
+          interactionType,
+          ...interactionData,
+        },
+      },
+    },
+    include: { interactionData: true },
+  })
+
   const interaction = await db.eInteraction.create({
     data: {
       interactionType,
-      dataId: existingData.id,
+      dataId: newData.id,
       userId,
       trackId: interactionData.trackId,
       albumId: interactionData.albumId,
@@ -164,6 +170,8 @@ async function createNewInteractionAndData(
     data: {
       interactionType,
       userId,
+      albumId: interactionData.albumId,
+      trackId: interactionData.trackId,
       dataId: newData.id,
     },
     include: {
@@ -181,6 +189,7 @@ async function createNewInteractionAndData(
     interactionData.artistName &&
     interactionData.albumName &&
     interactionData.imageUrl &&
+    sessionId &&
     !existingTrack
   ) {
     await db.eTrack.create({
@@ -202,18 +211,14 @@ async function createNewInteractionAndData(
           },
         },
         eData: {
-          connectOrCreate: {
-            where: { id: newData.id },
-            create: {
-              sessionId,
-              interactionData: {
-                create: {
-                  interactionType,
-                  ...interactionData,
-                },
-              },
+          connect: {
+            id: newData.id,
+            sessionId,
+            interactionData: {
+              interactionType,
             },
           },
+
         },
       },
     });
