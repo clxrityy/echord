@@ -4,6 +4,7 @@
     "dbaeumer.vscode-eslint",
     "dsznajder.es7-react-js-snippets",
     "editorconfig.editorconfig",
-    "haydenbleasel.vercel-vscode"
+    "haydenbleasel.vercel-vscode",
+    "prisma.prisma"
   ]
 }
