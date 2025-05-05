@@ -94,7 +94,7 @@ export function Navbar({ userId }: Readonly<{ userId?: string }>) {
               <span className='sr-only'>Profile</span>
             </Button>
           ) : (
-            <Button aria-label='Login' title='login' onClick={handleLoginClick}>
+            <Button aria-label='Login' title='login' onClick={handleLoginClick} className='hover:contrast-200 transition-all duration-100 hover:scale-105 focus:text-blue-400/75'>
               <IconLogin />
               <span className='sr-only'>Login</span>
             </Button>
@@ -103,7 +103,7 @@ export function Navbar({ userId }: Readonly<{ userId?: string }>) {
             aria-label='Privacy Policy'
             title='privacy'
             onClick={() => router.push('/terms#privacy')}
-            className='hover:contrast-200 transition-all duration-100 hover:scale-105 focus:text-blue-400/75'
+            className='hover:contrast-200 transition-all duration-100 hover:scale-105 focus:text-blue-400/75 px-2'
           >
             <IconPrivacy className='' />
             <span className='sr-only'>Privacy Policy</span>
