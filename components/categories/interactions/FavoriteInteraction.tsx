@@ -102,11 +102,7 @@ export function FavoriteInteraction({
       disabled={favorited || loading}
       onClick={async () => await handleFavorite()}
     >
-      {loading ? (
-        <IconLoading className='animate-spin' />
-      ) : (
-        <IconFavorite />
-      )}
+      {loading ? <IconLoading className='animate-spin' /> : <IconFavorite />}
       <span className='sr-only'>{favorited ? 'Favorited' : 'Favorite'}</span>
     </Button>
   );
