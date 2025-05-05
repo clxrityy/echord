@@ -93,6 +93,8 @@ export function FavoriteInteraction({
     }
   };
 
+  const { loading: IconLoading, favorite: IconFavorite } = ICONS;
+
   return (
     <Button
       className={`${loading ? 'cursor-none' : 'disabled:text-red-500/80 hover:text-gray-300 focus:text-blue-400 disabled:hover:text-red-500/80 disabled:cursor-not-allowed transition-all duration-200 ease-in-out cursor-pointer z-20'}`}
@@ -101,9 +103,9 @@ export function FavoriteInteraction({
       onClick={async () => await handleFavorite()}
     >
       {loading ? (
-        <ICONS.loading className='animate-spin' />
+        <IconLoading className='animate-spin' />
       ) : (
-        <ICONS.favorite />
+        <IconFavorite />
       )}
       <span className='sr-only'>{favorited ? 'Favorited' : 'Favorite'}</span>
     </Button>

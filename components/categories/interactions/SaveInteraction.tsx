@@ -99,6 +99,8 @@ export function SaveInteraction({
     }
   };
 
+  const {loading: IconLoading, save: IconSave} = ICONS;
+
   return (
     <Button
       title='Save'
@@ -106,7 +108,7 @@ export function SaveInteraction({
       onClick={async () => await handleSave()}
       className={`${loading ? 'cursor-none' : 'disabled:text-green-500/80 hover:text-gray-300 focus:text-blue-400 disabled:hover:text-green-500/80 disabled:cursor-not-allowed transition-all duration-200 ease-in-out z-20'}`}
     >
-      {loading ? <ICONS.loading className='animate-spin' /> : <ICONS.save />}
+      {loading ? <IconLoading className='animate-spin' /> : <IconSave />}
       <span className='sr-only'>{saved ? 'Saved' : 'Save to Library'}</span>
     </Button>
   );

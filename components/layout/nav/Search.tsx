@@ -58,6 +58,8 @@ export function Search() {
     setClicked(!clicked);
   }, [clicked]);
 
+  const {search: IconSearch } = ICONS;
+
   return (
     <div role='search' className=''>
       <OutsideClick onOutsideClick={() => setClicked(false)}>
@@ -69,7 +71,7 @@ export function Search() {
             onClick={handleClick}
             className={`${clicked ? 'ring-2 ring-blue-500' : ''} p-2 transition duration-200 focus:outline-none rounded-md hover:contrast-200 focus:text-blue-400/80 hover:scale-105 active:scale-95`}
           >
-            <ICONS.search />
+            <IconSearch />
           </Button>
           {clicked && (
             <input

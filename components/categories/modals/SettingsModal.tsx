@@ -52,6 +52,8 @@ export function SettingsModal({
     }
   }, [userId, user]);
 
+  const {settings: IconSettings } = ICONS;
+
   return (
     <Suspense>
       <Button
@@ -62,7 +64,7 @@ export function SettingsModal({
         {loading ? (
           <Skeleton className='w-6 h-6 bg-gray-400/30 animate-pulse rounded-full shadow-2xl' />
         ) : (
-          <ICONS.settings className='h-6 w-6' />
+          <IconSettings className='h-6 w-6' />
         )}
         <span className='sr-only'>Settings</span>
       </Button>
