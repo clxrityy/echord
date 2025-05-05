@@ -29,7 +29,7 @@ export function Result({ data, userId }: Readonly<Props>) {
 
   return (
     <li className='flex flex-col gap-2 p-4 border-b border-white/20 last:border-b-0 hover:bg-zinc-900/5 rounded-md transition-all duration-200 relative'>
-      <div className='flex items-center gap-2 z-10'>
+      <div className='flex items-center flex-row gap-2 z-10'>
         <ImageComponent
           src={cover_medium}
           alt={albumTitle}
@@ -41,7 +41,9 @@ export function Result({ data, userId }: Readonly<Props>) {
           href={`/track/${ID}`}
           className='focus:underline transition hover:text-blue-300/75'
         >
-          <h4>{title}</h4>
+          <p>
+            {title}
+          </p>
         </Link>
       </div>
       <div className='flex flex-col gap-1'>
