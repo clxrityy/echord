@@ -69,10 +69,10 @@ export function Result({ data, userId }: Readonly<Props>) {
 export function Results({
   data,
   userId,
-}: {
+}: Readonly<{
   data: DEEZER_SEARCH_RESPONSE;
   userId: string | undefined;
-}) {
+}>) {
   return (
     <ul className='flex flex-col gap-6 xl:gap-8 relative top-20 overflow-y-scroll pb-40 h-full'>
       {data.data.map((item: DEEZER_SEARCH_DATA) => (
