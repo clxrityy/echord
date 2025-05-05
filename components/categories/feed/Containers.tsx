@@ -114,6 +114,8 @@ export function FeedItemContainer({
 
   const Icon = interactionTypeIcon();
 
+  const { trash: IconTrash, more: IconMore } = ICONS;
+
   async function handleDelete() {
     const toastId = toast.loading('Deleting interaction...');
 
@@ -147,7 +149,7 @@ export function FeedItemContainer({
 
       // Handle successful deletion
       toast.success('Interaction deleted successfully', {
-        icon: <ICONS.trash />,
+        icon: <IconTrash />,
         id: toastId,
       });
       router.refresh();
@@ -225,6 +227,7 @@ export function FeedItemContainer({
               >
                 {imageUrl && title ? (
                   <ImageComponent
+                    crossOrigin='anonymous'
                     src={imageUrl}
                     alt={title}
                     className='w-14 h-14 rounded-md'
@@ -250,7 +253,7 @@ export function FeedItemContainer({
               onClick={() => setIsOpen((prev) => !prev)}
               className='h-4 w-4 md:h-5 md:w-5 2xl:h-6 2xl:w-6 text-gray-300/90 hover:text-purple-300/90 focus:text-purple-400/80 focus:scale-105 duration-100 transition-all ease-in-out'
             >
-              <ICONS.more className='' />
+              <IconMore className='' />
               <span className='sr-only'>More</span>
             </Button>
           </div>
@@ -263,7 +266,7 @@ export function FeedItemContainer({
                   className='text-gray-300/90 hover:text-red-400 focus:text-red-500 focus:ring focus:ring-offset-0 focus:ring-red-400/25 focus:ring-offset-white/5 rounded-2xl transition-colors ease-in-out px-1 py-1'
                   onClick={async () => await handleDelete()}
                 >
-                  <ICONS.trash className='h-4 w-4 md:h-5 md:w-5 4xl:h-6 4xl:w-6' />
+                  <IconTrash className='h-4 w-4 md:h-5 md:w-5 4xl:h-6 4xl:w-6' />
                 </Button>
               </Tooltip>
             )}
