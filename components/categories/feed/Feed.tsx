@@ -43,7 +43,10 @@ export function FeedItem({
 
   const isCurrentUser = userId == interactionUserId;
 
-  const renderFeedItem = (type: EInteractionType, extraProps: Record<string, any> = {}) => (
+  const renderFeedItem = (
+    type: EInteractionType,
+    extraProps: Record<string, any> = {}
+  ) => (
     <Suspense fallback={<Skeleton className='w-[5rem] h-full rounded-md' />}>
       <FeedItemContainer
         trackId={trackId ?? ''}
@@ -56,14 +59,18 @@ export function FeedItem({
         imageUrl={imageUrl && imageUrl !== 'undefined' ? imageUrl : undefined}
         title={title && title !== 'undefined' ? title : undefined}
         albumId={albumId && albumId !== 'undefined' ? albumId : undefined}
-        albumName={albumName && albumName !== 'undefined' ? albumName : undefined}
+        albumName={
+          albumName && albumName !== 'undefined' ? albumName : undefined
+        }
         dataId={dataId}
         {...extraProps}
       />
       <span className='sr-only'>
         {username ?? 'Unknown User'} {type.toLowerCase()}{' '}
         {title && title !== 'undefined' ? title : 'Unknown Title'} by{' '}
-        {artistName && artistName !== 'undefined' ? artistName : 'Unknown Artist'}
+        {artistName && artistName !== 'undefined'
+          ? artistName
+          : 'Unknown Artist'}
         {type === 'RATED' && ` ${rating} stars`}
       </span>
     </Suspense>
