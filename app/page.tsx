@@ -18,6 +18,7 @@ import {
 } from '@/prisma/app/generated/prisma/client';
 import { getUserSessionId } from '@/lib';
 import { getUserBySessionId } from '@/app/_actions';
+import { v4 as uuid } from 'uuid';
 
 export default async function Home() {
   const sessionId = await getUserSessionId();
@@ -67,16 +68,16 @@ export default async function Home() {
 
                         return (
                           <Suspense
-                            key={item.user.id}
+                            key={uuid()}
                             fallback={
                               <FeedListItemSkeleton key={item.user.id} />
                             }
                           >
-                            <FeedListItem key={item.user.id}>
+                            <FeedListItem key={item.user.userId}>
                               {interaction &&
-                              data &&
-                              interactionData &&
-                              userData ? (
+                                data &&
+                                interactionData &&
+                                userData ? (
                                 <FeedItem
                                   interaction={interaction}
                                   // data={data}
