@@ -22,188 +22,212 @@ export async function handleInteraction({
     return undefined;
   }
 
-  const existingTrack = await db.eTrack.findFirst({
-    where: {
-      trackId: interactionData.trackId,
-    },
-  });
+  const existingTrack = await findExistingTrack(interactionData.trackId);
+  const existingInteraction = await findExistingInteraction(
+    userId,
+    interactionType,
+    interactionData
+  );
 
-  const existingInteraction = await db.eInteraction.findFirst({
+  if (existingInteraction) {
+    return mergeInteractionData(existingInteraction, interactionData);
+  }
+
+  const existingData = await findExistingData(sessionId, interactionData);
+
+  if (existingData) {
+    return await createInteractionWithExistingData(
+      existingData,
+      interactionType,
+      userId,
+      interactionData
+    );
+  } else {
+    return await createNewInteractionAndData(
+      sessionId,
+      interactionType,
+      userId,
+      interactionData,
+      existingTrack
+    );
+  }
+}
+
+async function findExistingTrack(trackId: string) {
+  return await db.eTrack.findFirst({
+    where: { trackId },
+  });
+}
+
+async function findExistingInteraction(
+  userId: string,
+  interactionType: EInteractionType,
+  interactionData: Partial<EInteractionData>
+) {
+  return await db.eInteraction.findFirst({
     where: {
       userId,
       interactionType,
       eData: {
-        interactionData: {
+        interactionData: { ...interactionData },
+      },
+    },
+    include: {
+      eData: { include: { interactionData: true } },
+      eAlbum: true,
+      eTrack: true,
+      user: true,
+    },
+  });
+}
+
+function mergeInteractionData(
+  existingInteraction: any,
+  interactionData: Partial<EInteractionData>
+): Interaction {
+  return {
+    ...existingInteraction,
+    interactionData: {
+      ...existingInteraction.eData.interactionData,
+      ...interactionData,
+    },
+  };
+}
+
+async function findExistingData(
+  sessionId: string,
+  interactionData: Partial<EInteractionData>
+) {
+  return await db.eData.findFirst({
+    where: {
+      sessionId,
+      interactionData: { ...interactionData },
+    },
+    include: { interactionData: true },
+  });
+}
+
+async function createInteractionWithExistingData(
+  existingData: any,
+  interactionType: EInteractionType,
+  userId: string,
+  interactionData: Partial<EInteractionData>
+) {
+  const interaction = await db.eInteraction.create({
+    data: {
+      interactionType,
+      dataId: existingData.id,
+      userId,
+      trackId: interactionData.trackId,
+      albumId: interactionData.albumId,
+    },
+    include: {
+      eAlbum: true,
+      eData: { include: { interactionData: true } },
+      eTrack: true,
+      user: true,
+    },
+  });
+
+  if (interaction && interaction.eData.interactionData) {
+    return {
+      ...interaction,
+      interactionData: {
+        ...interaction.eData.interactionData,
+        ...interactionData,
+      },
+    };
+  }
+}
+
+async function createNewInteractionAndData(
+  sessionId: string,
+  interactionType: EInteractionType,
+  userId: string,
+  interactionData: Partial<EInteractionData>,
+  existingTrack: any
+) {
+  const newData = await db.eData.create({
+    data: {
+      sessionId,
+      interactionData: {
+        create: {
+          interactionType,
           ...interactionData,
         },
       },
     },
+    include: { interactionData: true },
+  });
+
+  const interaction = await db.eInteraction.create({
+    data: {
+      interactionType,
+      userId,
+      dataId: newData.id,
+    },
     include: {
-      eData: {
-        include: {
-          interactionData: true,
-        },
-      },
       eAlbum: true,
+      eData: { include: { interactionData: true } },
       eTrack: true,
       user: true,
     },
   });
 
   if (
-    existingInteraction &&
-    existingInteraction.eData &&
-    existingInteraction.eData.interactionData
+    interactionData.albumId &&
+    interactionData.trackId &&
+    interactionData.title &&
+    interactionData.artistName &&
+    interactionData.albumName &&
+    interactionData.imageUrl &&
+    !existingTrack
   ) {
-    // If the interaction already exists, we can choose to update it or ignore it
-    // For this example, we'll just return early
-    return {
-      ...existingInteraction,
-      interactionData: {
-        ...existingInteraction.eData.interactionData,
-        ...interactionData,
+    await db.eTrack.create({
+      data: {
+        trackId: interactionData.trackId,
+        title: interactionData.title,
+        artistName: interactionData.artistName,
+        albumName: interactionData.albumName,
+        imageUrl: interactionData.imageUrl,
+        album: {
+          connectOrCreate: {
+            where: { albumId: interactionData.albumId },
+            create: {
+              albumId: interactionData.albumId,
+              title: interactionData.albumName,
+              artistName: interactionData.artistName,
+              imageUrl: interactionData.imageUrl,
+            },
+          },
+        },
+        eData: {
+          connectOrCreate: {
+            where: { id: newData.id },
+            create: {
+              sessionId,
+              interactionData: {
+                create: {
+                  interactionType,
+                  ...interactionData,
+                },
+              },
+            },
+          },
+        },
       },
-    };
+    });
   }
 
-  // Create a new interaction
-
-  // check for existing data
-  const existingData = await db.eData.findFirst({
-    where: {
-      sessionId,
+  if (interaction && interaction.eData.interactionData) {
+    return {
+      ...interaction,
       interactionData: {
-        ...interactionData,
+        ...interaction.eData.interactionData,
+        ...newData.interactionData,
       },
-    },
-    include: {
-      interactionData: true,
-    },
-  });
-  // IF EXISTING DATA
-  const { albumId, trackId, title, artistName, albumName, imageUrl } =
-    interactionData;
-
-  if (existingData) {
-    const interaction = await db.eInteraction.create({
-      data: {
-        interactionType,
-        dataId: existingData.id,
-        userId,
-        trackId,
-        albumId,
-      },
-      include: {
-        eAlbum: true,
-        eData: {
-          include: {
-            interactionData: true,
-          },
-        },
-        eTrack: true,
-        user: true,
-      },
-    });
-
-    if (interaction && interaction.eData.interactionData) {
-      return {
-        ...interaction,
-        interactionData: {
-          ...interaction.eData.interactionData,
-          ...interactionData,
-        },
-      };
-    }
+    };
   } else {
-    // If the data doesn't exist, create it
-    const newData = await db.eData.create({
-      data: {
-        sessionId,
-        interactionData: {
-          create: {
-            interactionType,
-            ...interactionData,
-          },
-        },
-      },
-      include: {
-        interactionData: true,
-      },
-    });
-
-    // Create the interaction with the new data
-    const interaction = await db.eInteraction.create({
-      data: {
-        interactionType,
-        userId,
-        dataId: newData.id,
-      },
-      include: {
-        eAlbum: true,
-        eData: {
-          include: {
-            interactionData: true,
-          },
-        },
-        eTrack: true,
-        user: true,
-      },
-    });
-
-    // Create the album and track if they don't exist
-    if (albumId && trackId && title && artistName && albumName && imageUrl) {
-      if (!existingTrack) {
-        await db.eTrack.create({
-          data: {
-            trackId,
-            title,
-            artistName,
-            albumName,
-            imageUrl,
-            album: {
-              connectOrCreate: {
-                where: {
-                  albumId,
-                },
-                create: {
-                  albumId,
-                  title: albumName,
-                  artistName,
-                  imageUrl,
-                },
-              },
-            },
-            eData: {
-              connectOrCreate: {
-                where: {
-                  id: newData.id,
-                },
-                create: {
-                  sessionId,
-                  interactionData: {
-                    create: {
-                      interactionType,
-                      ...interactionData,
-                    },
-                  },
-                },
-              },
-            },
-          },
-        });
-      }
-    }
-
-    if (interaction && interaction.eData.interactionData) {
-      return {
-        ...interaction,
-        interactionData: {
-          ...interaction.eData.interactionData,
-          ...newData.interactionData,
-        },
-      };
-    } else {
-      return null;
-    }
+    return null;
   }
 }
