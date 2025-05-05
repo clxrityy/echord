@@ -51,6 +51,7 @@ export function Disk() {
       className='w-50 h-50 rounded-full disk'
       width={75}
       height={75}
+      priority
     />
   );
 }
