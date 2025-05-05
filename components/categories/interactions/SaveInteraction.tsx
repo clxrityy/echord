@@ -68,22 +68,23 @@ export function SaveInteraction({
         toast.error(`Failed to save track: ${error}`, {
           id: toastId,
         });
-      }
-      const timeout = setTimeout(() => {
+      } else {
+        toast.success('Saved successfully', {
+          id: toastId,
+        });
+        setSaved(true);
+        setLoading(false);
         if (interaction) {
-          addInteraction(interaction as Interaction);
-          setSaved(true);
-          toast.success('Saved successfully', {
-            id: toastId,
-          });
-        } else {
-          toast.error('Failed to save', {
-            id: toastId,
-          });
+          addInteraction({
+            ...interaction,
+            interactionType: 'SAVED',
+            interactionData: {
+              ...interaction.interactionData,
+              trackId,
+            },
+          } as Interaction);
         }
-      }, 2500);
-
-      clearTimeout(timeout);
+      }
     } catch (error) {
       console.error('Error saving interaction:', error);
       toast.error('Error saving', {
