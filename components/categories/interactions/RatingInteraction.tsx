@@ -59,15 +59,17 @@ export function RatingInteraction({
           value,
         }),
       });
-      const { interaction } = await response.json();
+      const { interaction, error } = await response.json();
 
-      if (interaction) {
-        addInteraction(interaction);
-        setRating(value);
-        toast.success('Rated successfully', { id: toastId });
-      } else {
-        toast.error('Failed to rate', { id: toastId });
+      if (error) {
+        toast.error(error, { id: toastId });
+        return;
       }
+
+      addInteraction(interaction);
+      setRating(value);
+      toast.success('Rated successfully', { id: toastId });
+      
     } catch (err) {
       console.error('Error rating:', err);
       toast.error('Failed to rate', { id: toastId });
@@ -87,13 +89,11 @@ export function RatingInteraction({
         } else {
           return 'gray';
         }
-      } else {
-        if (value <= isHovered!) {
+      } else if (value <= isHovered!) {
           return 'yellow';
         } else {
           return 'gray';
         }
-      }
     },
     [rating, isHovered]
   );
@@ -107,7 +107,7 @@ export function RatingInteraction({
 
   return (
     <div className='flex items-center gap-1 justify-end w-full'>
-      {[1, 2, 3, 4, 5].map((value) => {
+      {[1, 2, 3, 4, 5].map((value, idx) => {
         return isLoading ? (
           <IconLoading key={value} className='animate-spin' />
         ) : (
@@ -120,7 +120,7 @@ export function RatingInteraction({
               e.preventDefault();
               setIsHovered(null);
             }}
-            key={value}
+            key={idx + value}
             color={determineColor(rating ?? value)}
             className='cursor-pointer transition-all duration-200'
             onClick={() => {
