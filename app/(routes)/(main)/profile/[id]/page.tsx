@@ -3,7 +3,6 @@ import { SavesGrid, Favorites, UserBox } from '@/components/categories/user';
 import { Window } from '@/components/layout';
 import Loading from '@/app/loading';
 import { db, getUserSessionId } from '@/lib';
-// import { getUserBySessionId } from '@/app/_actions';
 import { Skeleton } from '@/components/ui';
 
 type Props = {
@@ -22,8 +21,6 @@ export default async function Page({ params }: Props) {
   });
 
   const sessionId = await getUserSessionId();
-  // const user = await getUserBySessionId(sessionId || '');
-  // const isCurrentUser = user?.userId === profileUser?.userId;
 
   if (!profileUser) {
     return <h1 className='mt-30'>User not found</h1>;
@@ -143,9 +140,7 @@ export default async function Page({ params }: Props) {
     let sum = 0;
 
     ratings.map(({ rating }) => {
-      for (let i = 0; i < ratings.length; i++) {
-        sum += rating ?? 0;
-      }
+      sum += rating ?? 0;
     });
 
     return sum;
