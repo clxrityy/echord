@@ -37,6 +37,7 @@ export default async function Page({ params }: Props) {
               <div className='flex flex-row w-full h-full mx-auto gap-6 items-center justify-center'>
                 {track.imageUrl && (
                   <ImageComponent
+                    crossOrigin='anonymous'
                     src={track.imageUrl}
                     alt={track.title}
                     className='rounded-lg'

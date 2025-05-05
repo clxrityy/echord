@@ -57,6 +57,7 @@ export function SavesGrid({ saves }: Readonly<SavesGridProps>) {
           <UserSave key={save.id} save={save}>
             {save.albumId && save.imageUrl && save.artistName && (
               <ImageComponent
+                crossOrigin='anonymous'
                 src={save.imageUrl}
                 alt={save.dataId}
                 width={determineSize(length, screenSize)}

@@ -38,6 +38,7 @@ export default async function Page({ params }: Props) {
               <div className='flex flex-row w-full h-full mx-auto gap-6 items-center justify-center'>
                 {album.imageUrl && (
                   <ImageComponent
+                    crossOrigin='anonymous'
                     src={album.imageUrl}
                     alt={album.title}
                     className='w-full h-full object-cover rounded-lg'

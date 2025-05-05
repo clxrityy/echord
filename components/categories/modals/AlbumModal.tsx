@@ -33,6 +33,7 @@ export function AlbumModal({
         <div className='flex flex-col items-center justify-center p-4'>
           {imageUrl && (
             <ImageComponent
+              crossOrigin='anonymous'
               src={imageUrl}
               alt={albumName ?? 'Album Image'}
               className='rounded-lg mb-2'

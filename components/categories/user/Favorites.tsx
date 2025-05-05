@@ -31,6 +31,7 @@ export const Favorites = ({ interactionData }: FavoritesProps) => {
           >
             {data.imageUrl && data.albumName && idx < 4 && (
               <ImageComponent
+                crossOrigin='anonymous'
                 src={data.imageUrl}
                 alt={data.albumName}
                 width={50}
