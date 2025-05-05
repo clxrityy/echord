@@ -111,15 +111,20 @@ export async function POST(req: NextRequest) {
       include: {
         eTrack: true,
         eAlbum: true,
+        interactionData: true,
       },
     });
 
     if (existingData) {
       const interaction = await handleInteraction({
         interactionData: {
-          ...existingData,
           imageUrl: track.album.cover_medium,
           rating: value,
+          trackId: track.id.toString(),
+          albumName: track.album.title,
+          artistName: track.artist.name,
+          title: track.title,
+          albumId: String(track.album.id),
         },
         interactionType: EInteractionType.RATED,
         userId,
