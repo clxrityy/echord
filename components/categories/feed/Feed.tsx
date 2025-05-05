@@ -3,6 +3,7 @@ import {
   // EData,
   EInteraction,
   EInteractionData,
+  EInteractionType,
 } from '@/prisma/app/generated/prisma/client';
 import { FeedItemContainer } from './Containers';
 import { Suspense } from 'react';
@@ -19,7 +20,6 @@ interface FeedItemProps {
 
 export function FeedItem({
   interaction,
-  // data,
   interactionData,
   userId,
   username,
@@ -38,111 +38,44 @@ export function FeedItem({
     albumName,
     dataId,
     trackId,
-    // rating, review
+    rating,
   } = interactionData;
 
   const isCurrentUser = userId == interactionUserId;
 
+  const renderFeedItem = (type: EInteractionType, extraProps: Record<string, any> = {}) => (
+    <Suspense fallback={<Skeleton className='w-[5rem] h-full rounded-md' />}>
+      <FeedItemContainer
+        trackId={trackId ?? ''}
+        interactionId={interactionId}
+        interactionUserId={interactionUserId}
+        isCurrentUser={isCurrentUser}
+        interactionType={type}
+        createdAt={createdAt}
+        userId={userId ?? undefined}
+        imageUrl={imageUrl && imageUrl !== 'undefined' ? imageUrl : undefined}
+        title={title && title !== 'undefined' ? title : undefined}
+        albumId={albumId && albumId !== 'undefined' ? albumId : undefined}
+        albumName={albumName && albumName !== 'undefined' ? albumName : undefined}
+        dataId={dataId}
+        {...extraProps}
+      />
+      <span className='sr-only'>
+        {username ?? 'Unknown User'} {type.toLowerCase()}{' '}
+        {title && title !== 'undefined' ? title : 'Unknown Title'} by{' '}
+        {artistName && artistName !== 'undefined' ? artistName : 'Unknown Artist'}
+        {type === 'RATED' && ` ${rating} stars`}
+      </span>
+    </Suspense>
+  );
+
   switch (interactionType) {
     case 'FAVORITED':
-      return (
-        <Suspense
-          fallback={<Skeleton className='w-[5rem] h-full rounded-md' />}
-        >
-          <FeedItemContainer
-            trackId={trackId ?? ''}
-            interactionId={interactionId}
-            isCurrentUser={isCurrentUser}
-            interactionType='FAVORITED'
-            createdAt={createdAt}
-            userId={userId ?? undefined}
-            imageUrl={
-              imageUrl && imageUrl !== 'undefined' ? imageUrl : undefined
-            }
-            title={title && title !== 'undefined' ? title : undefined}
-            albumId={albumId && albumId !== 'undefined' ? albumId : undefined}
-            albumName={
-              albumName && albumName !== 'undefined' ? albumName : undefined
-            }
-            dataId={dataId}
-            interactionUserId={interactionUserId}
-          />
-          <span className='sr-only'>
-            {username ?? 'Unknown User'} favorited{' '}
-            {title && title !== 'undefined' ? title : 'Unknown Title'} by{' '}
-            {artistName && artistName !== 'undefined'
-              ? artistName
-              : 'Unknown Artist'}
-          </span>
-        </Suspense>
-      );
-
+      return renderFeedItem('FAVORITED');
     case 'SAVED':
-      return (
-        <Suspense
-          fallback={<Skeleton className='w-[5rem] h-full rounded-md' />}
-        >
-          <FeedItemContainer
-            trackId={trackId ?? ''}
-            interactionId={interactionId}
-            interactionUserId={interactionUserId}
-            isCurrentUser={isCurrentUser}
-            interactionType='SAVED'
-            createdAt={createdAt}
-            userId={userId ?? undefined}
-            imageUrl={
-              imageUrl && imageUrl !== 'undefined' ? imageUrl : undefined
-            }
-            title={title && title !== 'undefined' ? title : undefined}
-            albumId={albumId && albumId !== 'undefined' ? albumId : undefined}
-            albumName={
-              albumName && albumName !== 'undefined' ? albumName : undefined
-            }
-            dataId={dataId}
-          />
-          <span className='sr-only'>
-            {username ?? 'Unknown User'} saved{' '}
-            {title && title !== 'undefined' ? title : 'Unknown Title'} by{' '}
-            {artistName && artistName !== 'undefined'
-              ? artistName
-              : 'Unknown Artist'}
-          </span>
-        </Suspense>
-      );
+      return renderFeedItem('SAVED');
     case 'RATED':
-      return (
-        <Suspense
-          fallback={<Skeleton className='w-[5rem] h-full rounded-md' />}
-        >
-          <FeedItemContainer
-            trackId={trackId ?? ''}
-            interactionId={interactionId}
-            interactionUserId={interactionUserId}
-            isCurrentUser={isCurrentUser}
-            interactionType='RATED'
-            createdAt={createdAt}
-            userId={userId ?? undefined}
-            imageUrl={
-              imageUrl && imageUrl !== 'undefined' ? imageUrl : undefined
-            }
-            title={title && title !== 'undefined' ? title : undefined}
-            albumId={albumId && albumId !== 'undefined' ? albumId : undefined}
-            albumName={
-              albumName && albumName !== 'undefined' ? albumName : undefined
-            }
-            dataId={dataId}
-            rating={interactionData.rating ?? 0}
-          />
-          <span className='sr-only'>
-            {username ?? 'Unknown User'} rated{' '}
-            {title && title !== 'undefined' ? title : 'Unknown Title'} by{' '}
-            {artistName && artistName !== 'undefined'
-              ? artistName
-              : 'Unknown Artist'}{' '}
-            {interactionData.rating} stars
-          </span>
-        </Suspense>
-      );
+      return renderFeedItem('RATED', { rating: rating ?? 0 });
     default:
       return <FeedListItemSkeleton />;
   }
