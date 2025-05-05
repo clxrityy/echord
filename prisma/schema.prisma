@@ -55,7 +55,7 @@ model EData {
   eAlbum          EAlbum?           @relation(fields: [albumId], references: [albumId])
   session         ESession          @relation(fields: [sessionId], references: [sessionId])
   eTrack          ETrack?           @relation(fields: [trackId], references: [trackId])
-  interactions    EInteraction[]
+  interactions    EInteraction?
   interactionData EInteractionData?
 }
 
@@ -63,7 +63,7 @@ model EInteraction {
   id              String           @id @default(cuid())
   userId          String
   interactionType EInteractionType
-  dataId          String
+  dataId          String           @unique
   createdAt       DateTime         @default(now())
   updatedAt       DateTime         @default(now())
   albumId         String?
