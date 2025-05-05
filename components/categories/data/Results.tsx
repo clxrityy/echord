@@ -41,9 +41,7 @@ export function Result({ data, userId }: Readonly<Props>) {
           href={`/track/${ID}`}
           className='focus:underline transition hover:text-blue-300/75'
         >
-          <p>
-            {title}
-          </p>
+          <p>{title}</p>
         </Link>
       </div>
       <div className='flex flex-col gap-1'>

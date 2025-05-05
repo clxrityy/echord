@@ -94,7 +94,12 @@ export function Navbar({ userId }: Readonly<{ userId?: string }>) {
               <span className='sr-only'>Profile</span>
             </Button>
           ) : (
-            <Button aria-label='Login' title='login' onClick={handleLoginClick} className='hover:contrast-200 transition-all duration-100 hover:scale-105 focus:text-blue-400/75'>
+            <Button
+              aria-label='Login'
+              title='login'
+              onClick={handleLoginClick}
+              className='hover:contrast-200 transition-all duration-100 hover:scale-105 focus:text-blue-400/75'
+            >
               <IconLogin />
               <span className='sr-only'>Login</span>
             </Button>

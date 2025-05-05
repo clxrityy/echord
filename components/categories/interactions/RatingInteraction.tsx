@@ -69,7 +69,6 @@ export function RatingInteraction({
       addInteraction(interaction);
       setRating(value);
       toast.success('Rated successfully', { id: toastId });
-      
     } catch (err) {
       console.error('Error rating:', err);
       toast.error('Failed to rate', { id: toastId });
@@ -90,10 +89,10 @@ export function RatingInteraction({
           return 'gray';
         }
       } else if (value <= isHovered!) {
-          return 'yellow';
-        } else {
-          return 'gray';
-        }
+        return 'yellow';
+      } else {
+        return 'gray';
+      }
     },
     [rating, isHovered]
   );

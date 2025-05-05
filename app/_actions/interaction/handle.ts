@@ -117,7 +117,7 @@ async function createInteractionWithExistingData(
       },
     },
     include: { interactionData: true },
-  })
+  });
 
   const interaction = await db.eInteraction.create({
     data: {
@@ -218,7 +218,6 @@ async function createNewInteractionAndData(
               interactionType,
             },
           },
-
         },
       },
     });

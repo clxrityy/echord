@@ -75,9 +75,9 @@ export default async function Home() {
                           >
                             <FeedListItem key={item.user.userId}>
                               {interaction &&
-                                data &&
-                                interactionData &&
-                                userData ? (
+                              data &&
+                              interactionData &&
+                              userData ? (
                                 <FeedItem
                                   interaction={interaction}
                                   // data={data}
