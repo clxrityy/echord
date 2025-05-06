@@ -1,4 +1,5 @@
 import { db } from '@/lib';
+import { BASE_URL } from '@/util';
 import { Metadata } from 'next';
 import { ReactNode } from 'react';
 
@@ -29,11 +30,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     openGraph: {
       title: `Echord | ${profileUser.username}`,
       description: `Profile page of ${profileUser.username}`,
-      url: `https://echord.uk/profile/${profileUser.userId}`,
+      url: `${BASE_URL}/profile/${profileUser.userId}`,
       images: [
         {
           url:
-            profileUser.avatar || 'https://echord.uk/img/default-avatar.png',
+            profileUser.avatar || `${BASE_URL}/img/default-avatar.png`,
           width: 250,
           height: 250,
         },
