@@ -29,11 +29,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     openGraph: {
       title: `Echord | ${profileUser.username}`,
       description: `Profile page of ${profileUser.username}`,
-      url: `https://echord.com/profile/${profileUser.userId}`,
+      url: `https://echord.uk/profile/${profileUser.userId}`,
       images: [
         {
           url:
-            profileUser.avatar || 'https://echord.com/img/default-avatar.png',
+            profileUser.avatar || 'https://echord.uk/img/default-avatar.png',
           width: 250,
           height: 250,
         },
