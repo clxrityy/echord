@@ -11,7 +11,6 @@
 ## TO-DO
 
 - [x] Ratings
-  - [ ] Rate an album
   - [x] Rate a track
   - [x] Compile average rating
   - [ ] Rate a review
