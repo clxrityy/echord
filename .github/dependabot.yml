@@ -5,15 +5,15 @@
 
 version: 2
 updates:
-  - package-ecosystem: "npm" # See documentation for possible values
-    directory: "/" # Location of package manifests
+  - package-ecosystem: 'npm' # See documentation for possible values
+    directory: '/' # Location of package manifests
     schedule:
-      interval: "weekly"
+      interval: 'weekly'
 
   # Enable version updates for Docker
-  - package-ecosystem: "docker"
+  - package-ecosystem: 'docker'
     # Look for a `Dockerfile` in the `root` directory
-    directory: "/"
+    directory: '/'
     # Check for updates once a week
     schedule:
-      interval: "weekly"
+      interval: 'weekly'

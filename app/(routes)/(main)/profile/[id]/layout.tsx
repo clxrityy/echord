@@ -33,8 +33,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       url: `${BASE_URL}/profile/${profileUser.userId}`,
       images: [
         {
-          url:
-            profileUser.avatar || `${BASE_URL}/img/default-avatar.png`,
+          url: profileUser.avatar || `${BASE_URL}/img/default-avatar.png`,
           width: 250,
           height: 250,
         },
