@@ -22,7 +22,7 @@ export function UserBox({ user, counts }: Readonly<Props>) {
       <div className='flex flex-col items-center justify-start w-full md:w-[200px] h-[230px] md:h-[250px] rounded-t-lg px-4 py-2 bg-gray-400/5 drop-shadow-2xl shadow-xl gap-[7.5]'>
         <div className='flex items-center justify-center gap-4 w-full'>
           <ImageComponent
-            src={user.avatar || '/img/default-avatar.png'}
+            src={user.avatar ?? '/img/default-avatar.png'}
             alt='User Avatar'
             width={50}
             height={50}
@@ -63,7 +63,7 @@ export function UserBox({ user, counts }: Readonly<Props>) {
           </li>
           <li className='flex items-center justify-between gap-5 w-1/3 md:w-full'>
             <span className='text-sm xl:text-base text-gray-300'>
-              Stars given
+              Stars
             </span>
             <span className='text-sm xl:text-base text-gray-400'>
               {starsGiven}
