@@ -27,19 +27,23 @@ export function RatingInteraction({
           interaction.userId === userId
         );
       });
+
       if (interaction && interaction.interactionData) {
         setRating(interaction.interactionData.rating);
+      } else {
+        setRating(null);
       }
     } else {
       setRating(null);
     }
     setIsLoading(false);
-  }, [interactions, trackId, userId, rating]);
+  }, [interactions, trackId, userId]);
 
   useEffect(() => {
-    checkRating();
-
-  }, [interactions, isLoading, trackId, userId, isLoading, rating]);
+    if (rating === null) {
+      checkRating();
+    }
+  }, [interactions, isLoading, trackId, userId, isLoading]);
 
   const rate = async (value: number) => {
     const toastId = toast.loading('Rating...');
