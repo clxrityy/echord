@@ -2,12 +2,8 @@
 import { DEEZER_SEARCH_DATA, DEEZER_SEARCH_RESPONSE } from '@/types';
 import { ImageComponent } from '@/components/ui/Image';
 import { Suspense } from 'react';
-import {
-  SaveInteraction,
-  RatingInteraction,
-  FavoriteInteraction,
-} from '@/components/categories/interactions';
 import Link from 'next/link';
+import { Interact } from '@/components/categories/interactions';
 
 type Props = {
   data: DEEZER_SEARCH_DATA;
@@ -52,12 +48,11 @@ export function Result({ data, userId }: Readonly<Props>) {
       {userId && (
         <section className='absolute bg-zinc-900/5 rounded-md transiton duration-200 right-0 top-0 w-full h-full flex items-center justify-center'>
           <div className='flex flex-col gap-2 w-full relative'>
-            <div className='flex items-center justify-end gap-2 p-2 w-full mr-5'>
-              <SaveInteraction trackId={ID as string} userId={userId} />
-              <FavoriteInteraction trackId={ID as string} userId={userId} />
-            </div>
             <Suspense>
-              <RatingInteraction userId={userId} trackId={ID as string} />
+              <Interact
+                userId={userId}
+                trackId={ID as string}
+              />
             </Suspense>
           </div>
         </section>
