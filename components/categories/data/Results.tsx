@@ -4,6 +4,7 @@ import { ImageComponent } from '@/components/ui/Image';
 import { Suspense } from 'react';
 import Link from 'next/link';
 import { Interact } from '@/components/categories/interactions';
+import { useInteractions } from '@/contexts';
 
 type Props = {
   data: DEEZER_SEARCH_DATA;
@@ -22,6 +23,8 @@ export function Result({ data, userId }: Readonly<Props>) {
   } = data;
 
   const ID = link.split('/').pop();
+
+  const { getInteractions } = useInteractions();
 
   return (
     <li className='flex flex-col gap-2 p-4 border-b border-white/20 last:border-b-0 hover:bg-zinc-900/5 rounded-md transition-all duration-200 relative'>
@@ -52,6 +55,7 @@ export function Result({ data, userId }: Readonly<Props>) {
               <Interact
                 userId={userId}
                 trackId={ID as string}
+                initialInteractions={getInteractions() ?? []}
               />
             </Suspense>
           </div>
