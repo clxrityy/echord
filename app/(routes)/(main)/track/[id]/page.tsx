@@ -4,7 +4,11 @@ import { Interact } from '@/components/categories/interactions';
 import { Window } from '@/components/layout';
 import { ImageComponent } from '@/components/ui';
 import { db, getUserSessionId } from '@/lib';
-import { EInteraction, EInteractionType, EUser } from '@/prisma/app/generated/prisma/client';
+import {
+  EInteraction,
+  EInteractionType,
+  EUser,
+} from '@/prisma/app/generated/prisma/client';
 import { Interaction } from '@/types';
 import { connection } from 'next/server';
 import { Suspense } from 'react';
@@ -43,13 +47,13 @@ export default async function Page({ params }: Props) {
       },
       include: {
         eData: true,
-      }
+      },
     });
 
     const trackInteractions = await db.eInteraction.findMany({
       where: {
         trackId: id,
-      }
+      },
     });
 
     const interactions = allInteractions.filter((interaction) => {
@@ -59,7 +63,7 @@ export default async function Page({ params }: Props) {
     });
 
     return interactions;
-  }
+  };
 
   const interactions = await getInteractions();
 
@@ -80,7 +84,7 @@ export default async function Page({ params }: Props) {
     const allInteractionDatas = await db.eInteractionData.findMany({
       include: {
         eData: true,
-      }
+      },
     });
 
     const allInteractions = await db.eInteraction.findMany({
@@ -88,29 +92,32 @@ export default async function Page({ params }: Props) {
         eAlbum: true,
         eTrack: true,
         user: true,
-      }
+      },
     });
 
-    const interactions: Interaction[] = allInteractions.filter((interaction) => {
-      return allInteractionDatas.some(
-        (interactionData) => interactionData.eData.id === interaction.dataId
-      );
-    }).map((interaction) => ({
-      ...interaction as EInteraction,
-      eAlbum: interaction.eAlbum ? { ...interaction.eAlbum } : null,
-      eTrack: interaction.eTrack ? { ...interaction.eTrack } : null,
-      user: interaction.user ? { ...interaction.user as EUser } : null,
-      interactionData: allInteractionDatas.find(
-        (data) => data.eData.id === interaction.dataId
-      ) || null
-    })) as Interaction[];
+    const interactions: Interaction[] = allInteractions
+      .filter((interaction) => {
+        return allInteractionDatas.some(
+          (interactionData) => interactionData.eData.id === interaction.dataId
+        );
+      })
+      .map((interaction) => ({
+        ...(interaction as EInteraction),
+        eAlbum: interaction.eAlbum ? { ...interaction.eAlbum } : null,
+        eTrack: interaction.eTrack ? { ...interaction.eTrack } : null,
+        user: interaction.user ? { ...(interaction.user as EUser) } : null,
+        interactionData:
+          allInteractionDatas.find(
+            (data) => data.eData.id === interaction.dataId
+          ) || null,
+      })) as Interaction[];
     let array: Interaction[] = [];
 
     interactions.map((interaction) => {
       if (interaction?.userId === userId) {
         array.push(interaction);
       }
-    })
+    });
 
     return array;
   }
@@ -142,44 +149,30 @@ export default async function Page({ params }: Props) {
                     quality={100}
                   />
                 )}
-                <h4>
-                  {track.albumName}
-                </h4>
+                <h4>{track.albumName}</h4>
               </div>
               <div className='flex flex-col gap-3 items-center justify-center'>
-                <h2>
-                  {track.title}
-                </h2>
-                <p>
-                  {track.artistName}
-                </p>
+                <h2>{track.title}</h2>
+                <p>{track.artistName}</p>
               </div>
             </div>
             <div className='flex flex-col items-center justify-center gap-3 py-8'>
-              {
-                userId && <Interact
+              {userId && (
+                <Interact
                   userId={userId}
                   trackId={id}
                   initialInteractions={userInteractions}
                 />
-              }
+              )}
             </div>
           </div>
           <div className='flex flex-col items-center md:items-start justify-center gap-5 w-full md:w-auto'>
             <div className='flex flex-col items-start justify-start gap-2'>
               <div className='flex flex-col items-start justify-start gap-2'>
-                <p>
-                  {favorites} Favorites
-                </p>
-                <p>
-                  {saves} Saves
-                </p>
-                <p>
-                  {reviews} Reviews
-                </p>
-                <p>
-                  {ratings} Ratings
-                </p>
+                <p>{favorites} Favorites</p>
+                <p>{saves} Saves</p>
+                <p>{reviews} Reviews</p>
+                <p>{ratings} Ratings</p>
               </div>
             </div>
           </div>
