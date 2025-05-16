@@ -5,7 +5,11 @@ import { BASE_URL, ICONS } from '@/util';
 import { useSession } from '@/contexts';
 import { Button, OutsideClick } from '@/components/ui';
 
-export function Search() {
+export interface SearchProps {
+  size?: number;
+}
+
+export function Search({ size }: Readonly<SearchProps>) {
   const [searchField, setSearchField] = useState<string>('');
   const [clicked, setClicked] = useState<boolean>(false);
 
@@ -71,7 +75,7 @@ export function Search() {
             onClick={handleClick}
             className={`${clicked ? 'ring-2 ring-blue-500' : ''} p-2 transition duration-200 focus:outline-none rounded-md hover:contrast-200 focus:text-blue-400/80 hover:scale-105 active:scale-95`}
           >
-            <IconSearch />
+            <IconSearch size={size} />
           </Button>
           {clicked && (
             <input
