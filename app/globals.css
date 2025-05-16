@@ -68,8 +68,6 @@ main {
 h1 {
   font-size: 2.5rem;
   font-weight: 700;
-
-  @apply text-xl md:text-2xl lg:text-3xl xl:text-4xl 2xl:text-5xl;
 }
 
 h2 {
