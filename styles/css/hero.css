@@ -1,30 +1,15 @@
-.disk {
+.logo {
   width: auto;
   height: auto;
   object-fit: cover;
-  mask-image: url(/img/disk-bg.png);
-  mask-size: 100%;
-  mask-repeat: no-repeat;
-  mask-position: center;
-  -webkit-mask-image: url(/img/disk-bg.png);
+  -webkit-mask-image: url(/apple-touch-icon.png);
+  mask-image: url(/apple-touch-icon.png);
   -webkit-mask-size: 100%;
+  mask-size: 100%;
   -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
   -webkit-mask-position: center;
+  mask-position: center;
   animation-duration: 4.2s;
   animation-iteration-count: infinite;
-}
-
-.disk {
-  animation-name: disk-spin;
-  animation-timing-function: linear;
-}
-
-@keyframes disk-spin {
-  from {
-    transform: rotate(0deg);
-  }
-
-  to {
-    transform: rotate(360deg);
-  }
 }
