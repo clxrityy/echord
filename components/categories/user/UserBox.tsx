@@ -62,9 +62,7 @@ export function UserBox({ user, counts }: Readonly<Props>) {
             <span className='text-sm xl:text-base text-gray-400'>{saves}</span>
           </li>
           <li className='flex items-center justify-between gap-5 w-1/3 md:w-full'>
-            <span className='text-sm xl:text-base text-gray-300'>
-              Stars
-            </span>
+            <span className='text-sm xl:text-base text-gray-300'>Stars</span>
             <span className='text-sm xl:text-base text-gray-400'>
               {starsGiven}
             </span>
