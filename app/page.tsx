@@ -25,7 +25,6 @@ export default async function Home() {
   const user = await getUserBySessionId(sessionId ?? '');
 
   const feedRes = await fetch(`${BASE_URL}/api/feed`, {
-    cache: 'no-store',
     headers: {
       'Content-Type': 'application/json',
     },

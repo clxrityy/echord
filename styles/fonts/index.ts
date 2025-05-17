@@ -5,6 +5,7 @@ export const AR = AR_One_Sans({
   subsets: ['latin'],
   variable: '--font-ar',
   display: 'swap',
+  preload: true,
 });
 
 export const TMR = Tomorrow({
@@ -12,6 +13,7 @@ export const TMR = Tomorrow({
   variable: '--font-tmr',
   display: 'swap',
   weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
+  preload: true,
 });
 
 export const Rubica = localFont({
