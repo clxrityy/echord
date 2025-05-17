@@ -2,6 +2,10 @@
 
 [![Static Badge](https://img.shields.io/badge/website-echord?style=for-the-badge&logo=appveyor&logoColor=%238fc0c9&logoSize=auto&label=echord.uk&labelColor=%233f5067&color=%23294380&link=https%3A%2F%2Fechord.uk)](https://echord.uk)
 
+Dedicated to providing a good user experience and optimal performance.
+
+[![Lighthouse](./.assets/lighthouse/lighthouse.svg)](./.assets/markdown/LIGHTHOUSE.md)
+
 ---
 
 | [![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)](https://hub.docker.com/r/clxrity/echord.uk) | [![GitHub](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)](https://github.com/clxrityy/echord) |

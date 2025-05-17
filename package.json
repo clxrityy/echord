@@ -17,7 +17,9 @@
     "studio": "npx prisma studio",
     "latest": "pnpm up --latest && pnpm db",
     "prepare": "husky",
-    "dev:docker": "docker-compose up"
+    "dev:docker": "docker-compose up",
+    "lighthouse:report": "rm -rf .assets/lighthouse && lighthouse-badges -s -b for-the-badge -r -o .assets/lighthouse -u https://echord.uk",
+    "lighthouse:badges": "lighthouse-badges -b for-the-badge -o .assets/lighthouse -u https://echord.uk"
   },
   "license": "MIT",
   "dependencies": {
