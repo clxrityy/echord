@@ -77,6 +77,11 @@ const nextConfig: NextConfig = {
             key: 'X-DNS-Prefetch-Control',
             value: 'on',
           }, // THIS IS THE ONE THAT ENABLES DNS PREFETCHING
+          {
+            key: 'Accept-Encoding',
+            value: 'gzip, deflate, br',
+            // THIS IS THE ONE THAT ENABLES GZIP COMPRESSION (https://developer.chrome.com/docs/lighthouse/performance/uses-text-compression/?utm_source=lighthouse&utm_medium=devtools)
+          },
         ],
       },
     ];
