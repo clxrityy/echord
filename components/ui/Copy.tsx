@@ -9,7 +9,9 @@ export function Copy({ value }: Readonly<{ value: string }>) {
 
   const handleCopy = useCallback(async () => {
     try {
-      await navigator.clipboard.writeText(value);
+      await navigator.storage.persist().then(async () => {
+        await navigator.clipboard.writeText(value);
+      })
       setCopied(true);
       setTimeout(() => {
         setCopied(false);
