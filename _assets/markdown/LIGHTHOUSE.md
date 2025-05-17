@@ -1,4 +1,4 @@
-# [![Lighthouse](https://img.shields.io/badge/lighthouse-%23f15a24.svg?style=for-the-badge&logo=lighthouse&logoColor=white)](../lighthouse/echord_uk.html)
+# ![Lighthouse](https://img.shields.io/badge/lighthouse-%23f15a24.svg?style=for-the-badge&logo=lighthouse&logoColor=white)
 
 |                        Accessibility                         |                         Best Practices                         |                       Performance                        |                   SEO                    |
 | :----------------------------------------------------------: | :------------------------------------------------------------: | :------------------------------------------------------: | :--------------------------------------: |
