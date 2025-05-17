@@ -4,7 +4,7 @@
 
 Dedicated to providing a good user experience and optimal performance.
 
-[![Lighthouse](./.assets/lighthouse/lighthouse.svg)](./.assets/markdown/LIGHTHOUSE.md)
+[![Lighthouse](./.assets/lighthouse/lighthouse.svg)](./_assets/markdown/LIGHTHOUSE.md)
 
 ---
 
