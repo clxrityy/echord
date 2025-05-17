@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { Button, ImageComponent } from '@/components/ui';
 import { ICONS } from '@/util';
 import { Search } from '@/components/layout';
-import { ReactNode } from 'react';
+import { ReactNode, Suspense } from 'react';
 import { useRouter } from 'next/navigation';
 
 const { login: IconLogin, privacy: IconPrivacy, user: IconUser } = ICONS;
@@ -17,9 +17,11 @@ export function Hero({ userId }: Readonly<{ userId: StringOrUndefined }>) {
       {!userId ? (
         <div className='w-full h-full flex flex-col items-center justify-center gap-2'>
           <div>
-            <h1 className='text-4xl font-bold text-center'>
-              Welcome to 乇chord
-            </h1>
+            <Suspense>
+              <h1 className='text-4xl font-bold text-center'>
+                Welcome to 乇chord
+              </h1>
+            </Suspense>
             <p className='text-lg text-center mb-8'>
               Join and start cataloging your music collection
             </p>
@@ -34,16 +36,15 @@ export function Hero({ userId }: Readonly<{ userId: StringOrUndefined }>) {
         <div className='w-full h-max flex flex-col items-center justify-center gap-2 2xl:mt-30'>
           <div className='grid grid-cols-1 xl:grid-cols-2 2xl:grid-cols-1 items-center justify-center mb-4 gap-4 w-full'>
             <div className='flex flex-col items-center justify-center'>
-              <h1 className='text-4xl font-bold text-center mb-4'>
-                Welcome Back!
-              </h1>
+              <Suspense>
+                <h1 className='text-4xl font-bold text-center mb-4'>
+                  Welcome Back!
+                </h1>
+              </Suspense>
               <p className='text-lg text-center mb-8'>
                 Explore your personalized feed and discover new content.
               </p>
             </div>
-            {/* <div className='w-full flex items-center justify-center xl:w-fit 2xl:w-full'>
-              <Logo />
-            </div> */}
           </div>
         </div>
       )}
@@ -83,7 +84,6 @@ export function HeroNav({ userId }: Readonly<{ userId: StringOrUndefined }>) {
         {userId ? (
           <Button
             onClick={() => router.push(`/profile/${userId}`)}
-            role='profile'
             className='font-rubica'
             aria-label='Profile'
             title='profile'
