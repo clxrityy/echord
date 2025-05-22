@@ -35,8 +35,9 @@
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-hot-toast": "^2.5.2",
+    "sharp": "^0.34.2",
     "uuid": "^11.1.0",
-    "zustand": "^5.0.4"
+    "zustand": "^5.0.5"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.3.1",
@@ -44,8 +45,8 @@
     "@next/eslint-plugin-next": "^15.3.2",
     "@tailwindcss/postcss": "^4.1.7",
     "@types/crypto-js": "^4.2.2",
-    "@types/node": "^22.15.18",
-    "@types/react": "^19.1.4",
+    "@types/node": "^22.15.21",
+    "@types/react": "^19.1.5",
     "@types/react-dom": "^19.1.5",
     "eslint": "^9.27.0",
     "eslint-config-next": "15.3.2",
