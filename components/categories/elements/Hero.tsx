@@ -34,7 +34,7 @@ export function Hero({ userId }: Readonly<{ userId: StringOrUndefined }>) {
         </div>
       ) : (
         <div className='w-full h-max flex flex-col items-center justify-center gap-2 2xl:mt-30'>
-          <div className='grid grid-cols-1 xl:grid-cols-2 2xl:grid-cols-1 items-center justify-center mb-4 gap-4 w-full'>
+          <div className='grid grid-cols-1 2xl:grid-cols-1 items-center justify-center mb-4 gap-4 w-full'>
             <div className='flex flex-col items-center justify-center'>
               <Suspense>
                 <h1 className='text-4xl font-bold text-center mb-4'>
