@@ -104,10 +104,7 @@ export function Pagination({
     return pages;
   };
 
-  const {
-    left: IconLeft,
-    right: IconRight,
-  } = ICONS;
+  const { left: IconLeft, right: IconRight } = ICONS;
 
   return (
     <div className='flex items-center justify-center gap-4 py-6 mb-10 xl:mb-4 font-[var(--font-tmr)] relative z-10'>

@@ -21,7 +21,6 @@ export function Search({ size }: Readonly<SearchProps>) {
 
   const isHomePage = pathname === '/';
 
-
   useEffect(() => {
     async function addSearchToSession(search: string) {
       if (getSessionId() === '') {
@@ -88,7 +87,7 @@ export function Search({ size }: Readonly<SearchProps>) {
               placeholder='Search'
               value={searchField}
               onChange={handleChange}
-              className={`${isHomePage ? "-right-0 -left-18 w-max mt-4 lg:-left-32" : "w-64"} p-2 border border-white/50 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200 absolute top-18 right-0 z-50 shadow-md`}
+              className={`${isHomePage ? '-right-0 -left-18 w-max mt-4 lg:-left-32' : 'w-64'} p-2 border border-white/50 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200 absolute top-18 right-0 z-50 shadow-md`}
             />
           )}
         </div>

@@ -4,7 +4,12 @@ import { Window } from '@/components/layout';
 import Loading from '@/app/loading';
 import { db, getUserSessionId } from '@/lib';
 import { Skeleton } from '@/components/ui';
-import { FeedItem, FeedList, FeedListItem, FeedListItemSkeleton } from '@/components/categories/feed';
+import {
+  FeedItem,
+  FeedList,
+  FeedListItem,
+  FeedListItemSkeleton,
+} from '@/components/categories/feed';
 import { Interaction } from '@/types';
 import { v4 as uuid } from 'uuid';
 
@@ -162,7 +167,7 @@ export default async function Page({ params }: Props) {
     const allInteractions = await db.eInteractionData.findMany({
       include: {
         eData: true,
-      }
+      },
     });
 
     const userInteractions = await db.eInteraction.findMany({
@@ -173,7 +178,7 @@ export default async function Page({ params }: Props) {
         eData: true,
         user: true,
         eAlbum: true,
-        eTrack: true
+        eTrack: true,
       },
     });
 
@@ -224,7 +229,7 @@ export default async function Page({ params }: Props) {
                 {userFeed.map((item) => {
                   const interaction = {
                     ...item!,
-                  }
+                  };
 
                   const data = {
                     id: item?.dataId,
@@ -255,15 +260,10 @@ export default async function Page({ params }: Props) {
                   return (
                     <Suspense
                       key={uuid()}
-                      fallback={
-                        <FeedListItemSkeleton key={item?.user.id} />
-                      }
+                      fallback={<FeedListItemSkeleton key={item?.user.id} />}
                     >
                       <FeedListItem key={item?.user.userId}>
-                        {interaction &&
-                          data &&
-                          interactionData &&
-                          userData ? (
+                        {interaction && data && interactionData && userData ? (
                           <FeedItem
                             interaction={interaction}
                             // data={data}
