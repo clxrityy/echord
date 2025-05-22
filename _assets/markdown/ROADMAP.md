@@ -43,9 +43,14 @@
     - [ ] Change username
     - [ ] Change avatar
     - [ ] Change bio
-  - [ ] User feed
-    - [ ] User reviews
-    - [ ] User ratings
+  - [x] User feed
+  - [ ] User reviews
+  - [ ] User ratings
+  - [x] User favorites
+    - [x] Favorites box (right side on large screen)
+    - [ ] Link to list of favorites
+  - [x] User saves
+    - [ ] Link to list of saves
   - [ ] User profile
     - [x] User favorites
     - [x] User saves (left side column)
