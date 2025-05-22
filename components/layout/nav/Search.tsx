@@ -1,6 +1,6 @@
 'use client';
 import { ChangeEvent, useState, useEffect, useCallback } from 'react';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { BASE_URL, ICONS } from '@/util';
 import { useSession } from '@/contexts';
 import { Button, OutsideClick } from '@/components/ui';
@@ -16,6 +16,11 @@ export function Search({ size }: Readonly<SearchProps>) {
   const router = useRouter();
 
   const { addSearch, searches, getSessionId } = useSession();
+
+  const pathname = usePathname();
+
+  const isHomePage = pathname === '/';
+
 
   useEffect(() => {
     async function addSearchToSession(search: string) {
@@ -65,9 +70,9 @@ export function Search({ size }: Readonly<SearchProps>) {
   const { search: IconSearch } = ICONS;
 
   return (
-    <div role='search' className=''>
+    <div role='search' className='w-full flex items-center justify-center'>
       <OutsideClick onOutsideClick={() => setClicked(false)}>
-        <div className='flex flex-col items-center relative gap-5'>
+        <div className='flex flex-col items-center relative gap-5 w-full'>
           <Button
             role='search'
             title='Search'
@@ -83,7 +88,7 @@ export function Search({ size }: Readonly<SearchProps>) {
               placeholder='Search'
               value={searchField}
               onChange={handleChange}
-              className='w-64 p-2 border border-white/50 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200 absolute top-18 right-0 z-50 shadow-md'
+              className={`${isHomePage ? "-right-0 -left-18 w-max mt-4 lg:-left-32" : "w-64"} p-2 border border-white/50 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200 absolute top-18 right-0 z-50 shadow-md`}
             />
           )}
         </div>
