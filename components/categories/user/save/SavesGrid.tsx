@@ -36,7 +36,7 @@ export function SavesGrid({ saves }: Readonly<SavesGridProps>) {
       if (width < 768) return baseSize * 0.8; // Medium screens
       return baseSize; // Large screens
     },
-    [screenSize]
+    [screenSize, length]
   );
 
   return (
