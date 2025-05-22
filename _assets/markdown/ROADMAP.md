@@ -130,7 +130,7 @@
 #### Utility
 
 - [x] Terms of Service
-- [ ] Privacy Policy
+- [x] Privacy Policy
 - [ ] Contact Us
 - [ ] About Us
 
