@@ -67,11 +67,13 @@ export default async function SearchPage({ params }: Props) {
     );
   }
 
+  console.log(length);
+
   return (
     <Suspense fallback={<Loading />}>
       <Window sessionId={sessionId || ''}>
         <div className='search-page'>
-          <h1 className='fixed top-6 flex gap-3 items-center'>
+          <h1 className='flex gap-3 items-center'>
             Search Results for:{' '}
             <span className='italic font-medium'>{decodeURIComponent(id)}</span>
           </h1>
