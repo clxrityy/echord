@@ -19,7 +19,7 @@ export function UserBox({ user, counts }: Readonly<Props>) {
 
   return (
     <div className='md:absolute top-2 right-[32.5%] md:right-2 px-6 py-4 md:h-[100px] w-full sm:w-auto h-auto'>
-      <div className='flex flex-col items-center justify-start w-full md:w-[200px] h-[230px] md:h-[250px] rounded-t-lg px-4 py-2 bg-gray-400/5 drop-shadow-2xl shadow-xl gap-[7.5]'>
+      <div className='flex flex-col items-center justify-start w-full md:w-[200px] h-[230px] md:h-[250px] rounded-t-lg px-4 py-2 bg-gray-400/5 drop-shadow-2xl shadow-xl gap-[7.5] mt-10'>
         <div className='flex items-center justify-center gap-4 w-full'>
           <ImageComponent
             src={user.avatar ?? '/img/default-avatar.png'}

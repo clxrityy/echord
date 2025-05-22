@@ -14,7 +14,7 @@ export const Favorites = ({ interactionData }: FavoritesProps) => {
   const { favorite: IconFavorite } = ICONS;
 
   return (
-    <div className='flex flex-col items-center justify-center w-full gap-2 relative md:mt-100 md:absolute md:left-0 md:top-0 md:translate-x-[35%] lg:translate-x-[40%] md:translate-y-0'>
+    <div className='flex flex-col items-center justify-center w-full gap-2 relative md:mt-100 md:absolute md:left-0 md:top-8 md:translate-x-[35%] lg:translate-x-[40%] md:translate-y-0'>
       <h1 className='text-2xl font-bold mb-2 flex flex-row gap-2 items-center'>
         <Tooltip text='Favorites'>
           <IconFavorite />
