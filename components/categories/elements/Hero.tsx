@@ -16,8 +16,8 @@ export function Hero({ userId }: Readonly<{ userId: StringOrUndefined }>) {
   return (
     <div className='w-full h-full flex flex-col items-center justify-start gap-5 py-10 px-10'>
       {!userId ? (
-        <div className='w-full h-full flex flex-col items-center justify-center gap-2'>
-          <div>
+        <div className='w-full h-full flex flex-col items-center justify-center gap-5'>
+          <div className='grid grid-cols-1 2xl:grid-cols-1 items-center justify-center mb-4 gap-4 w-full'>
             <Suspense>
               <h1 className='text-4xl font-bold text-center'>
                 Welcome to 乇chord
@@ -49,7 +49,7 @@ export function Hero({ userId }: Readonly<{ userId: StringOrUndefined }>) {
           </div>
         </div>
       )}
-      <div className='flex flex-col lg:flex-row items-center justify-center gap-3 mb-10 xl:mb-0'>
+      <div className='flex flex-col lg:flex-row items-center justify-center gap-3 mb-10 xl:mb-0 pt-5'>
         <p className='font-rubica text-3xl tracking-wide'>Search</p>{' '}
         <Search size={35} />
       </div>
