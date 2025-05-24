@@ -2,7 +2,7 @@
 
 import { EInteractionData } from '@/prisma/app/generated/prisma/client';
 import { UserSave } from './UserSave';
-import { Suspense, useCallback } from 'react';
+import { Suspense, useCallback, useEffect, useState } from 'react';
 import { Skeleton, ImageComponent } from '@/components/ui';
 import { useScreenSize } from '@/hooks/useScreenSize';
 
@@ -34,10 +34,17 @@ export function SavesGrid({ saves }: Readonly<SavesGridProps>) {
       // Adjust for screen width
       if (width < 480) return baseSize * 0.6; // Small screens
       if (width < 768) return baseSize * 0.8; // Medium screens
+
       return baseSize; // Large screens
     },
     [screenSize, length]
   );
+
+  const [size, setSize] = useState(determineSize(length, screenSize));
+
+  useEffect(() => {
+    setSize(determineSize(length, screenSize));
+  }, [screenSize, length]);
 
   return (
     <div className='flex flex-col gap-0 h-screen mt-22 justify-end items-start fixed bottom-0 left-0'>
@@ -48,8 +55,8 @@ export function SavesGrid({ saves }: Readonly<SavesGridProps>) {
             <Skeleton
               className='animate-pulse rounded-lg bg-zinc-200/50'
               style={{
-                width: determineSize(length, screenSize),
-                height: determineSize(length, screenSize),
+                width: size,
+                height: size,
               }}
             />
           }
@@ -60,8 +67,8 @@ export function SavesGrid({ saves }: Readonly<SavesGridProps>) {
                 crossOrigin='anonymous'
                 src={save.imageUrl}
                 alt={save.dataId}
-                width={determineSize(length, screenSize)}
-                height={determineSize(length, screenSize)}
+                width={size}
+                height={size}
                 className='rounded-md'
               />
             )}
