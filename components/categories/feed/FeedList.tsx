@@ -14,8 +14,8 @@ export function FeedList({
   const startIndex = (currentPage - 1) * itemsPerPage;
 
   return (
-    <div className='w-full h-fit lg:h-full flex flex-col items-center justify-center relative'>
-      <ul className='w-full h-fit lg:h-full flex flex-col lg:grid xl:grid-cols-2 lg:w-fit 2xl:max-w-4xl gap-0 items-center justify-start px-4 rounded-lg shadow-xl shadow-gray-700/15 relative overflow-y-scroll max-h-[calc(100vh)] xl:max-h-[calc(200vh)] lg:pt-0 pb-10 sm:pb-8 mt-10'>
+    <div className='w-full h-fit lg:h-full flex flex-col items-center justify-start relative'>
+      <ul className='w-full h-fit flex flex-col lg:grid lg:grid-cols-1 xl:grid-cols-2 lg:w-fit 2xl:max-w-4xl gap-0 items-center justify-start px-4 rounded-lg shadow-xl shadow-gray-700/15 relative overflow-y-scroll max-h-[calc(100vh)] xl:max-h-[calc(200vh)] lg:pt-0 pb-10 sm:pb-8 mt-10'>
         {Children.map(children, (child, index) => {
           if (index >= startIndex && index < startIndex + itemsPerPage) {
             return child;

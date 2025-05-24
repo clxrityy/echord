@@ -151,7 +151,7 @@ export default async function Page({ params }: Props) {
                 )}
                 <h4>{track.albumName}</h4>
               </div>
-              <div className='flex flex-col gap-3 items-center justify-center'>
+              <div className='flex flex-col gap-3 items-start justify-center'>
                 <h2>{track.title}</h2>
                 <p>{track.artistName}</p>
               </div>

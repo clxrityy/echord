@@ -21,4 +21,13 @@ export const Rubica = localFont({
   variable: '--font-rubica',
   display: 'swap',
   style: 'normal',
+  preload: true,
+});
+
+export const Nasionaliz = localFont({
+  src: './nasionaliz.ttf',
+  variable: '--font-nasionaliz',
+  display: 'swap',
+  style: 'normal',
+  preload: true,
 });

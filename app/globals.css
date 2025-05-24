@@ -2,8 +2,8 @@
 
 :root {
   --foreground: #ededed;
-  --color-blue-popsicle: #294380;
-  --color-redline: #9e363a;
+  --color-blue-popsicle: #273c6cda;
+  --color-redline: #9e363ad3;
   --color-purple-shadow: #3b1547da;
   --color-grey-blue-leaf: #373a3fbc;
   --color-blue-pastelic-pale: #8fc0c9;
@@ -86,6 +86,10 @@ h3 {
 
 .font-rubica {
   font-family: var(--font-rubica), sans-serif;
+}
+
+.font-nas {
+  font-family: var(--font-nasionaliz), sans-serif;
 }
 
 .navbar {

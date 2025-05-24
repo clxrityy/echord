@@ -5,7 +5,7 @@ import { Skeleton } from '@/components/ui';
 import { Backdrop } from '@/components/layout';
 import { BASE_URL } from '@/util';
 import { connection } from 'next/server';
-import { AR, TMR, Rubica } from '@/styles/fonts';
+import { AR, TMR, Rubica, Nasionaliz } from '@/styles/fonts';
 import SessionProvider from '@/contexts/session';
 import WindowProvider from '@/contexts/window';
 import InteractionProvider from '@/contexts/interaction';
@@ -162,7 +162,7 @@ export default async function RootLayout({
         />
       </head>
       <body
-        className={`${AR.variable} ${TMR.variable} ${Rubica.variable} antialiased`}
+        className={`${AR.variable} ${TMR.variable} ${Rubica.variable} ${Nasionaliz.variable} antialiased`}
       >
         <Suspense fallback={<Skeleton className='w-full h-full' />}>
           <SessionProvider>

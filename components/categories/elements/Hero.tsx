@@ -8,6 +8,7 @@ import { ICONS } from '@/util';
 import { Search } from '@/components/layout';
 import { ReactNode, Suspense } from 'react';
 import { useRouter } from 'next/navigation';
+import { Header } from './Header';
 
 const { login: IconLogin, privacy: IconPrivacy, user: IconUser } = ICONS;
 
@@ -63,7 +64,7 @@ export function Logo() {
     <ImageComponent
       src='/apple-touch-icon.png'
       alt='logo'
-      className='rounded-full logo h-50 w-50'
+      className='rounded-full logo h-50 w-50 opacity-75 hover:opacity-100 transition-all duration-200 cursor-pointer'
       width={75}
       height={75}
       priority
@@ -76,9 +77,8 @@ export function HeroNav({ userId }: Readonly<{ userId: StringOrUndefined }>) {
 
   return (
     <div className='w-full h-full flex flex-col items-center justify-center gap-10 py-10 px-10'>
-      <div className='flex items-center gap-2 justify-center'>
-        <h1 className='text-5xl font-bold text-center font-rubica'>乇chord</h1>
-        <Logo />
+      <div className='flex items-center gap-8 justify-center'>
+        <Header />
       </div>
       <div className='flex flex-col w-full items-center justify-center gap-8 lg:flex-row lg:gap-4 *:bg-blue-400/15 *:rounded-md *:p-3 *:shadow-md *:flex *:items-center *:justify-center *:hover:scale-95 *:transition-all *:duration-200 *:focus:ring-2 *:focus:ring-blue-500 *:w-full *:md:w-2/3 *:lg:w-1/3'>
         {userId ? (
@@ -120,6 +120,7 @@ export function HeroNav({ userId }: Readonly<{ userId: StringOrUndefined }>) {
           Privacy Policy
         </Button>
       </div>
+      <Logo />
     </div>
   );
 }

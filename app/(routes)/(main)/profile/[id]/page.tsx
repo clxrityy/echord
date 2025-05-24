@@ -223,7 +223,7 @@ export default async function Page({ params }: Props) {
           <div className='md:absolute w-full flex flex-col items-center justify-center gap-2'>
             <Favorites interactionData={await getFavorites()} />
           </div>
-          <div className='w-full flex items-center max-w-screen-sm h-full'>
+          <div className='w-full flex items-center h-full mb-10'>
             <Suspense>
               <FeedList itemsPerPage={5}>
                 {userFeed.map((item) => {
