@@ -41,16 +41,14 @@ export default async function Page({ params }: Props) {
                     crossOrigin='anonymous'
                     src={album.imageUrl}
                     alt={album.title}
-                    className='w-full h-full object-cover rounded-lg'
-                    width={500}
-                    height={500}
+                    className='rounded-sm'
+                    width={50}
+                    height={50}
                     priority
                     loading='eager'
                     placeholder='blur'
                     blurDataURL={album.imageUrl}
-                    sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
                     quality={100}
-                    style={{ maxWidth: '100%', height: 'auto' }}
                   />
                 )}
                 <h2 className='text-2xl font-bold'>{album.title}</h2>
