@@ -57,7 +57,9 @@ export function AlbumModal({
                 {title}
               </h2>
             </Link>
-            <h4 className='text-xl font-semibold text-gray-300'>{albumName}</h4>
+            <Link href={`/album/${albumId}`} className='hover:underline hover:text-gray-200 focus:underline-offset-2 transition-all duration-200 ease-in'>
+              <h4 className='text-xl font-semibold text-gray-300'>{albumName}</h4>
+            </Link>
           </div>
           <p className='text-gray-600'>{artistName}</p>
         </div>
