@@ -206,7 +206,7 @@ export default async function Page({ params }: Props) {
   return (
     <Suspense fallback={<Loading />}>
       <Window sessionId={sessionId || ''}>
-        <div className='w-full md:h-full relative flex items-center justify-between md:justify-start flex-col md:gap-6 mt-20 md:mt-0 gap-5 overflow-y-auto overflow-clip scroll-smooth max-h-[calc(100vh)]'>
+        <div className='w-full md:h-full relative flex items-center justify-between md:justify-start flex-col md:gap-6 mt-20 md:mt-0 gap-5 lg:gap-10 overflow-y-auto overflow-clip scroll-smooth max-h-[calc(100vh)]'>
           <Suspense
             fallback={
               <Skeleton className='w-[200px] h-[400px] animate-pulse drop-shadow-2xl shadow-2xl bg-gray-600/40 rounded-lg' />
@@ -220,10 +220,10 @@ export default async function Page({ params }: Props) {
            * - Interactions
            * - ...
            */}
-          <div className='md:absolute w-full flex flex-col items-center justify-center gap-2'>
+          <div className='md:absolute w-full flex flex-col items-center justify-center gap-5'>
             <Favorites interactionData={await getFavorites()} />
           </div>
-          <div className='w-full flex items-center h-full mb-10'>
+          <div className='w-full flex items-center h-full mb-10 m-5'>
             <Suspense>
               <FeedList itemsPerPage={5}>
                 {userFeed.map((item) => {
