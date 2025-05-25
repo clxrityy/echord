@@ -3,7 +3,6 @@ import { NextRequest, NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
 
 export async function POST(_req: NextRequest) {
-
   const cookieStore = await cookies();
 
   try {
@@ -24,8 +23,8 @@ export async function POST(_req: NextRequest) {
         status: 200,
         headers: {
           'Set-Cookie': `${ENV.COOKIE_NAME}=; Max-Age=0; Path=/; HttpOnly; SameSite=Lax; Secure=${process.env.NODE_ENV === 'production'}`,
-        }
-       },
+        },
+      }
     );
   } catch (error) {
     console.error('Error in logout route:', error);
