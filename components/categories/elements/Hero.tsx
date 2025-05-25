@@ -27,7 +27,7 @@ export function Hero({ userId }: Readonly<{ userId: StringOrUndefined }>) {
               Join and start cataloging your music collection
             </p>
           </div>
-          <Button className='bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition duration-200'>
+          <Button className='bg-gradient-to-r from-blue-500/75 to-blue-400/50 text-white py-4 px-8 rounded-md hover:bg-blue-600 transition duration-200'>
             <Link prefetch={false} href={'/login'}>
               Get Started
             </Link>
@@ -80,7 +80,7 @@ export function HeroNav({ userId }: Readonly<{ userId: StringOrUndefined }>) {
       <div className='flex items-center gap-8 justify-center'>
         <Header />
       </div>
-      <div className='flex flex-col w-full items-center justify-center gap-8 lg:flex-row lg:gap-4 *:bg-blue-400/15 *:rounded-md *:p-3 *:shadow-md *:flex *:items-center *:justify-center *:hover:scale-95 *:transition-all *:duration-200 *:focus:ring-2 *:focus:ring-blue-500 *:w-full *:md:w-2/3 *:lg:w-1/3'>
+      <div className='flex flex-col w-full items-center justify-center gap-8 lg:flex-row lg:gap-4 *:bg-gradient-to-tr *:from-[var(--color-blue-popsicle)]/85 *:to-blue-400/50 *:rounded-md *:p-3 *:shadow-md *:flex *:items-center *:justify-center *:hover:scale-95 *:transition-all *:duration-200 *:focus:ring-2 *:focus:ring-blue-500 *:w-full *:md:w-2/3 *:lg:w-1/3'>
         {userId ? (
           <Button
             onClick={() => router.push(`/profile/${userId}`)}

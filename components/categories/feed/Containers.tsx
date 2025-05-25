@@ -168,7 +168,7 @@ export function FeedItemContainer({
 
   return (
     <>
-      <div className='flex items-start justify-start lg:justify-center 2xl:justify-start gap-2 w-full sm:w-2/3 md:w-1/2 lg:w-[90%] xl:w-full relative pb-8 border-l-4 pl-6 border-white/25 rounded-l-sm bg-[var(--color-blue-pastelic-pale)]/[4.25%] px-10 py-4 shadow-2xl drop-shadow-sm drop-shadow-gray-600/30 mx-2'>
+      <div className='flex items-start justify-start lg:justify-center 2xl:justify-start gap-2 w-full sm:w-2/3 md:w-1/2 lg:w-[90%] xl:w-full relative pb-8 border-l-4 pl-6 border-white/25 rounded-l-sm bg-gradient-to-r from-[var(--color-blue-popsicle)]/[35%] to-blue-700/5 px-10 py-4 shadow-2xl drop-shadow-sm drop-shadow-gray-600/30 mx-2'>
         <div className='flex flex-col items-start justify-center w-full gap-4'>
           <div className='flex flex-col items-center justify-start w-fit gap-5'>
             <div className='flex items-start justify-start gap-4 w-full flex-col md:flex-row relative'>
@@ -202,7 +202,7 @@ export function FeedItemContainer({
                   </Suspense>
                 )}
               </FeedUserContainer>
-              <div className='flex items-center lg:items-start justify-center gap-2 h-full xl:flex-col 2xl:flex-row'>
+              <div className='flex items-center lg:items-start justify-center gap-3 h-full'>
                 <span className='text-xs md:text-sm text-gray-400'>
                   {isToday
                     ? 'Today'
