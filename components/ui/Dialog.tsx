@@ -24,11 +24,21 @@ export function Dialog({
 
   useEffect(() => {
     if (open) {
-      dialogRef.current?.showModal();
-    } else {
+      openDialog();
+    }
+     
+  }, [open]);
+
+  useEffect(() => {
+    if (!open) {
       closeDialog();
     }
+     
   }, [open]);
+
+  const openDialog = () => {
+    dialogRef.current?.showModal();
+  };
 
   const closeDialog = () => {
     dialogRef.current?.close();
