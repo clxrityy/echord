@@ -17,7 +17,7 @@ export async function createSession(userId: string) {
     },
   });
 
-  if (existingSessions.length >= 0) {
+  if (existingSessions.length > 0) {
     const ipAddresses = existingSessions[0].ipAddresses;
 
     if (!ipAddresses.includes(ip)) {
