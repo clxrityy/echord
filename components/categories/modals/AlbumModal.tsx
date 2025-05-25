@@ -1,4 +1,4 @@
-"use client";
+'use client';
 import { DialogProps, Dialog, ImageComponent } from '@/components/ui';
 import Link from 'next/link';
 import { Suspense } from 'react';
@@ -26,7 +26,6 @@ export function AlbumModal({
   artistName,
   trackId,
 }: Readonly<AlbumModalProps>) {
-
   const { userId } = useSession();
 
   const { getInteractions } = useInteractions();
@@ -52,27 +51,31 @@ export function AlbumModal({
             />
           )}
           <div className='flex flex-col items-center justify-center my-2 gap-4'>
-            <Link href={`/track/${trackId}`} className='hover:underline hover:text-gray-300 focus:underline-offset-2 transition-all duration-200 ease-in'>
-              <h2>
-                {title}
-              </h2>
+            <Link
+              href={`/track/${trackId}`}
+              className='hover:underline hover:text-gray-300 focus:underline-offset-2 transition-all duration-200 ease-in'
+            >
+              <h2>{title}</h2>
             </Link>
-            <Link href={`/album/${albumId}`} className='hover:underline hover:text-gray-200 focus:underline-offset-2 transition-all duration-200 ease-in'>
-              <h4 className='text-xl font-semibold text-gray-300'>{albumName}</h4>
+            <Link
+              href={`/album/${albumId}`}
+              className='hover:underline hover:text-gray-200 focus:underline-offset-2 transition-all duration-200 ease-in'
+            >
+              <h4 className='text-xl font-semibold text-gray-300'>
+                {albumName}
+              </h4>
             </Link>
           </div>
           <p className='text-gray-600'>{artistName}</p>
         </div>
         <div className='flex justify-center flex-col items-center p-4'>
-          {
-            trackId && userId && (
-              <Interact
-                trackId={trackId}
-                userId={userId}
-                initialInteractions={initialInteractions}
-              />
-            )
-          }
+          {trackId && userId && (
+            <Interact
+              trackId={trackId}
+              userId={userId}
+              initialInteractions={initialInteractions}
+            />
+          )}
         </div>
       </Dialog>
     </Suspense>
