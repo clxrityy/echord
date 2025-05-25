@@ -28,6 +28,12 @@
   cursor: pointer;
 }
 
+@media (min-width: 1200px) {
+  .header {
+    font-size: 3.5rem;
+  }
+}
+
 .header:hover {
   font-variation-settings:
     'wght' 100,
