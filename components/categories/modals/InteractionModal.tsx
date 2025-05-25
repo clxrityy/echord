@@ -66,19 +66,21 @@ export function InteractionModal({
           <div>
             <div className='flex flex-col items-start justify-start w-full gap-2'>
               <h2 className='text-lg font-semibold flex items-center gap-2'>
-                {interaction?.user.username} {Icon(interaction?.interactionType as EInteractionType)}
+                {interaction?.user.username}{' '}
+                {Icon(interaction?.interactionType as EInteractionType)}
               </h2>
-              {
-                interaction?.albumId && (
-                  <Link href={`/album/${interaction.albumId}`} className='hover:underline underline-offset-2 hover:text-gray-200 focus:underline-offset-4 transition-all duration-200 ease-in'>
-                    <p className='text-gray-600'>
-                      {interaction?.eAlbum
-                        ? interaction.eAlbum.title
-                        : interaction?.eTrack?.title}
-                    </p>
-                  </Link>
-                )
-              }
+              {interaction?.albumId && (
+                <Link
+                  href={`/album/${interaction.albumId}`}
+                  className='hover:underline underline-offset-2 hover:text-gray-200 focus:underline-offset-4 transition-all duration-200 ease-in'
+                >
+                  <p className='text-gray-600'>
+                    {interaction?.eAlbum
+                      ? interaction.eAlbum.title
+                      : interaction?.eTrack?.title}
+                  </p>
+                </Link>
+              )}
             </div>
             <div className='flex flex-col items-start justify-start w-full gap-4 mt-4'>
               {error && <p className='text-red-500'>{error}</p>}
@@ -91,7 +93,6 @@ export function InteractionModal({
   );
 }
 
-
 const Icon = (type: EInteractionType) => {
   switch (type) {
     case EInteractionType.FAVORITED:
@@ -103,4 +104,4 @@ const Icon = (type: EInteractionType) => {
     default:
       return <IconLoading className='animate-spin' />;
   }
-}
+};
