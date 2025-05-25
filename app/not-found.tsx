@@ -2,6 +2,8 @@ import { Button } from '@/components/ui/Button';
 import Link from 'next/link';
 import { ICONS } from '@/util';
 
+const { home: IconHome } = ICONS;
+
 export default function NotFound() {
   return (
     <div className='font-[var(--font-tmr)] w-full h-full flex items-center justify-center gap-4 bg-black/35 backdrop-blur-sm'>
@@ -16,7 +18,7 @@ export default function NotFound() {
               href={'/'}
               className='flex items-center justify-center bg-blue-500 text-white hover:bg-blue-600 duration-200 transition-colors focus:ring ease-out px-6 py-2 rounded-lg'
             >
-              <ICONS.home className='w-8 h-8' />
+              <IconHome className='w-8 h-8' />
               <span className='sr-only'>Go to home page</span>
             </Link>
           </Button>

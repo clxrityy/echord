@@ -7,6 +7,8 @@ import { useRouter } from 'next/navigation';
 import { useCallback, useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 
+const { login: IconLogin } = ICONS;
+
 export const Login = ({
   sessionId,
   userId,
@@ -125,7 +127,7 @@ export const Login = ({
           onClick={handleLogin}
           className='bg-blue-500 text-white rounded-md p-2 hover:bg-blue-600 transition duration-200 w-1/3'
         >
-          Login <ICONS.login className='h-5 w-5 inline-block' />
+          Login <IconLogin className='h-5 w-5 inline-block' />
         </button>
       </div>
     </form>
