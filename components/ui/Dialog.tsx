@@ -26,14 +26,12 @@ export function Dialog({
     if (open) {
       openDialog();
     }
-     
   }, [open]);
 
   useEffect(() => {
     if (!open) {
       closeDialog();
     }
-     
   }, [open]);
 
   const openDialog = () => {
