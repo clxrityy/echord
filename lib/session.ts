@@ -35,8 +35,7 @@ export async function buildUserSession({
 
     return userSession;
   } catch (error) {
-    console.error('Error building user session (setting cookie):', error);
-    throw new Error('Failed to build user session');
+    console.log('Error building user session (setting cookie):', error);
   }
 }
 
@@ -60,21 +59,16 @@ export async function getUserSession() {
         console.log('Session expired, logging out user session');
         return null;
       } catch (error) {
-        console.error(
-          'Error logging out user session (deleting cookie):',
-          error
-        );
-        throw new Error('Failed to log out user session');
+        console.log('Error logging out user session (deleting cookie):', error);
       }
     }
   } catch (error) {
-    console.error('Error decrypting user session:', error);
+    console.log('Error decrypting user session:', error);
     try {
       await logoutUserSession();
       console.log('Session expired, logging out user session');
     } catch (error) {
-      console.error('Error logging out user session (deleting cookie):', error);
-      throw new Error('Failed to log out user session');
+      console.log('Error logging out user session (deleting cookie):', error);
     }
     return null;
   }
@@ -128,8 +122,7 @@ export async function getUserSessionId() {
       await logoutUserSession();
       console.log('Session expired, logging out user session');
     } catch (error) {
-      console.error('Error logging out user session (deleting cookie):', error);
-      throw new Error('Failed to log out user session');
+      console.log('Error logging out user session (deleting cookie):', error);
     }
     return null;
   }
