@@ -10,7 +10,7 @@ import { ReactNode, Suspense } from 'react';
 import { useRouter } from 'next/navigation';
 import { Header } from './Header';
 
-const { login: IconLogin, privacy: IconPrivacy, user: IconUser } = ICONS;
+const { login: IconLogin, user: IconUser, github: IconGithub } = ICONS;
 
 export function Hero({ userId }: Readonly<{ userId: StringOrUndefined }>) {
   return (
@@ -27,7 +27,7 @@ export function Hero({ userId }: Readonly<{ userId: StringOrUndefined }>) {
               Join and start cataloging your music collection
             </p>
           </div>
-          <Button className='bg-gradient-to-r from-blue-500/75 to-blue-400/50 text-white py-4 px-8 rounded-md hover:bg-blue-600 transition duration-200'>
+          <Button className='bg-gradient-to-r from-blue-500/25 to-[var(--color-blue-pastelic-pale)]/50 text-white py-4 px-8 rounded-md hover:bg-blue-500/50 transition duration-200'>
             <Link prefetch={false} href={'/login'}>
               Get Started
             </Link>
@@ -76,11 +76,11 @@ export function HeroNav({ userId }: Readonly<{ userId: StringOrUndefined }>) {
   const router = useRouter();
 
   return (
-    <div className='w-full h-full flex flex-col items-center justify-center gap-10 py-10 px-10'>
+    <div className='w-full h-full flex flex-col items-center justify-center gap-10 py-10 px-10 mb-20 sm:mb-0'>
       <div className='flex items-center gap-8 justify-center'>
         <Header />
       </div>
-      <div className='flex flex-col w-full items-center justify-center gap-8 lg:flex-row lg:gap-4 *:bg-gradient-to-tr *:from-[var(--color-blue-popsicle)]/85 *:to-blue-400/50 *:rounded-md *:p-3 *:shadow-md *:flex *:items-center *:justify-center *:hover:scale-95 *:transition-all *:duration-200 *:focus:ring-2 *:focus:ring-blue-500 *:w-full *:md:w-2/3 *:lg:w-1/3'>
+      <div className='flex flex-col w-full items-center justify-center gap-8 lg:flex-row lg:gap-4 *:bg-gradient-to-tr *:from-[var(--color-blue-popsicle)]/85 *:to-[var(--color-blue-pastelic-pale)]/25 *:rounded-md *:p-3 *:shadow-md *:flex *:items-center *:justify-center *:hover:scale-95 *:transition-all *:duration-200 *:focus:ring-2 *:focus:ring-blue-500 *:w-full *:md:w-2/3 *:lg:w-1/3 z-40'>
         {userId ? (
           <Button
             onClick={() => router.push(`/profile/${userId}`)}
@@ -107,7 +107,10 @@ export function HeroNav({ userId }: Readonly<{ userId: StringOrUndefined }>) {
             Login
           </Button>
         )}
-        <Button
+        {/**
+         * REPLACE WITH API & OPEN SOURCE LINK
+         */}
+        {/* <Button
           onClick={() => router.push(`/terms#privacy`)}
           role=''
           className='font-rubica'
@@ -118,6 +121,19 @@ export function HeroNav({ userId }: Readonly<{ userId: StringOrUndefined }>) {
             <IconPrivacy />
           </IconWrapper>{' '}
           Privacy Policy
+        </Button> */}
+        <Button className='font-rubica' aria-label='github' title='github'>
+          <Link
+            href={'https://github.com/clxrityy/echord'}
+            rel='noopener noreferrer'
+            target='_blank'
+            className='w-full h-full flex items-center justify-center'
+          >
+            <IconWrapper>
+              <IconGithub />
+            </IconWrapper>
+            Open Source
+          </Link>
         </Button>
       </div>
       <Logo />
