@@ -47,7 +47,7 @@ export function SavesGrid({ saves }: Readonly<SavesGridProps>) {
   }, [screenSize, length]);
 
   return (
-    <div className='flex flex-col gap-0 h-screen mt-22 justify-end items-start fixed bottom-0 left-0'>
+    <div className='flex flex-col gap-0 h-screen mt-22 justify-end items-start fixed bottom-12 left-0'>
       {saves.map((save) => (
         <Suspense
           key={save.id}
