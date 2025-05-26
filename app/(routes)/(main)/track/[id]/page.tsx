@@ -130,7 +130,7 @@ export default async function Page({ params }: Props) {
   return (
     <Suspense fallback={<Loading />}>
       <Window sessionId={sessionId || ''}>
-        <div className='w-full mx-auto flex flex-col md:flex-row md:items-start items-center justify-between gap-10 px-6 py-10'>
+        <div className='w-full mx-auto flex flex-col md:flex-row md:items-start items-center justify-start lg:justify-between gap-10 px-6 py-10 h-full'>
           <div className='flex flex-col items-center justify-center gap-5'>
             <div className='flex flex-col lg:flex-row items-center justify-center gap-6'>
               <div className='flex flex-col items-center justify-center gap-2'>
