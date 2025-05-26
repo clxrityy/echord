@@ -37,14 +37,14 @@ export default async function Home() {
       {/**
        *
        */}
-      <div className='w-full h-full flex flex-col xl:flex-row gap-2 items-start justify-start xl:justify-between xl:items-start xl:gap-0'>
+      <div className='w-full h-full flex flex-col xl:flex-row gap-10 items-start justify-start xl:justify-between xl:items-start xl:gap-0'>
         <Suspense fallback={<Loading />}>
           <Hero userId={user?.userId} />
         </Suspense>
         <div className='relative flex justify-center items-center w-full'>
           <Suspense fallback={<Loading />}>
             <Window sessionId={sessionId ?? ''}>
-              <div className='w-full h-fit flex items-center justify-center relative sm:pb-20 pb-40 pt-80 sm:pt-0 z-0'>
+              <div className='w-full h-full flex items-center justify-center relative sm:pb-20 pb-40 pt-80 sm:pt-0 z-0'>
                 <Suspense
                   fallback={
                     <Skeleton className='w-full h-full bg-gray-400/30 animate-pulse rounded-full shadow-2xl' />
