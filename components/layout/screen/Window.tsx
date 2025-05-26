@@ -4,6 +4,7 @@ import { useScreenSize } from '@/hooks/useScreenSize';
 import { EUserAgent } from '@/prisma/app/generated/prisma/client';
 import { UserAgent } from '@/types';
 import { ReactNode, useEffect, useState } from 'react';
+import { Footer } from '../footer';
 
 type WindowProps = {
   sessionId: string;
@@ -99,6 +100,7 @@ export const Window = ({ sessionId, children }: WindowProps) => {
           {children}
         </div>
       </div>
+      <Footer />
     </div>
   );
 };
