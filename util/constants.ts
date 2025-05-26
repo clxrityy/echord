@@ -18,6 +18,8 @@ import {
   Link,
   CopyCheck,
   ShieldAlert,
+  Database,
+  GitBranch,
 } from 'lucide-react';
 
 export const DEEZER_API_URL = 'https://api.deezer.com';
@@ -50,6 +52,8 @@ export const ICONS = {
   link: Link,
   copied: CopyCheck,
   privacy: ShieldAlert,
+  api: Database,
+  github: GitBranch,
 };
 
 export const ENV = {
