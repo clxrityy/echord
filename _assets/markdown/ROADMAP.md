@@ -62,6 +62,7 @@
 - [x] `/login` - Sign in
 - [x] `/signup` - Sign up
 - [x] `/logout` - Sign out
+- [ ] Add pagination to `/search`
 
 #### Seamless routing experience
 
@@ -131,6 +132,7 @@
 - [x] Remove your own favorited/saved songs
 - [x] Click on a liked song (on someone's profile) to open a modal with the track
   - [ ] Modal should show the album cover, track name, artist name, etc.
+- [ ] Public API
 
 #### Utility
 
