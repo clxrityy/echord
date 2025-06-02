@@ -42,7 +42,7 @@
   "devDependencies": {
     "@eslint/eslintrc": "^3.3.1",
     "@eslint/js": "^9.27.0",
-    "@next/eslint-plugin-next": "^15.3.2",
+    "@next/eslint-plugin-next": "^15.3.3",
     "@tailwindcss/postcss": "^4.1.7",
     "@types/crypto-js": "^4.2.2",
     "@types/node": "^22.15.21",
